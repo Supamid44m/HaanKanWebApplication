@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <title>{%block title%}  {%endblock%}</title>
+    
+</head>
+<body>
+    <div>
+        <header class="bg-emerald-300">
+            <div>
+            <a href="#"><h1 class="text-center">Haankan</h1></a>
+
+            <p class="text-right" >user:</p>
+            </div>
+        </header>
+        <div class="w3-sidebar w3-light-grey w3-bar-block" style="width:15%">
+            <h3 class="w3-bar-item">Menu</h3>
+            <a href="#" class="w3-bar-item w3-button">ดูปาร์ตี้ทั้งหมด</a>
+            <a href="#" class="w3-bar-item w3-button">Link 2</a>
+            <a href="#" class="w3-bar-item w3-button">Link 3</a>
+          </div>
+        <!-- Page Content -->
+    {%block content%}
+        <div style="margin-left:25%">
+            <div class="w3-container w3-teal">
+                <h1>ss</h1>
+            </div>  
+            <div class="bg-emerald-300 w-20 h-20 ">
+                content
+            </div>
+        </div>
+    {%endblock%}
+</div>
+
+</body>
+</html>
