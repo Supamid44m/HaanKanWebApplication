@@ -4,5 +4,5 @@ from Content.models import *
 
 # Create your views here.
 def showNews(req):
-    context={"News":News.objects.all()}
-    return render(req,'Content/header.html',context={})
+    context={"news":News.objects.all()}
+    return render(req,'Content/news.html',context)

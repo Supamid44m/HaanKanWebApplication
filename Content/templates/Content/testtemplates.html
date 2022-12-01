@@ -12,30 +12,45 @@
     
 </head>
 <body>
-    <div>
-        <header class="bg-emerald-300">
-            <div>
-            <a href="#"><h1 class="text-center">Haankan</h1></a>
 
-            <p class="text-right" >user:</p>
-            </div>
-        </header>
-        <div class="w3-sidebar w3-light-grey w3-bar-block" style="width:15%">
-            <h3 class="w3-bar-item">Menu</h3>
-            <a href="#" class="w3-bar-item w3-button">ดูปาร์ตี้ทั้งหมด</a>
-            <a href="#" class="w3-bar-item w3-button">Link 2</a>
-            <a href="#" class="w3-bar-item w3-button">Link 3</a>
-          </div>
-        <!-- Page Content -->
+    <header class="bg-emerald-300">
+        <div>
+        <a href="#"><h1 class="text-center">Haankan</h1></a>
+    
+        <p class="text-right" >user:</p>
+        </div>
+    </header>
+    
+    <div class="w3-sidebar w3-light-grey w3-bar-block" style="width:15%">
+        <h3 class="w3-bar-item">Menu</h3>
+        <a href="{%url party%}" class="w3-bar-item w3-button">ดูปาร์ตี้ทั้งหมด</a>
+        <a href="{%url news%}" class="w3-bar-item w3-button">Link 2</a>
+        <a href="#" class="w3-bar-item w3-button">Link 3</a>
+      </div>   
+       
+      
+
     {%block content%}
-        <div style="margin-left:25%">
-            <div class="w3-container w3-teal">
-                <h1>ss</h1>
-            </div>  
-            <div class="bg-emerald-300 w-20 h-20 ">
-                content
+    {for i in News}
+        <div style="margin-left:25%" class="bg-emerald-300 w-60 h-30 rounded-md" >
+             
+            <div>
+                <label for="title"></label>
+                <span class="text-md" id="title">{{i.title}}</span>
+            </div>
+
+            <div>
+                <label for="description"></label>
+                <span class="text-md" id="description">{{i.desciption}}</span>
+            </div>
+
+            <div>
+            </div>
+
+            <div>
             </div>
         </div>
+    {% endfor %}
     {%endblock%}
 </div>
 

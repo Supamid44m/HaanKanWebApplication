@@ -1,0 +1,36 @@
+{%extends 'Content/components/base.html' %}
+
+{%block title%}Party{%endblock%}
+
+
+{%block content%}
+<div class="grid grid-cols-4">
+    {% for i in party %}
+    {% if i.isApproved %}
+        <div style="margin-left:25%" class="bg-emerald-300 w-60 h-30 rounded-md" >
+     
+            <div>
+                <label for="title" class="text-xl text-bold">Title</label>
+                <span class="text-md" id="title">{{i.title}}</span>
+            </div>
+
+            <div>
+                <label for="description">แอปพลิเคชั่น</label>
+                <span class="text-md" id="description">{{i.apps.name}}</span>
+            </div>
+
+            <div>
+                <label for="description">จำนวน</label>
+                <span class="text-md" id="description">{{i.quantity}}</span>
+            </div>
+
+            <div>
+                <label for="description">ราคา</label>
+                <span class="text-md" id="description">{{i.price}}</span>
+            </div>
+        
+        </div>
+        {% endif%}
+    {% endfor %}
+</div>
+{%endblock%}
