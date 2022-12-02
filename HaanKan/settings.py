@@ -81,11 +81,11 @@ DATABASES = {
         #"ENGINE": "django.db.backends.sqlite3",
         #"NAME": BASE_DIR / "db.sqlite3",
         "ENGINE": "django.db.backends.mysql",
-        "NAME": 'Haankan-webapp',
-        "USER": 'Supamid44m',
+        "NAME": '#',
+        "USER": '#',
         "HOST": '127.0.0.1',
         "PORT": '3306',
-        "PASSWORD": 'Supamid44Mm',
+        "PASSWORD": '#',
     }
 }
 
