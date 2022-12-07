@@ -4,6 +4,6 @@ from . import views
 
 urlpatterns =[
     path('',views.showParty,name="party"),
-    path('create/',views.crateParty,name='createParty')
+    path('create/',views.crateParty,name='createparty')
     
 ]

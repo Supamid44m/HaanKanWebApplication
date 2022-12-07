@@ -32,24 +32,49 @@
 
     {%block content%}
     {for i in News}
-        <div style="margin-left:25%" class="bg-emerald-300 w-60 h-30 rounded-md" >
+        <div style="margin-left:25%" class="bg-emerald-300 w-80 h-60 rounded-md" >
+
+            <div class="pt-6" >
+                <img src="https://images.pexels.com/photos/39853/woman-girl-freedom-happy-39853.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt=""  class="w-24 h-24  rounded-md " >
+            </div>
              
-            <div>
-                <label for="title"></label>
-                <span class="text-md" id="title">{{i.title}}</span>
-            </div>
+            <div class="ml-6 ">   
 
-            <div>
-                <label for="description"></label>
-                <span class="text-md" id="description">{{i.desciption}}</span>
-            </div>
+                <div>
+                    <label for="title">ชื่อ</label>
+                    <span class="text-md" id="title">{{i.title}}</span>
+                </div>
 
-            <div>
-            </div>
+                <div>
+                 <label for="description">จำนวนรับ</label>
+                    <span class="text-md" id="description">{{i.desciption}}</span>
+                </div>
 
-            <div>
+                <div>
+                    <label for="description">Rating</label>
+                       <span class="text-md" id="description">{{i.desciption}}</span>
+                 </div>
+
+                <div>
+                    <label for="description">ราคา</label>
+                    <span class="text-md" id="description">{{i.desciption}} ต่อเดือน</span>
+                </div>
+            
+            
             </div>
+          
+
+
+
+            <footer class="bg-black ">
+                <div >
+                    test
+                </div>
+            </footer>
+
+          
         </div>
+        
     {% endfor %}
     {%endblock%}
 </div>

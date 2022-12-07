@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Register</title>
+</head>
+<body class="bg-neutral-800">
+
+    <h1 class="text-xl"><a href="{%url 'party'%}">Haan Kan</a></h1>
+    
+    <div class="bg-zinc-800 w-3/12 mx-auto my-auto rounded-md my-10">
+        <div class="bg-zinc-100 text-xl rounded-t-lg">
+        <span class="">สมัครสมาชิก</span>
+        </div>
+        <div class="mt-2">
+            <form action="{%url 'register'%}" method="POST" class="text-xl">
+                
+                    
+                {%csrf_token%}
+                <div class="mt-2">
+                    <div class="text-xl text-gray-50" >
+                        {{form.username.label_tag}}
+                    </div>
+                    {{form.username}}
+                    {{form.username.errors}}
+                </div>
+
+                <div class="mt-2">
+                    <div class="text-xl text-gray-50">
+                        {{form.email.label_tag}}
+                    </div>
+                    
+                    {{form.email}}
+                    {{form.email.errors}}
+                </div>
+
+                <div class="mt-2">
+                    <div class="text-xl text-gray-50">
+                    {{form.password1.label_tag}}
+                    </div>
+                    {{form.password1}}
+                    {{form.password1.errors}}
+                </div class="mt-2">
+
+                <div class="mt-2">
+                    <div class="text-xl text-gray-50">
+                    {{form.password2.label_tag}}
+                    </div>
+                    {{form.password2}}
+                    {{form.password2.errors}}
+                </div>
+                <br>
+                <div class="text-center text-gray-50"><button type="submit">สมัครสมาชิก</button></div>
+                
+           
+            </form>
+           
+        </div>
+    </div>
+</body>
+</html>

@@ -1,6 +1,17 @@
 <div class="w3-sidebar w3-light-grey w3-bar-block" style="width:15%">
+    {%if user.is_authenticated %}
+    
     <h3 class="w3-bar-item">Menu</h3>
     <a href="{%url 'party'%}" class="w3-bar-item w3-button">ดูปาร์ตี้ทั้งหมด</a>
+    <a href="{%url 'createparty'%}" class="w3-bar-item w3-button">สร้างปาร์ตี้ใหม่</a>
     <a href="{%url 'news'%}" class="w3-bar-item w3-button">ข่าวประชาสัมพันธ์</a>
-    <a href="#" class="w3-bar-item w3-button">Link 3</a>
-  </div>
+    <a href="#" class="w3-bar-item w3-button">เกี่ยวกับ</a>
+    <a href="{%url 'logout'%}" class="w3-bar-item w3-button">ออกจากระบบ</a>
+    {%else%}
+    <a href="{%url 'party'%}" class="w3-bar-item w3-button">ดูปาร์ตี้ทั้งหมด</a>
+    <a href="{%url 'news'%}" class="w3-bar-item w3-button">ข่าวประชาสัมพันธ์</a>
+    <a href="#" class="w3-bar-item w3-button">เกี่ยวกับ</a>
+    <a href="{%url 'register'%}" class="w3-bar-item w3-button">สมัครสมาชิก</a>
+    <a href="{%url 'login'%}" class="w3-bar-item w3-button">เข้าสู่ระบบ</a>
+    {%endif%}
+</div>

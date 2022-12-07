@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_extensions",
+    "Authenticate",
     "Party",
     "Content"
 ]
@@ -81,11 +82,11 @@ DATABASES = {
         #"ENGINE": "django.db.backends.sqlite3",
         #"NAME": BASE_DIR / "db.sqlite3",
         "ENGINE": "django.db.backends.mysql",
-        "NAME": '#',
-        "USER": '#',
+        "NAME": 'Haankan-webapp',
+        "USER": 'root',
         "HOST": '127.0.0.1',
         "PORT": '3306',
-        "PASSWORD": '#',
+        "PASSWORD": '1234',
     }
 }
 
@@ -106,7 +107,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "th-TH"
 
 TIME_ZONE = "UTC"
 
@@ -124,3 +125,9 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+
+#Auth
+LOGIN_REDIRECT_URL="party"
+LOGOUT_REDIRECT_URL='party'
