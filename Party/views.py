@@ -1,5 +1,5 @@
 from django.http.response import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from Party.models import *
 from .forms import *
 # Create your views here.
@@ -10,8 +10,12 @@ def showParty(req):
 
 
 def crateParty(req):
-    form=cratePartyforms(req.POST or None)
-    if form.is_valid():
-        form.save()
+    if req.method == "POST":
+        form=cratePartyforms(req.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+    else:
+        form=cratePartyforms()
     context={'form':form}
     return render(req,'Party/createParty.html',context)

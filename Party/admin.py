@@ -4,5 +4,4 @@ from .models import *
 
 admin.site.register(Party)
 admin.site.register(Apps)
-admin.site.register(AppImage)
-admin.site.register(QrcodePayment)
+

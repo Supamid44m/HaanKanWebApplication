@@ -9,44 +9,13 @@
     <div class="bg-zinc-100 text-xl rounded-t-lg">
         <span class="text-2xl">เริ่มสร้างตี้กันเลย</span>
         </div>
-    <form method="POST" style="margin-left:25%" action="{%url 'createparty'%}" class="">
+    <form method="POST" style="margin-left:25%" action=" " class="">
         <div class="text-xl ">
         {%csrf_token%}
-            <div class="mt-2 ">
-                <label for="title">ชื่อ</label>
-                <input type="text" name="title" id="title">
-            </div>
 
-            <div class="mt-2">
-                <label for="apps">แอปพลิเคชั่น</label>
-                <select id="apps" name="apps">
-                    <option value="Netflix">Netflix</option>
-                    <option value="Spotify">Spotify</option>
-                    <option value="Spotify">Youtube Premium</option>
-                    <option value="Spotify">HBO GO</option>
-                    <option value="Spotify">Disney+</option>
-                </select>
-            </div>
+        {{form.as_p}}
 
-            <div class="mt-2">
-                <label for="quantity">จำนวน</label>
-                <input type="number" name="quantity" id="quantity">
-            </div>
-            <div class="mt-2">
-                <label for="price">ราคา</label>
-                <input type="number" name="price" id="price">
-            </div>
             
-            <div class="mt-2">
-                <label for="rating">เรตติ้ง</label>
-                <input type="number" name="rating" id="rating">
-            </div>
-
-            <div class="mt-2">
-                <label for="qrcodepayment">ช่องทางการชำระ</label>
-                <input type="image" name="qrcodepayment" id="qrcodepayment">
-            </div>
-
             <div class="mt-2">
                 <button type="submit">Submit</button>
             </div>
@@ -54,11 +23,11 @@
     
 
         </div>
-</form>
+    </form>
 </div>
 {%else%}
     <div class="text-center text-2xl">
-        <span>กรุณาเข้าสู่ะรบบ!</span>
+        <span>กรุณาเข้าสู่ะระบบ!</span>
     </div>
     
 {%endif%}
