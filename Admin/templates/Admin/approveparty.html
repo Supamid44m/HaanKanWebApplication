@@ -1,0 +1,61 @@
+{%extends 'Content/components/base.html' %}
+
+{%block title%}approveparty{%endblock%}
+
+{%block content%}
+<div style="margin-left: 25%;" >
+    {%if user.is_authenticated %}
+        {%if user.is_superuser %}
+            <div>
+                <form action="" method="POST">
+                    {%csrf_token%}
+                    <table class="border-2 ">
+                        <thead>
+                            <tr>
+                                <th>Party Title</th>
+                                <th>Apps</th>
+                                <th>Approve</th>
+                            </tr>
+                        </thead>
+                        <tbody class="border-2">
+                            {%for i in partys %}
+                            <tr>
+                                <td class="border-2">{{i}}</td>
+                                <td class="border-2">{{i.apps}}</td>
+                                
+                                <td class="border-2">
+                                    {%if i.isApproved%}
+                                    <div>
+                                        <input type="checkbox" checked="checked" value="{{i.id}}" name="boxes">
+                                    </div>
+                                    {%else%}
+                                    <div>
+                                        <input type="checkbox"  value="{{i.id}}" name="boxes">
+                                    </div>
+                                    {%endif%}
+
+
+                                </td>
+                            </tr>
+                            
+                            {%endfor%}
+                        </tbody>
+                    </table>
+                
+                <button type="submit" class="border-2">Update</button>
+                </form>
+               
+            </div>
+
+        {%else%}
+            <div class="text-center">คุณไม่มีสิทธ์เข้าถึง</div>
+        {%endif%}
+
+    {%else%}
+            
+    {%endif%}
+
+
+</div>
+
+{%endblock%}

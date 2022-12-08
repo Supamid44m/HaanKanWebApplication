@@ -4,11 +4,15 @@
 
 
 {%block content%}
+<div class=" ml-20">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input type="search" value="ค้นหา" class="border-2 border-black rounded-md">
+</div>
 <div class="grid grid-cols-4">
     {% for i in news %}
-        <div style="margin-left:25%" class="bg-zinc-700 w-80 h-30 rounded-md" >
+        <div style="margin-left:25%" class="bg-zinc-700 w-80 h-30 rounded-md mt-20 ml-20" >
             <div class="pt-6 " >
-                <img src="{{i.apps.appImage.image}}" alt=""  class="w-24 h-24  rounded-md" >
+                <img src="{{ i.image.url }}" alt="image" class="w-24 h-24  rounded-md" >
                
             </div>
             <div>
@@ -19,6 +23,11 @@
             <div>
                 <label for="description">รายอะเลียด</label>
                 <span class="text-md" id="description">{{i.desciption}}</span>
+            </div>
+
+            <div>
+                <label for="news">สร้างโดย</label>
+                <span class="text-md" id="news">{{i.admin.username}}</span>
             </div>
 
             <div>
