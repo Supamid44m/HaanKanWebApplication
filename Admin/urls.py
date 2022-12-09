@@ -5,4 +5,5 @@ from . import views
 urlpatterns =[
     path('',views.showuser,name="alluser"),
     path('approveparty',views.approveParty,name="approveparty"),
+    path('addapp',views.addApps,name="addapps"),
 ]

@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from Party.models import *
 from django.contrib import messages
+from .forms import *
 # Create your views here.
 
 def showuser(req):
@@ -27,3 +28,13 @@ def approveParty(req):
         return redirect('party')
     return render(req,"Admin/approveparty.html")
     
+def addApps(req):
+    if req.method == 'POST':
+        form = AddnewAppforms(req.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+    else:
+        form=AddnewAppforms()
+    context={'form':form}
+    return render(req,'Admin/addnewapp.html',context)

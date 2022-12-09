@@ -1,0 +1,23 @@
+{%extends 'Content/components/base.html' %}
+
+
+{%block title%}addnewApps{%endblock%}
+
+{%block content%}
+
+<div>
+    <div style="margin-left:25%">
+        <form action="" method="POST">
+            {%csrf_token%}
+            {{form.as_p}}
+
+            <button type="submit">เพิ่มแอป</button>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+{%endblock%}

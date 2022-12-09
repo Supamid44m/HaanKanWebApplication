@@ -7,6 +7,29 @@
     {%if user.is_authenticated %}
         {%if user.is_superuser %}
             <div>
+               <div class="border-2 w-20 ">
+                <p>ปาร์ตี้ทั้งหมด</p>
+                <span>{{partys | length}}</span>
+                
+               </div>
+               
+            </div>
+            <br>
+
+            <div>
+                <div class="border-2 w-20 ">
+                
+                 {%if partys.isApproved %}
+                 <p>ปาร์ตี้ที่อนุมัติแล้ว</p>
+                 
+                 {%else%}
+                 <p>ปาร์ตี้ที่อนุมัติแล้ว</p>
+                
+                 {%endif%}
+             
+                </div>
+                
+             </div>
                 <form action="" method="POST">
                     {%csrf_token%}
                     <table class="border-2 ">
