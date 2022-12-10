@@ -40,7 +40,7 @@
 
                     <div>
                         <label for="description">ราคา</label>
-                        <span class="text-md" id="description">{{i.price}} บาท</span>
+                        <span class="text-md" id="description">{{i.priceavg}}บาท/คน </span>
                     </div>
                 </div>
             </div>
@@ -48,13 +48,19 @@
             <footer class="bg-zinc-500 h-10 rounded-b-lg h-16">
                 <div class="">
                     <i class="fa-sharp fa-solid fa-users"></i>
-                    <span class="mt-2">{{i.member | length}} / {{i.quantity}} คน</span>
+                    <span class="mt-2">{{i.members.count}} / {{i.quantity}} คน</span>
                     
                 </div>
-
+                {%if i.members.count == i.quantity %}
                 <div class="border-solid border-slate-600 text-center mx-auto my-auto">
-                    <a href="">ขอเข้าร่วม</a>
+                    <a href="">เต็ม</a>
                 </div>
+                {%else%}
+                <div class="border-solid border-slate-600 text-center mx-auto my-auto">
+                    <a href="">เข้าปาร์ตี้</a>
+                </div>
+                {%endif%}
+                <a href="{{ i.get_absolute_url }}">test</a>
             </footer>
         </div>
 

@@ -13,7 +13,6 @@ def approveParty(req):
     if req.user.is_superuser:
         if req.method=="POST":
              id_list=req.POST.getlist('boxes')
-
              context.update(isApproved=False)
 
              for i in id_list:
@@ -22,7 +21,11 @@ def approveParty(req):
              return redirect('party')
         
         else:
-            return render(req,"Admin/approveparty.html",{'partys':Party.objects.all()})
+            return render(req,"Admin/approveparty.html",{
+                'partys':Party.objects.all(),
+                'partyapprove':Party.objects.filter(isApproved=True),
+                'partyunapprove':Party.objects.filter(isApproved=False)
+            })
     else:
         messages.success(req,("คุณไม่มีสิทธ์เข้าถึง"))
         return redirect('party')
@@ -30,11 +33,14 @@ def approveParty(req):
     
 def addApps(req):
     if req.method == 'POST':
-        form = AddnewAppforms(req.POST)
+        form = AddnewAppforms(req.POST,req.FILES)
         if form.is_valid():
             form.save()
+            print("yes")
             return redirect('/')
+            
     else:
         form=AddnewAppforms()
+        
     context={'form':form}
     return render(req,'Admin/addnewapp.html',context)

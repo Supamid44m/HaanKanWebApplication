@@ -1,0 +1,61 @@
+{%extends 'Content/components/base.html' %}
+
+{%block title%}Party-detail{%endblock%}
+
+
+{%block content%}
+<div style="margin-left: 25%" >
+    <div class="border-2 w-64" >
+        <h1>รายละเอียดปาร์ตี้</h1>
+        
+        <div>
+            <label for="title">ชื่อ</label>
+            <span id="title" name="title">{{party.title}}</span>
+        </div>
+        <div>
+            <label for="title">หัวตี้</label>
+            <span id="title" name="title">{{party.owner}}</span>
+        </div>
+        <div>
+            <label for="price">ราคาเต็ม</label>
+            <span id="price" name="title">{{party.price}} บาท</span>
+        </div>
+        
+        <div class="border-2 w-60 rounded-md">
+            {%if user in party.members.all %}
+            <div >
+                <span>{{party.bank}}</span>
+                <span class="ml-16">{{party.bankaccount}}</span>
+            </div>
+            <div>
+                <img src="{{party.qrcodeImage.url}}" alt="image" class="w-64 h-64 ">
+            </div>
+            <div >
+                <span>ชำระภายวันที่</span>
+                <span class="ml-16">date</span>
+            </div>
+            {%else%}
+            <div>
+                
+            </div>
+            {%endif%}
+        </div>
+
+
+        <div>
+            {%if party.members.count%}
+            <div>สมาชิก</div>
+                {%for member in party.members.all %}
+                <div>
+                    <a href="#">{{member}}</a>
+                </div>
+            
+                {%endfor%}
+            {%endif%}
+        </div>
+    </div>
+   
+</div>
+
+
+{%endblock%}

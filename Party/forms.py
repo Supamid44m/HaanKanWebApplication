@@ -6,20 +6,23 @@ from .models import *
 class cratePartyforms(ModelForm):
     class Meta:
         model=Party
-        fields=('title','apps','quantity','qrcodeImage','price')
+        fields=('title','apps','quantity','qrcodeImage','bank','bankaccount','price')
         labels={
-            'title':'Title',
-            'apps':'Apps',
-            'quantity':'Quatity',
-            'qrcodeImage':'Qrcodepayment',
-            'price':'Price',
+            'title':'ชื่อปาร์ตี้',
+            'apps':'แอปพลิเคชั่น',
+            'quantity':'จำนวน',
+            'qrcodeImage':'Qrcode เพื่อสแกนจ่าย',
+            'bank':'ธนาคาร',
+            'bankaccount':'เลขบัญชี',
+            'price':'ราคาเต็ม',
 
         }
         widgets={
             'title':forms.TextInput(attrs={'class':'form-control','placeholder':'ชื่อ'}),
             'apps':forms.Select(attrs={'placeholder':'แอป'}),
             'quantity':forms.NumberInput(attrs={'class':'form-control','placeholder':'จำนวน'}),
-            'qrcodeImage':forms.ClearableFileInput(attrs={'class':'form-control','placeholder':'ช่องทางชำระ'}),
+            'bank':forms.Select(attrs={'placeholder':'ธนาคาร'}),
+            'bankaccount':forms.TextInput(attrs={'placeholder':'เลขบัญชี'}),
             'price':forms.NumberInput(attrs={'class':'form-control','placeholder':'ราคา'})
 
         }

@@ -27,7 +27,7 @@
 
             <div>
                 <label for="news">สร้างโดย</label>
-                <span class="text-md" id="news">{{i.admin.username}}</span>
+                <span class="text-md" id="news">{{i.writer}}</span>
             </div>
 
             <div>
@@ -42,7 +42,7 @@
                 </div>
 
                 <div class="border-solid border-slate-600 text-center mx-auto my-auto">
-                    <a href="">อ่าน</a>
+                    <a href="{{ i.get_absolute_url }}">อ่าน</a>
                 </div>
             </footer>
         

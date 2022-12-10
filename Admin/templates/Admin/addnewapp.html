@@ -7,17 +7,19 @@
 
 <div>
     <div style="margin-left:25%">
-        <form action="" method="POST">
-            {%csrf_token%}
-            {{form.as_p}}
-
-            <button type="submit">เพิ่มแอป</button>
-
-
-        </form>
-
+        {%if user.is_authenticated%}
+                {%if user.is_superuser%}
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        {%csrf_token%} 
+                        {{form.as_p}}
+                    <input type="submit">
+                    </form>
+                {%endif%}
+        {%else%}
+            <div class="text-center">
+                <span>คุณไม่มีสิทธ์เข้าถึงหน้านี้</span>
+            </div>
+        {%endif%}
     </div>
-
 </div>
-
 {%endblock%}

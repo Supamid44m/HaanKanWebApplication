@@ -7,29 +7,27 @@
     {%if user.is_authenticated %}
         {%if user.is_superuser %}
             <div>
-               <div class="border-2 w-20 ">
-                <p>ปาร์ตี้ทั้งหมด</p>
-                <span>{{partys | length}}</span>
-                
-               </div>
+                <div class="border-2 w-20 ">
+                    <p>ปาร์ตี้ทั้งหมด</p>
+                    <span>{{partys | length}}</span>
+                </div>
+
+                <div class="border-2 w-20 ">
+                   
+                        <div>
+                            <span>ปาร์ตี้ที่อนุมัติแล้ว</span>
+                            {{partyapprove| length}}
+                        </div>
+
+                </div>
+                <div class="">
+                    <span>ปาร์ตี้ที่รอการอนุมัติ</span>
+                    {{partyunapprove| length}}
+                </div>
                
             </div>
-            <br>
+          
 
-            <div>
-                <div class="border-2 w-20 ">
-                
-                 {%if partys.isApproved %}
-                 <p>ปาร์ตี้ที่อนุมัติแล้ว</p>
-                 
-                 {%else%}
-                 <p>ปาร์ตี้ที่อนุมัติแล้ว</p>
-                
-                 {%endif%}
-             
-                </div>
-                
-             </div>
                 <form action="" method="POST">
                     {%csrf_token%}
                     <table class="border-2 ">
@@ -37,7 +35,9 @@
                             <tr>
                                 <th>Party Title</th>
                                 <th>Apps</th>
+                                <th>owner</th>
                                 <th>Approve</th>
+                                
                             </tr>
                         </thead>
                         <tbody class="border-2">
@@ -45,6 +45,7 @@
                             <tr>
                                 <td class="border-2">{{i}}</td>
                                 <td class="border-2">{{i.apps}}</td>
+                                <td class="border-2"><a href="#">{{i.owner}}</a></td>
                                 
                                 <td class="border-2">
                                     {%if i.isApproved%}

@@ -34,7 +34,8 @@ class AddnewAppforms(ModelForm):
             'name':'Appname',
             'image':'Image',
         }
-        widget={
+        widgets={
             'name': forms.TextInput(attrs={'class':'form-control','placeholder':'ขื่อแอป'}),
-            'image': forms.ClearableFileInput(attrs={'class':'form-control','placeholder':'รูป'}),
+            
         }
+
