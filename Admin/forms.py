@@ -31,11 +31,26 @@ class AddnewAppforms(ModelForm):
         model=Apps
         fields=('name','image')
         labels={
-            'name':'Appname',
-            'image':'Image',
+            'name':'ชื่อแอป',
+            'image':'รูป',
         }
         widgets={
             'name': forms.TextInput(attrs={'class':'form-control','placeholder':'ขื่อแอป'}),
             
         }
+
+class WriteNewsforms(ModelForm):
+    class Meta:
+        model=News
+        fields=('title','image','desciption')
+        labels={
+            'title':'หัวข่าว',
+            'image':'Image',
+            'desciption':'รายละเอียด'
+        }
+        widgets={
+            'title': forms.TextInput(attrs={'class':'form-control','placeholder':'หัวข่าว'}),
+            'desciption': forms.Textarea(attrs={'class':'form-control','placeholder':'รายละเอียด'}),
+        }
+
 

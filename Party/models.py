@@ -2,7 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.urls import reverse
-
+from django.conf import settings
+from django.contrib.auth import get_user_model
 
 
    
@@ -28,7 +29,7 @@ class Partymember(models.Model):
 # Create your models here.
 class Party(models.Model):
     owner=models.CharField(max_length=500,null=True)
-    members=models.ManyToManyField(User,null=False)
+    members=models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
     title = models.CharField(max_length=500,null=False)
     apps = models.ForeignKey(Apps, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=0,null=True)

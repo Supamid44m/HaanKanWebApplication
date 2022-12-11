@@ -15,8 +15,8 @@
             
             <div class="text-lg ">
                 
-                <div class="border-2 border-black rounded-t-lg">
-                    <div class="pt-6">
+                <div class="border-2 border-black rounded-t-lg ">
+                    <div class="pt-6 ml-16">
                         <img src="{{i.apps.image.url}}" alt="image"  class="w-24 h-24  rounded-md" >
                         
                     </div>
@@ -35,11 +35,15 @@
                         <label for="description">จำนวน</label>
                         <span class="text-md" id="description">{{i.quantity}} คน</span>
                     </div>
-
+                    
+                    <div>
+                        <label for="description">ราคาเต็ม</label>
+                        <span class="text-md" id="description">{{i.price}}บาท</span>
+                    </div>
                     
 
                     <div>
-                        <label for="description">ราคา</label>
+                        <label for="description">ราคาเฉลี่ย</label>
                         <span class="text-md" id="description">{{i.priceavg}}บาท/คน </span>
                     </div>
                 </div>
@@ -49,7 +53,7 @@
                 <div class="">
                     <i class="fa-sharp fa-solid fa-users"></i>
                     <span class="mt-2">{{i.members.count}} / {{i.quantity}} คน</span>
-                    
+                    <a href="{{ i.get_absolute_url }}" class="ml-28">ดูรายละเอียด</a>
                 </div>
                 {%if i.members.count == i.quantity %}
                 <div class="border-solid border-slate-600 text-center mx-auto my-auto">
@@ -60,7 +64,7 @@
                     <a href="">เข้าปาร์ตี้</a>
                 </div>
                 {%endif%}
-                <a href="{{ i.get_absolute_url }}">test</a>
+                
             </footer>
         </div>
 

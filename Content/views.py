@@ -14,3 +14,5 @@ def newsDetail(req,id):
     'news': get_object_or_404(News, pk=id)
   })
 
+
+

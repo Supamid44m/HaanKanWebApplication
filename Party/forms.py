@@ -26,3 +26,12 @@ class cratePartyforms(ModelForm):
             'price':forms.NumberInput(attrs={'class':'form-control','placeholder':'ราคา'})
 
         }
+
+class addMemberForm(ModelForm):
+    class Meta:
+        models=Party
+        fields=('members',)
+        labels={'members':'เพิ่มสมาชิก'}
+        widgets={
+            'members':forms.SelectMultiple(attrs={'placeholder':'เพิ่มสมาชิก'})
+        }

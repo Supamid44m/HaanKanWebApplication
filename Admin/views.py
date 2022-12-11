@@ -44,3 +44,17 @@ def addApps(req):
         
     context={'form':form}
     return render(req,'Admin/addnewapp.html',context)
+
+def writeNews(req):
+    if req.method == 'POST':
+        form = WriteNewsforms(req.POST,req.FILES)
+        if form.is_valid():
+            writer=form.save()
+            writer.writer = req.user
+            writer.save()
+            return redirect('/')
+    else:
+        form=WriteNewsforms()
+        
+    context={'form':form}
+    return render(req,'Admin/writenews.html',context)
