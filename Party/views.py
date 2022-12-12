@@ -8,7 +8,6 @@ from .models import Party
 
 def showParty(req):
     context={"party":Party.objects.all()}
-    
     return render(req,'Party/party.html',context)
 
 
@@ -29,11 +28,18 @@ def crateParty(req):
 
 
 def partyDetail(req,id):
-     return render(req,'Party/party-details.html',{
+    return render(req,'Party/party-details.html',
+    {
     'party': get_object_or_404(Party, pk=id)
-  })
-
-def joinParty():
-    pass
+    }
+  )
 
 
+def join(req, id):
+    party = get_object_or_404(Party, pk= id)
+    if req.method == 'POST':
+        party.members.add(req.user)
+        party.save()
+        return redirect('/' + str(id) )
+    else:
+        return render(req, 'Party/party.html', {'partys': party})

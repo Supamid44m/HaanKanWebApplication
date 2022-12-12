@@ -10,7 +10,7 @@ class cratePartyforms(ModelForm):
         labels={
             'title':'ชื่อปาร์ตี้',
             'apps':'แอปพลิเคชั่น',
-            'quantity':'จำนวน',
+            'quantity':'จำนวน(รวมตัวเอง)',
             'qrcodeImage':'Qrcode เพื่อสแกนจ่าย',
             'bank':'ธนาคาร',
             'bankaccount':'เลขบัญชี',

@@ -17,7 +17,7 @@
                 
                 <div class="border-2 border-black rounded-t-lg ">
                     <div class="pt-6 ml-16">
-                        <img src="{{i.apps.image.url}}" alt="image"  class="w-24 h-24  rounded-md" >
+                        <img src="{{i.apps.image.url}}" alt="image"  class="w-30 h-24  rounded-md" >
                         
                     </div>
             
@@ -38,7 +38,7 @@
                     
                     <div>
                         <label for="description">ราคาเต็ม</label>
-                        <span class="text-md" id="description">{{i.price}}บาท</span>
+                        <span class="text-md" id="description">{{i.price}} บาท</span>
                     </div>
                     
 
@@ -60,9 +60,18 @@
                     <a href="">เต็ม</a>
                 </div>
                 {%else%}
-                <div class="border-solid border-slate-600 text-center mx-auto my-auto">
-                    <a href="">เข้าปาร์ตี้</a>
+                {%if user in i.members.all%}
+                <div class="text-center" >
+                    <span>คุณอยู่ที่นี้แล้ว</span>
                 </div>
+                {%else%}
+                <div class="text-center">
+                    <form method ='POST'  action="{% url 'joins' i.id %}" >
+                        {% csrf_token %}
+                    <input type="submit" value="เข้า" >
+                    </form>
+                    </div>
+                {%endif%}
                 {%endif%}
                 
             </footer>

@@ -7,4 +7,5 @@ urlpatterns =[
     path('approveparty',views.approveParty,name="approveparty"),
     path('addapp',views.addApps,name="addapps"),
     path('writenews',views.writeNews,name="writenews"),
+    
 ]
