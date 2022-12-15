@@ -55,23 +55,32 @@
                     <span class="mt-2">{{i.members.count}} / {{i.quantity}} คน</span>
                     <a href="{{ i.get_absolute_url }}" class="ml-28">ดูรายละเอียด</a>
                 </div>
-                {%if i.members.count == i.quantity %}
+                
+                {%if i.members.count >= i.quantity %}
                 <div class="border-solid border-slate-600 text-center mx-auto my-auto">
-                    <a href="">เต็ม</a>
+                    <a href="{%url 'createparty'%}">เต็ม</a>
                 </div>
                 {%else%}
-                {%if user in i.members.all%}
-                <div class="text-center" >
-                    <span>คุณอยู่ที่นี้แล้ว</span>
-                </div>
-                {%else%}
-                <div class="text-center">
-                    <form method ='POST'  action="{% url 'joins' i.id %}" >
-                        {% csrf_token %}
-                    <input type="submit" value="เข้า" >
-                    </form>
+                    {%if user.is_authenticated%}
+                        {%if user in i.members.all%}
+                            <div class="text-center" >
+                                <span>คุณอยู่ที่นี้แล้ว</span>
+                            </div>
+                        {%else%}
+                            <div class="text-center">
+                                <form method ='POST'  action="{% url 'joins' i.id %}" >
+                                    {% csrf_token %}
+                                <input type="submit" value="ขอเข้าร่วม" >
+                                </form>
+                            </div>
+                        {%endif%}
+                    {%else%}
+                    <div class="text-center">
+                        <a href="{%url 'login'%}"><span class="">กรุณาเข้าสู่ะระบบเพื่อเข้าร่วมปาร์ตี้</span></a>
                     </div>
-                {%endif%}
+                    {%endif%}
+
+
                 {%endif%}
                 
             </footer>

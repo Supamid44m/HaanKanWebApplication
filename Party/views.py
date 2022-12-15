@@ -16,7 +16,7 @@ def crateParty(req):
         form=cratePartyforms(req.POST,req.FILES)
         if form.is_valid():
             owner=form.save(commit=False)
-            owner.owner = str(req.user)  
+            owner.owner = req.user
             owner.save()
             form.save_m2m()   
             owner.members.add(req.user)
@@ -38,8 +38,26 @@ def partyDetail(req,id):
 def join(req, id):
     party = get_object_or_404(Party, pk= id)
     if req.method == 'POST':
-        party.members.add(req.user)
+        party.pending_members.add(req.user)
         party.save()
         return redirect('/' + str(id) )
     else:
         return render(req, 'Party/party.html', {'partys': party})
+
+def accept_member(req, party_id, user_id):
+    party = Party.objects.get(id=party_id)
+    user = User.objects.get(id=user_id)
+    if req.user == party.owner:
+        party.accept_member(user)
+        return redirect("/")
+    else:
+        return redirect("/")
+
+def reject_member(req, party_id, user_id):
+    party = Party.objects.get(id=party_id)
+    user = User.objects.get(id=user_id)
+    if req.user == party.owner:
+        party.reject_member(user)
+        return redirect("/")
+    else:
+        return redirect("/")

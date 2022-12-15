@@ -28,8 +28,10 @@ class Partymember(models.Model):
 
 # Create your models here.
 class Party(models.Model):
-    owner=models.CharField(max_length=500,null=True)
+    #owner=models.CharField(max_length=500,null=True)
+    owner=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,null=True,related_name='owner')
     members=models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
+    pending_members = models.ManyToManyField(User, related_name="pending_parties")
     title = models.CharField(max_length=500,null=False)
     apps = models.ForeignKey(Apps, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=0,null=True)
@@ -47,7 +49,18 @@ class Party(models.Model):
     
     def get_absolute_url(self):      
         return reverse('partydetails', kwargs={"id":self.id})
-
-
+    
+    def add_membesr(self,user):
+        if not user in self.members.all():
+            self.members.add(user)
+    
+    def accept_member(self, user):
+        self.pending_members.remove(user)
+        self.members.add(user)
+    
+    def reject_member(self, user):
+        self.pending_members.remove(user)
+    
+            
 
 

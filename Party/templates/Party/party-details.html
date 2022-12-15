@@ -4,6 +4,7 @@
 
 
 {%block content%}
+{% if party.isApproved %}
 <div style="margin-left: 25%" >
     <div class="border-2 w-64 rounded-md" >
         <h1>รายละเอียดปาร์ตี้</h1>
@@ -44,6 +45,26 @@
             {%endif%}
         </div>
 
+        {%if user == party.owner%}
+        <div>
+            <h2>สมาชิกที่ขอเข้าร่วม</h2>
+            <ul>
+               
+            {% for pending in party.pending_members.all %}
+                
+                <li>{{ pending.username }}</li>
+                <form action="{% url 'accept_member' party.id user.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Accept</button>
+                </form>
+                <form action="{% url 'reject_member' party.id user.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Reject</button>
+                </form>
+            {% endfor %}
+            </ul>
+        </div>
+        {%endif%}
 
         <div>
             {%if party.members.count%}
@@ -57,8 +78,21 @@
             {%endif%}
         </div>
     </div>
+    
+    
+  
+
+
+
+
+
+
+
    
 </div>
+{%else%}
+<div  class="text-center" >ไม่สามารถดูรายละเอียดได้เนื่องจากปาร์ตี้ยังไม่ได้รับการอนุมัติ</div>
+{%endif%}
 
 
 {%endblock%}
