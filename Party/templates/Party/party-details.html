@@ -50,9 +50,9 @@
             <h2>สมาชิกที่ขอเข้าร่วม</h2>
             <ul>
                
-            {% for pending in party.pending_members.all %}
+            {% for user in party.pending_members.all %}
                 
-                <li>{{ pending.username }}</li>
+                <li>{{ user.username }}</li>
                 <form action="{% url 'accept_member' party.id user.id %}" method="post">
                     {% csrf_token %}
                     <button type="submit">Accept</button>

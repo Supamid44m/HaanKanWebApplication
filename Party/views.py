@@ -49,7 +49,7 @@ def accept_member(req, party_id, user_id):
     user = User.objects.get(id=user_id)
     if req.user == party.owner:
         party.accept_member(user)
-        return redirect("/")
+        return redirect("/"+ str(party_id))
     else:
         return redirect("/")
 
@@ -58,6 +58,6 @@ def reject_member(req, party_id, user_id):
     user = User.objects.get(id=user_id)
     if req.user == party.owner:
         party.reject_member(user)
-        return redirect("/")
+        return redirect("/"+ str(party_id))
     else:
         return redirect("/")
