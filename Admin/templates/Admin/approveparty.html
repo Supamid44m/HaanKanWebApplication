@@ -3,16 +3,16 @@
 {%block title%}approveparty{%endblock%}
 
 {%block content%}
-<div style="margin-left: 25%;" >
-    {%if user.is_authenticated %}
+<div style="margin-left: 25%;" class="" >
+{%if user.is_authenticated %}
         {%if user.is_superuser %}
-            <div>
-                <div class="border-2 w-20 ">
+            <div class=" grid grid-cols-4  ">
+                <div class="border-2 w-20  rounded ">
                     <p>ปาร์ตี้ทั้งหมด</p>
                     <span>{{partys | length}}</span>
                 </div>
 
-                <div class="border-2 w-20 ">
+                <div class="border-2 w-20  rounded ">
                    
                         <div>
                             <span>ปาร์ตี้ที่อนุมัติแล้ว</span>
@@ -20,64 +20,84 @@
                         </div>
 
                 </div>
-                <div class="">
+            
+                 <div class="border-2 w-20  rounded">
                     <span>ปาร์ตี้ที่รอการอนุมัติ</span>
                     {{partyunapprove| length}}
                 </div>
-               
             </div>
-          
-
-                <form action="" method="POST">
-                    {%csrf_token%}
-                    <table class="border-2 ">
-                        <thead>
-                            <tr>
-                                <th>Party Title</th>
-                                <th>Apps</th>
-                                <th>owner</th>
-                                <th>Approve</th>
-                                
-                            </tr>
-                        </thead>
-                        <tbody class="border-2">
-                            {%for i in partys %}
-                            <tr>
-                                <td class="border-2">{{i}}</td>
-                                <td class="border-2">{{i.apps}}</td>
-                                <td class="border-2"><a href="#">{{i.owner}}</a></td>
-                                
-                                <td class="border-2">
-                                    {%if i.isApproved%}
-                                    <div>
-                                        <input type="checkbox" checked="checked" value="{{i.id}}" name="boxes">
-                                    </div>
-                                    {%else%}
-                                    <div>
-                                        <input type="checkbox"  value="{{i.id}}" name="boxes">
-                                    </div>
-                                    {%endif%}
-
-
-                                </td>
-                            </tr>
-                            
-                            {%endfor%}
-                        </tbody>
-                    </table>
+            <div class="">
+                    <form action="" method="POST" class="grid grid-cols-4 ">
+                        {%csrf_token%}
+                   
+                    {%for i in partys %}
+                    <div class="text-lg mt-10 w-62 ml-16">
                 
-                <button type="submit" class="border-2">Update</button>
+                        <div class="border-2 border-black rounded-t-lg  ">
+                            <div class="pt-6 ml-10 mr-10 ">
+                                <img src="{{i.apps.image.url}}" alt="image"  class="w-30 h-24  rounded-md" >
+                                
+                            </div>
+                    
+                            <div>
+                                <label for="title" class="text-xl text-bold"></label>
+                                <span class="text-md" id="title">{{i.title}}</span>
+                            </div>
+        
+                            <div>
+                                <label for="owner">หัวตี้</label>
+                                <a href="#" class="text-md" id="owner">{{i.owner}}</a>
+                                
+                            </div>
+        
+                            <div>
+                                <label for="quantity">จำนวน</label>
+                                <span class="text-md" id="quantity">{{i.quantity}} คน</span>
+                            </div>
+                            
+                            <div>
+                                <label for="apps">แอป</label>
+                                <span class="text-md" id="apps">{{i.apps}}</span>
+                            </div>
+                            
+        
+                        
+                        </div>
+                        <footer class="bg-zinc-300 h-10 rounded-b-lg h-16">
+                            
+                            {%if i.isApproved%}
+                            <div>
+                                <label for="">อนุมัติ<input type="checkbox" checked="checked" value="{{i.id}}" name="boxes"></label>
+                            </div>
+                            {%else%}
+                            <div>
+                                <label for="">อนุมัติ<input type="checkbox"  value="{{i.id}}" name="boxes"></label>
+                            </div>
+                            {%endif%}
+
+                        </footer>
+                       
+                    </div>
+                {%endfor%}
+                <button type="submit" class="border-2 w-20 h-10 hover:bg-zinc-300">Update</button>
                 </form>
+                </div>
+                
+
                
             </div>
+           
 
+               
+            </div>
+               
         {%else%}
             <div class="text-center">คุณไม่มีสิทธ์เข้าถึง</div>
         {%endif%}
 
-    {%else%}
+    
             
-    {%endif%}
+{%endif%}
 
 
 </div>
