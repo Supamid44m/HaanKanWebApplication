@@ -26,12 +26,14 @@
                     {{partyunapprove| length}}
                 </div>
             </div>
+
+
             <div class="">
                     <form action="" method="POST" class="grid grid-cols-4 ">
                         {%csrf_token%}
                    
                     {%for i in partys %}
-                    <div class="text-lg mt-10 w-62 ml-16">
+                <div class="text-lg mt-10 w-62 ml-16">
                 
                         <div class="border-2 border-black rounded-t-lg  ">
                             <div class="pt-6 ml-10 mr-10 ">
@@ -77,11 +79,13 @@
 
                         </footer>
                        
-                    </div>
-                {%endfor%}
+                </div>
+                    {%endfor%}
+                
+                </div>
+                
                 <button type="submit" class="border-2 w-20 h-10 hover:bg-zinc-300">Update</button>
                 </form>
-                </div>
                 
 
                
@@ -89,7 +93,7 @@
            
 
                
-            </div>
+            
                
         {%else%}
             <div class="text-center">คุณไม่มีสิทธ์เข้าถึง</div>
