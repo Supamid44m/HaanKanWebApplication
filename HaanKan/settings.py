@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -41,7 +42,16 @@ INSTALLED_APPS = [
     "Authenticate",
     "Party",
     "Content",
-    "Admin"
+    "Admin",
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    
+   
+    
+    
     
 ]
 
@@ -94,6 +104,7 @@ DATABASES = {
 }
 
 
+
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
@@ -104,6 +115,25 @@ AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
     {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
     {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
+]
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        # For each OAuth based provider, either add a ``SocialApp``
+        # (``socialaccount`` app) containing the required client
+        # credentials, or list them here:
+        'APP': {
+            'client_id': '123',
+            'secret': '456',
+            'key': ''
+        }
+    }
+}
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+    
 ]
 
 
@@ -133,6 +163,16 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 
+SITE_ID = 1
+
+
 #Auth
 LOGIN_REDIRECT_URL="party"
 LOGOUT_REDIRECT_URL='party'
+
+#clinetID
+#220714774120-koqks533mffbng0kfmk8ac3h198c3kpj.apps.googleusercontent.com
+
+
+#secret
+#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
