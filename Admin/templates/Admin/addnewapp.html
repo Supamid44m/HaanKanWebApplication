@@ -9,11 +9,24 @@
     <div style="margin-left:25%">
         {%if user.is_authenticated%}
                 {%if user.is_superuser%}
+                <div class="border-2 w-56">
                     <form action="" method="POST" enctype="multipart/form-data">
                         {%csrf_token%} 
-                        {{form.as_p}}
-                    <input type="submit">
+
+                        {{form.name.label_tag}}
+                        {{form.name}}
+                        {{form.name.errors}}
+
+                        <div>
+                            {{form.image.label_tag}}
+                            {{form.image}}
+                            {{form.iamge.errors}}
+                        </div>
+
+
+                    <input type="submit" class="hover:bg-sky-700 border-2">
                     </form>
+                </div>
                 {%endif%}
         {%else%}
             <div class="text-center">

@@ -9,11 +9,31 @@
     <div style="margin-left:25%">
         {%if user.is_authenticated%}
                 {%if user.is_superuser%}
+                <div class="border-2">
                     <form action="" method="POST" enctype="multipart/form-data">
                         {%csrf_token%} 
-                        {{form.as_p}}
+                        <div class="border-2">
+                            {{form.title.label_tag}}
+                            {{form.title}}
+                            {{form.title.errors}}
+                        </div>
+
+                        <div class="border-2">
+                            {{form.desciption.label_tag}}
+                            {{form.desciption}}
+                            {{form.desciption.errors}}
+                        </div>
+
+                        <div class="border-2">
+                            {{form.image.label_tag}}
+                            {{form.image}}
+                            {{form.image.errors}}
+                        </div>
+                        
+                        
                     <input type="submit">
                     </form>
+                </div>
                 {%endif%}
         {%else%}
             <div class="text-center">
