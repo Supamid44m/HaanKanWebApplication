@@ -9,7 +9,7 @@
     <div style="margin-left:25%">
         {%if user.is_authenticated%}
                 {%if user.is_superuser%}
-                <div class="border-2">
+                <div class="border-2 bg-zinc-700 rounded">
                     <form action="" method="POST" enctype="multipart/form-data">
                         {%csrf_token%} 
                         <div class="border-2">
