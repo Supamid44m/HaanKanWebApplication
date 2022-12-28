@@ -8,5 +8,5 @@ python manage.py graph_models -a -o name.png
 
 
 (1146, "Table 'Haankan-webapp.socialaccount_socialapp_sites' doesn't exist")
-
+conda env update --file requirements.yml --prune
 showmigrations
