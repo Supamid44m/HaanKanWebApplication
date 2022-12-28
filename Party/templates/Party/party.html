@@ -62,9 +62,15 @@
                 </div>
                 {%else%}
                     {%if user.is_authenticated%}
+                       
+
                         {%if user in i.members.all%}
                             <div class="text-center" >
                                 <span>คุณอยู่ที่นี้แล้ว</span>
+                            </div>
+                        {%elif user in i.pending_members.all%}
+                            <div class="text-center" >
+                                <span>รอหัวตี้ตอบรับ</span>
                             </div>
                         {%else%}
                             <div class="text-center">

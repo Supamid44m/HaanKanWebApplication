@@ -44,6 +44,12 @@
             </div>
             {%endif%}
         </div>
+        <div class="text-center">
+            <form method ='POST'  action="{% url 'leave' party.id %}" >
+                {% csrf_token %}
+            <input type="submit" value="leave" >
+            </form>
+        </div>
 
         {%if user == party.owner%}
         <div>

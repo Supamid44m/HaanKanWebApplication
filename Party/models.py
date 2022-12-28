@@ -4,7 +4,8 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.urls import reverse
 from django.conf import settings
 from django.contrib.auth import get_user_model
-
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 
    
 
@@ -61,6 +62,16 @@ class Party(models.Model):
     def reject_member(self, user):
         self.pending_members.remove(user)
     
-            
+    def transfer_owner(self, new_owner):
+        self.owner = new_owner
+        self.save()
+
+    def leave_party(self, user):
+        if user == self.owner:
+            new_owner = self.members.exclude(pk=user.pk).first()
+            self.transfer_owner(new_owner)
+        self.members.remove(user) 
+    
+
 
 

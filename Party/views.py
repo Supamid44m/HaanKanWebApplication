@@ -44,6 +44,14 @@ def join(req, id):
     else:
         return render(req, 'Party/party.html', {'partys': party})
 
+def leave(req, id):
+    party = get_object_or_404(Party, pk= id)
+    if req.method == 'POST':
+        party.leave_party(req.user)
+        return redirect('/')
+    else:
+        return render(req, 'Party/party.html', {'partys': party})
+
 def accept_member(req, party_id, user_id):
     party = Party.objects.get(id=party_id)
     user = User.objects.get(id=user_id)
