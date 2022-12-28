@@ -16,4 +16,5 @@ python manage.py graph_models -a -o name.png
 conda env update --file requirements.yml --prune
 
 
+#
 showmigrations
