@@ -24,6 +24,9 @@
         
         <div class="border-2 w-60 rounded-md ml-2">
             {%if user in party.members.all %}
+            <div>
+                <a href="{%url 'update' party.id%}">แก้ไข</a>
+            </div>
             <div >
                 <span>{{party.bank}}</span>
                 <span class="ml-16">{{party.bankaccount}}</span>

@@ -28,9 +28,11 @@ def crateParty(req):
 
 
 def partyDetail(req,id):
-    return render(req,'Party/party-details.html',
+    
+    return render(req,'Party/party_details.html',
     {
-    'party': get_object_or_404(Party, pk=id)
+    'party': get_object_or_404(Party, pk=id),
+    
     }
   )
 
@@ -69,3 +71,11 @@ def reject_member(req, party_id, user_id):
         return redirect("/"+ str(party_id))
     else:
         return redirect("/")
+
+def update_party(req,id):
+    party = Party.objects.get(id=id)
+    form=cratePartyforms(req.POST or None ,req.FILES or None,instance=party)
+    if form.is_valid():
+            form.save()   
+            return redirect('/')
+    return render(req,'Party/updateParty.html',{'partys':party,'form':form})
