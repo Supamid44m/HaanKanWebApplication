@@ -7,14 +7,18 @@
         {%if user.is_authenticated %}
             {%if user.is_superuser %}
             <div style="margin-left:100px" class="text-slate-200">
-            <label for="username">ผู้ใช้:</label>
-            <span id="username">{{user.username}}(admin)</span>
-            
+           
+            <label for="user">ผู้ใช้:</label>
+            <span id="user">{{user.username}} (admin)</span>
+            <a href="{{ profile.get_absolute_url}}">ss</a>
+             <img src="{{user.profile.profile_pic.url}}" alt="" class="rounded-full h-10" id="user" >
             </div>
             {%else%}
             <div style="margin-left:100px" class="text-slate-200">
-                <label for="username">ผู้ใช้:</label>
-                <span id="username">{{user.username}}</span>
+                <label for="usern">ผู้ใช้:</label>
+                
+                <span id="user">{{user.username}}</span>
+                <img src="{{user.profile.profile_pic.url}}" alt="" class="rounded-full" id="user">
             </div>
             {%endif%}
         {%else%}

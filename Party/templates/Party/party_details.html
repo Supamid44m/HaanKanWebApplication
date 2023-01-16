@@ -1,9 +1,10 @@
 {%extends 'Content/components/base.html' %}
 
-{%block title%}Party-detail{%endblock%}
+{%block title%}{{party.title}}{%endblock%}
 
 
 {%block content%}
+
 {% if party.isApproved %}
 <div style="margin-left: 25%" >
     <div class="border-2 w-64 rounded-md" >
@@ -21,6 +22,8 @@
             <label for="price">ราคาเต็ม</label>
             <span id="price" name="title">{{party.price}} บาท</span>
         </div>
+
+        
         
         <div class="border-2 w-60 rounded-md ml-2">
             {%if user in party.members.all %}
@@ -87,18 +90,44 @@
             {%endif%}
         </div>
     </div>
-    
-    
+
   
 
-
-
-
-
-
-
-   
+<div class="lg:w-2/4 mx-4 lg:mx-auto p-4 bg-white rounded-xl">
+    <div class="chat-messages space-y-3 " id="chat-messages">
+        <div class="p-4 bg-gray-200 rounded-xl">
+            <p class="font-semibold">username</p>
+            <p class="font-semibold">Mesage</p>
+        </div>
 </div>
+<div class="lg:w-2/4 mt-6 mx-4 lg:mx-auto p-4 bg-white rounded-xl">
+    <form method="POST" class="flex" action=".">
+        {%csrf_token%}
+        <input type="text" name="content" class="flex-1 mr-3 " placeholder="Your message" id="chat-messages-input">
+        <button class="px-5 py-3 rounded-xl text-white bg-teal-600 hover:bg-teal-700" id="chat-messages-submit">Send</button>
+
+    </form>
+</div>
+
+
+<script>
+    const party_id = {{party.id}};
+    const chatSocket = new WebSocket('ws://' + window.location.host + '/ws/party/' + party_id);
+    
+   
+
+    chatSocket.onmessage = function(e) {
+      console.log('onmessage')
+    }
+
+    chatSocket.onclose = function(e) {
+        console.log('Connection closed');
+    }
+</script>
+
+</div>
+
+
 {%else%}
 <div  class="text-center" >ไม่สามารถดูรายละเอียดได้เนื่องจากปาร์ตี้ยังไม่ได้รับการอนุมัติ</div>
 {%endif%}

@@ -2,11 +2,18 @@ from django.shortcuts import render,redirect
 from Party.models import *
 from django.contrib import messages
 from .forms import *
+from django.contrib.auth import get_user_model
+
 # Create your views here.
 
 def showuser(req):
-    
-    return render(req,"Admin/showmember.html",)
+    if req.user.is_superuser:
+        User = get_user_model()
+        users = User.objects.all()
+        return render(req,"Admin/showmember.html",{'users': users})
+    else:
+        messages.success(req,("คุณไม่มีสิทธ์เข้าถึง"))
+        return redirect('party')
 
 def approveParty(req):
     context=Party.objects.all()
@@ -58,3 +65,4 @@ def writeNews(req):
         
     context={'form':form}
     return render(req,'Admin/writenews.html',context)
+

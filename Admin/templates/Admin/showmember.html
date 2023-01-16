@@ -1,16 +1,66 @@
 {%extends 'Content/components/base.html' %}
 
 
-{%block title%}members{%endblock%}
+{%block title%}Alluser{%endblock%}
 
 {%block content%}
+{%if user.is_authenticated %}
+    {%if user.is_superuser %}
+    <div>
+        <div style="margin-left:25%">
+            
+            <table style="width:100%" class="border-2">
+                
+                <tr class="border-2">
+                <th >username</th>
+                <th>Firstname</th>
+                <th>Lastname</th>
+                <th>วันที่สมัครสมาชิก</th>
+                <th>เข้าสู่ระบบล่าสุด</th>
+                <th>แอดมิน</th>
+                <th>สถานะ</th>
+                </tr>
+                <tbody class="border-2">
+                    {%for i in users%}
+                    <tr >
+                        <td class="border-2">{{i.username}}</td>
+                        <td class="border-2">{{i.first_name}}</td>
+                        <td class="border-2">{{i.last_name}}</td>
+                        <td class="border-2">{{i.date_joined}}</td>
+                        <td class="border-2">{{i.last_login}}</td>
+                        <td class="border-2">
+                            {%if i.is_superuser%}
+                            <div>Yes</div>
+                            {%else%}
+                            <div>No</div>
+                            {%endif%}
 
-<div>
-    <div style="margin-left:25%">
+                        </td>
+                        <td class="border-2">
+                            {%if i.is_active%}
+                            <div>Active</div>
+                            {%else%}
+                            <div></div>
+                            {%endif%}
+
+                        </td>
+                    </tr>
+                    
+                </tbody>
+                
+                
+                {%endfor%}
+            </table>
         
+        </div>
 
     </div>
+    {%else%}
+    <div>คุณไม่มีสิทธ์เข้าถึง</div>
+    {%endif%}
 
-</div>
+{%else%}
+<div>กรุณาเข้าสู่ระบบ</div>
+{%endif%}
 
 {%endblock%}

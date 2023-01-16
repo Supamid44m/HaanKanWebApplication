@@ -3,7 +3,9 @@ from django.shortcuts import get_object_or_404, render,redirect
 from Party.models import *
 from .forms import *
 from django.views.generic.detail import DetailView
-from .models import Party
+from .models import Party , ChatMessage
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 
 def showParty(req):
@@ -27,14 +29,23 @@ def crateParty(req):
     return render(req,'Party/createParty.html',context)
 
 
+"""@login_required
+
+def party_chat(request, party_id):
+    party = Party.objects.get(id=party_id)
+    messages = Message.objects.filter(party=party)
+
+    if request.method == 'POST':
+        message = request.POST.get('message')
+        sender = request.user
+        Message.objects.create(content=message, sender=sender, party=party)
+
+    return render(request, 'party_chat.html', {'party': party, 'messages': messages})
+
+"""
 def partyDetail(req,id):
-    
-    return render(req,'Party/party_details.html',
-    {
-    'party': get_object_or_404(Party, pk=id),
-    
-    }
-  )
+    party = get_object_or_404(Party, id=id)
+    return render(req,'Party/party_details.html', {'party': party})
 
 
 def join(req, id):
@@ -79,3 +90,6 @@ def update_party(req,id):
             form.save()   
             return redirect('/')
     return render(req,'Party/updateParty.html',{'partys':party,'form':form})
+
+
+

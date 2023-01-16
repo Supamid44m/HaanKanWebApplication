@@ -72,6 +72,13 @@ class Party(models.Model):
             self.transfer_owner(new_owner)
         self.members.remove(user) 
     
+from django.db import models
+
+class ChatMessage(models.Model):
+    party = models.ForeignKey(Party, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    message = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
 
 
 

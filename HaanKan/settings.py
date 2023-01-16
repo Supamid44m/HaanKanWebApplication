@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 from django.utils import timezone
+from django.core.asgi import get_asgi_application
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -49,10 +50,13 @@ INSTALLED_APPS = [
     "Party",
     "Content",
     "Admin",
+    "Profile",
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'channels',
+    
     
     
    
@@ -91,7 +95,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "HaanKan.wsgi.application"
-
+ASGI_APPLICATION = "HaanKan.asgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -105,7 +109,7 @@ DATABASES = {
         "USER": 'user',
         "HOST": '127.0.0.1',
         "PORT": '3306',
-        "PASSWORD": '1234',
+        "PASSWORD": 'user',
     }
 }
 
@@ -144,7 +148,7 @@ SOCIALACCOUNT_PROVIDERS = {
 
 LANGUAGE_CODE = "th-TH"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = 'Asia/Bangkok'
 
 USE_I18N = True
 
@@ -178,3 +182,13 @@ LOGOUT_REDIRECT_URL='party'
 
 #secret
 #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
+
+#FOR CHAT
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
+
+
+
