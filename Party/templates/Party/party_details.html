@@ -101,10 +101,10 @@
         </div>
 </div>
 <div class="lg:w-2/4 mt-6 mx-4 lg:mx-auto p-4 bg-white rounded-xl">
-    <form method="POST" class="flex" action=".">
+    <form method="POST" class="flex" action="#">
         {%csrf_token%}
-        <input type="text" name="content" class="flex-1 mr-3 " placeholder="Your message" id="chat-messages-input">
-        <button class="px-5 py-3 rounded-xl text-white bg-teal-600 hover:bg-teal-700" id="chat-messages-submit">Send</button>
+        <input type="text" name="content" class="flex-1 mr-3 " placeholder="Your message" id="chat-message-input">
+        <button class="px-5 py-3 rounded-xl text-white bg-teal-600 hover:bg-teal-700" id="chat-message-submit">Send</button>
 
     </form>
 </div>
@@ -112,16 +112,41 @@
 
 <script>
     const party_id = {{party.id}};
-    const chatSocket = new WebSocket('ws://' + window.location.host + '/ws/party/' + party_id);
+    const chatSocket = new WebSocket('ws://' + window.location.host + '/ws/party/' + party_id+'/');
     
    
 
     chatSocket.onmessage = function(e) {
       console.log('onmessage')
+
+      const data = JSON.parse(e.data);
+
+      if (data.message){
+         let html = '<div class="p-4 bg-gray-200 rounded-xl">';
+             html += '<p>' + data.message +'</p></div>'; 
+
+             document.querySelector('#chat-messages').innerHTML += html;
+        
+      }else{
+        alert('The message emtpy')
+      }
     }
 
     chatSocket.onclose = function(e) {
         console.log('Connection closed');
+    }
+
+
+    document.querySelector('#chat-message-submit').onclick = function(e){
+        const messageInputDom=document.querySelector('#chat-message-submit');
+        const message = messageInputDom.value;
+
+        chatSocket.send(JSON.stringify({
+            'message':message,
+            'room':party_id,
+        }));
+
+        messageInputDom.value='';
     }
 </script>
 

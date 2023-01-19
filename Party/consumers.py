@@ -1,6 +1,6 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
 from asgiref.sync import sync_to_async
-from .models import Party
+from .models import Party,ChatMessage
 
 import json
 
@@ -30,7 +30,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         user = self.scope["user"]
         party = Party.objects.get(id=self.party_id)
         
-        #ChatMessage.objects.create(party=party, user=user, message=message)
+        ChatMessage.objects.create(party=party, user=user, message=message)
 
         # Send message to party group
         await self.channel_layer.group_send(

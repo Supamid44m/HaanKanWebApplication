@@ -1,0 +1,108 @@
+{%extends 'Content/components/base.html' %}
+{%block title%}Search{%endblock%}
+
+{%block content%}
+<div  class="ml-20">
+    <div class="">
+        {%if searched%}
+        <span>ผลการค้นหา:{{party | length}}</span>
+        <div class="grid grid-cols-4 ">
+            
+            {% for i in party %}
+                {% if i.isApproved %}
+                <div style="margin-left:25%" class="bg-zinc-700 w-80 h-30 rounded-md mt-20 ml-20 " >
+                    
+                    <div class="text-lg ">
+                        
+                        <div class="border-2 border-black rounded-t-lg ">
+                            <div class="pt-6 ml-16">
+                                <img src="{{i.apps.image.url}}" alt="image"  class="w-30 h-24  rounded-md" >
+                                
+                            </div>
+                    
+                            <div>
+                                <label for="title" class="text-xl text-bold">รายการ:</label>
+                                <span class="text-md" id="title">{{i.title}}</span>
+                            </div>
+        
+                            <div>
+                                <label for="description">แอปพลิเคชั่น</label>
+                                <span class="text-md" id="description">{{i.apps.name}}</span>
+                            </div>
+        
+                            <div>
+                                <label for="description">จำนวน</label>
+                                <span class="text-md" id="description">{{i.quantity}} คน</span>
+                            </div>
+                            
+                            <div>
+                                <label for="description">ราคาเต็ม</label>
+                                <span class="text-md" id="description">{{i.price}} บาท</span>
+                            </div>
+                            
+        
+                            <div>
+                                <label for="description">ราคาเฉลี่ย</label>
+                                <span class="text-md" id="description">{{i.priceavg}}บาท/คน </span>
+                            </div>
+                        </div>
+                    </div>
+        
+                    <footer class="bg-zinc-500 h-10 rounded-b-lg h-16">
+                        <div class="">
+                            <i class="fa-sharp fa-solid fa-users"></i>
+                            <span class="mt-2">{{i.members.count}} / {{i.quantity}} คน</span>
+                            <a href="{{ i.get_absolute_url }}" class="ml-28">ดูรายละเอียด</a>
+                        </div>
+                        
+                        {%if i.members.count >= i.quantity %}
+                        <div class="border-solid border-slate-600 text-center mx-auto my-auto">
+                            <a href="{%url 'createparty'%}">เต็ม</a>
+                        </div>
+                        {%else%}
+                            {%if user.is_authenticated%}
+                               
+        
+                                {%if user in i.members.all%}
+                                    <div class="text-center" >
+                                        <span>คุณอยู่ที่นี้แล้ว</span>
+                                    </div>
+                                {%elif user in i.pending_members.all%}
+                                    <div class="text-center" >
+                                        <span>รอหัวตี้ตอบรับ</span>
+                                    </div>
+                                {%else%}
+                                    <div class="text-center">
+                                        <form method ='POST'  action="{% url 'joins' i.id %}" >
+                                            {% csrf_token %}
+                                        <input type="submit" value="ขอเข้าร่วม" >
+                                        </form>
+                                    </div>
+                                {%endif%}
+                            {%else%}
+                            <div class="text-center">
+                                <a href="{%url 'login'%}"><span class="">กรุณาเข้าสู่ะระบบเพื่อเข้าร่วมปาร์ตี้</span></a>
+                            </div>
+                            {%endif%}
+        
+        
+                        {%endif%}
+                        
+                    </footer>
+                </div>
+        
+                {% endif%}
+            {% endfor %}
+        </div>
+        {%else%}
+        <div>
+            <h1>
+                TEST
+            </h1>
+        </div>
+        {%endif%}
+    </div>
+
+
+</div>
+{%endblock%}

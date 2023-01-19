@@ -53,7 +53,7 @@ def join(req, id):
     if req.method == 'POST':
         party.pending_members.add(req.user)
         party.save()
-        return redirect('/' + str(id) )
+        return redirect('/party/' + str(id) )
     else:
         return render(req, 'Party/party.html', {'partys': party})
 
@@ -61,7 +61,7 @@ def leave(req, id):
     party = get_object_or_404(Party, pk= id)
     if req.method == 'POST':
         party.leave_party(req.user)
-        return redirect('/')
+        return redirect('/party/')
     else:
         return render(req, 'Party/party.html', {'partys': party})
 
@@ -70,26 +70,35 @@ def accept_member(req, party_id, user_id):
     user = User.objects.get(id=user_id)
     if req.user == party.owner:
         party.accept_member(user)
-        return redirect("/"+ str(party_id))
+        return redirect("/party/"+ str(party_id))
     else:
-        return redirect("/")
+        return redirect("/party/")
 
 def reject_member(req, party_id, user_id):
     party = Party.objects.get(id=party_id)
     user = User.objects.get(id=user_id)
     if req.user == party.owner:
         party.reject_member(user)
-        return redirect("/"+ str(party_id))
+        return redirect("/party/"+ str(party_id))
     else:
-        return redirect("/")
+        return redirect("/party/")
 
 def update_party(req,id):
     party = Party.objects.get(id=id)
     form=cratePartyforms(req.POST or None ,req.FILES or None,instance=party)
     if form.is_valid():
             form.save()   
-            return redirect('/')
+            return redirect('/party/')
     return render(req,'Party/updateParty.html',{'partys':party,'form':form})
 
-
-
+def search(req,):
+    if req.method == "POST":
+        searched= req.POST["searched"]
+        party = Party.objects.filter(title__contains=searched,)
+        return render(req,'Party/searchParty.html',
+        {
+            'searched':searched,
+            'party':party
+        })
+    else:
+        return render(req,'Party/searchParty.html',{})

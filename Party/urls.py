@@ -13,6 +13,7 @@ urlpatterns =[
     path('<int:id>/leave/', views.leave, name='leave'),
     path("<int:party_id>/accept/<int:user_id>/", views.accept_member, name="accept_member"),
     path("<int:party_id>/reject/<int:user_id>/", views.reject_member, name="reject_member"),
-    path('ws/party/<int:party_id>/', consumers.ChatConsumer.as_asgi())
+    path("search_party/",views.search,name='search_party')
+    #path('ws/party/<int:party_id>/', consumers.ChatConsumer.as_asgi())
     
 ]

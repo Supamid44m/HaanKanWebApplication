@@ -38,6 +38,7 @@ AUTHENTICATION_BACKENDS = [
 
 
 INSTALLED_APPS = [
+    'channels',
     'django.contrib.sites',
     "django.contrib.admin",
     "django.contrib.auth",
@@ -46,24 +47,16 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_extensions",
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     "Authenticate",
     "Party",
     "Content",
     "Admin",
     "Profile",
-    'allauth',
-    'allauth.account',
-    'allauth.socialaccount',
-    'allauth.socialaccount.providers.google',
-    'channels',
-    
-    
-    
-   
-    
-    
-    
-]
+] 
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -106,10 +99,10 @@ DATABASES = {
         #"NAME": BASE_DIR / "db.sqlite3",
         "ENGINE": "django.db.backends.mysql",
         "NAME": 'Haankan-webapp',
-        "USER": 'user',
+        "USER": 'root',
         "HOST": '127.0.0.1',
         "PORT": '3306',
-        "PASSWORD": 'user',
+        "PASSWORD": '1234',
     }
 }
 
