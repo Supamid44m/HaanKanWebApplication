@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect, get_object_or_404
 from Party.models import *
 from django.contrib import messages
 from .forms import *
@@ -16,19 +16,9 @@ def showuser(req):
         return redirect('party')
 
 def approveParty(req):
-    context=Party.objects.all()
+    
     if req.user.is_superuser:
-        if req.method=="POST":
-             id_list=req.POST.getlist('boxes')
-             context.update(isApproved=False)
-
-             for i in id_list:
-                Party.objects.filter(pk=int(i)).update(isApproved=True)
-             messages.success(req,("อัปเดต"))
-             return redirect('party')
-        
-        else:
-            return render(req,"Admin/approveparty.html",{
+        return render(req,"Admin/approveparty.html",{
                 'partys':Party.objects.all(),
                 'partyapprove':Party.objects.filter(isApproved=True),
                 'partyunapprove':Party.objects.filter(isApproved=False)
@@ -37,6 +27,21 @@ def approveParty(req):
         messages.success(req,("คุณไม่มีสิทธ์เข้าถึง"))
         return redirect('party')
     return render(req,"Admin/approveparty.html")
+
+def approve_party(req, party_id):
+    party = get_object_or_404(Party, pk=party_id)
+    party.approve()
+    return redirect('/party/')
+
+def reject_party(req, party_id):
+    party = get_object_or_404(Party, pk=party_id)
+    party.reject()
+    return redirect('/party/')
+
+def delte_party(req,party_id):
+    party = get_object_or_404(Party, pk=party_id)
+    party.delete()
+    return redirect('/party/')
     
 def addApps(req):
     if req.method == 'POST':

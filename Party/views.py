@@ -5,6 +5,8 @@ from .forms import *
 from django.views.generic.detail import DetailView
 from .models import Party , ChatMessage
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+
 
 # Create your views here.
 
@@ -12,7 +14,7 @@ def showParty(req):
     context={"party":Party.objects.all()}
     return render(req,'Party/party.html',context)
 
-
+@login_required
 def crateParty(req):
     if req.method == "POST":
         form=cratePartyforms(req.POST,req.FILES)
@@ -22,7 +24,7 @@ def crateParty(req):
             owner.save()
             form.save_m2m()   
             owner.members.add(req.user)
-            return redirect('/')
+            return redirect('/party/')
     else:
         form=cratePartyforms()
     context={'form':form}
@@ -43,9 +45,18 @@ def party_chat(request, party_id):
     return render(request, 'party_chat.html', {'party': party, 'messages': messages})
 
 """
+"""def partyDetail(req,id):
+    party = get_object_or_404(Party, id=id)
+    return render(req,'Party/party_details.html', {'party': party})"""
+
 def partyDetail(req,id):
     party = get_object_or_404(Party, id=id)
-    return render(req,'Party/party_details.html', {'party': party})
+    messages = ChatMessage.objects.filter(party=party)
+    username=req.user.username
+    if req.method == 'POST':
+        message = req.POST.get('message')
+        ChatMessage.objects.create(user=req.user, party=party, message=message)
+    return render(req,'Party/party_details.html', {'party': party, 'messages': messages,'username': username})
 
 
 def join(req, id):
@@ -94,7 +105,7 @@ def update_party(req,id):
 def search(req,):
     if req.method == "POST":
         searched= req.POST["searched"]
-        party = Party.objects.filter(title__contains=searched,)
+        party=Party.objects.filter(Q(title__icontains=searched) | Q(price__icontains=searched) | Q(apps__name__icontains=searched))
         return render(req,'Party/searchParty.html',
         {
             'searched':searched,

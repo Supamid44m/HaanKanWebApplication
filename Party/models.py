@@ -27,6 +27,7 @@ class Partymember(models.Model):
         return self.fname
 '''
 
+
 # Create your models here.
 class Party(models.Model):
     #owner=models.CharField(max_length=500,null=True)
@@ -70,7 +71,17 @@ class Party(models.Model):
         if user == self.owner:
             new_owner = self.members.exclude(pk=user.pk).first()
             self.transfer_owner(new_owner)
-        self.members.remove(user) 
+        self.members.remove(user)
+
+    def approve(self):
+        self.isApproved = True
+        self.save()
+
+    def reject(self):
+        self.delete()
+    
+    def delet(self):
+        self.delete
     
 from django.db import models
 

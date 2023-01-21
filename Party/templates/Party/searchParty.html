@@ -10,6 +10,7 @@
             
             {% for i in party %}
                 {% if i.isApproved %}
+                
                 <div style="margin-left:25%" class="bg-zinc-700 w-80 h-30 rounded-md mt-20 ml-20 " >
                     
                     <div class="text-lg ">
@@ -84,16 +85,18 @@
                                 <a href="{%url 'login'%}"><span class="">กรุณาเข้าสู่ะระบบเพื่อเข้าร่วมปาร์ตี้</span></a>
                             </div>
                             {%endif%}
-        
+                        
         
                         {%endif%}
                         
                     </footer>
                 </div>
-        
+            {%else%}
+            <span>ปาร์ตี้ยังไม่ได้รับอนุมัติ</span>
                 {% endif%}
             {% endfor %}
         </div>
+
         {%else%}
         <div>
             <h1>

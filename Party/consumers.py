@@ -1,7 +1,7 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
 from asgiref.sync import sync_to_async
 from .models import Party,ChatMessage
-
+from django.contrib.auth.models import User
 import json
 
 class ChatConsumer(AsyncWebsocketConsumer):
@@ -27,10 +27,12 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
-        user = self.scope["user"]
-        party = Party.objects.get(id=self.party_id)
+        username = self.scope["user"].username
+        party = self.scope['url_route']['kwargs']['party_id']
+
+        await self.save_message(username,party,message)
         
-        ChatMessage.objects.create(party=party, user=user, message=message)
+        
 
         # Send message to party group
         await self.channel_layer.group_send(
@@ -38,17 +40,25 @@ class ChatConsumer(AsyncWebsocketConsumer):
             {
                 'type': 'chat_message',
                 'message': message,
-                
+                'username': username
             }
         )
 
     # Receive message from party group
     async def chat_message(self, event):
         message = event['message']
-       
+        username = event['username']
 
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
             'message': message,
+            'username': username
             
         }))
+    
+    @sync_to_async
+    def save_message(self,username,party,message):
+        user=User.objects.get(username=username)
+        party=Party.objects.get(id=party)
+
+        ChatMessage.objects.create(user=user,party=party,message=message)
