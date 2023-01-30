@@ -64,7 +64,7 @@ def writeNews(req):
             writer=form.save()
             writer.writer = req.user
             writer.save()
-            return redirect('/')
+            return redirect('/news/')
     else:
         form=WriteNewsforms()
         

@@ -40,7 +40,7 @@ def undislike_news(request, id):
 
 def delete_news(req,id):
     news= get_object_or_404(News,pk=id)
-    if req.user==news.writer and req.method == "POST":
+    if req.user.is_superuser and req.method == "POST":
         news.delete()
         return redirect('/news/')
     
