@@ -6,6 +6,7 @@ from django.views.generic.detail import DetailView
 from .models import Party , ChatMessage
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
+from datetime import datetime
 
 
 # Create your views here.
@@ -31,33 +32,36 @@ def crateParty(req):
     return render(req,'Party/createParty.html',context)
 
 
-"""@login_required
 
-def party_chat(request, party_id):
-    party = Party.objects.get(id=party_id)
-    messages = Message.objects.filter(party=party)
-
-    if request.method == 'POST':
-        message = request.POST.get('message')
-        sender = request.user
-        Message.objects.create(content=message, sender=sender, party=party)
-
-    return render(request, 'party_chat.html', {'party': party, 'messages': messages})
-
-"""
 """def partyDetail(req,id):
     party = get_object_or_404(Party, id=id)
     return render(req,'Party/party_details.html', {'party': party})"""
 
 def partyDetail(req,id):
     party = get_object_or_404(Party, id=id)
+    current_date = date.today().isoformat()
     messages = ChatMessage.objects.filter(party=party)
-    username=req.user.username
-    if req.method == 'POST':
-        message = req.POST.get('message')
-        ChatMessage.objects.create(user=req.user, party=party, message=message)
-    return render(req,'Party/party_details.html', {'party': party, 'messages': messages,'username': username})
+    days_left = party.days_until_paid(current_date)
+    form = None
+    if req.user == party.owner:
+        form = AddMemberForms()
+    return render(req,'Party/party_details.html', {'party': party, 'messages': messages,'days_left':days_left,"form":form})
 
+def add_member(req,id):
+    party = get_object_or_404(Party, id=id)
+    if req.user == party.owner and req.method == "POST":
+        form = AddMemberForms(req.POST)
+        if form.is_valid():
+            member = form.cleaned_data['member']
+            party.members.add(member)
+    return redirect('/party/' + str(id))
+
+def delete_member(req,id,member_id):
+    party = get_object_or_404(Party, id=id)
+    member = get_object_or_404(User, id=member_id)
+    if req.user == party.owner and req.method == "POST":
+        party.delete_members(member)
+    return redirect('/party/' + str(id))
 
 def join(req, id):
     party = get_object_or_404(Party, pk= id)
@@ -67,6 +71,14 @@ def join(req, id):
         return redirect('/party/' + str(id) )
     else:
         return render(req, 'Party/party.html', {'partys': party})
+
+
+def delete_party(req,id):
+    party = get_object_or_404(Party,pk=id)
+    if req.user==party.owner and req.method == "POST":
+        party.reject()
+        return redirect('/party/')
+
 
 def leave(req, id):
     party = get_object_or_404(Party, pk= id)
@@ -99,7 +111,7 @@ def update_party(req,id):
     form=cratePartyforms(req.POST or None ,req.FILES or None,instance=party)
     if form.is_valid():
             form.save()   
-            return redirect('/party/')
+            return redirect('/party/'+str(id))
     return render(req,'Party/updateParty.html',{'partys':party,'form':form})
 
 def search(req,):
@@ -113,3 +125,30 @@ def search(req,):
         })
     else:
         return render(req,'Party/searchParty.html',{})
+
+def like_party(request, party_id):
+    user = request.user
+    party = get_object_or_404(Party, pk=party_id)
+    party.like_party(user)
+    return redirect("/party/"+ str(party_id))
+
+
+def unlike_party(request, party_id):
+    party = get_object_or_404(Party, pk=party_id)
+    party.unlike_party(request.user)
+    return redirect("/party/"+ str(party_id))
+
+
+def dislike_party(request, party_id):
+    party = get_object_or_404(Party, pk=party_id)
+    party.dislike_party(request.user)
+    return redirect("/party/"+ str(party_id))
+
+
+def undislike_party(request, party_id):
+    party = get_object_or_404(Party, pk=party_id)
+    party.undislike_party(request.user)
+    return redirect("/party/"+ str(party_id))
+
+
+

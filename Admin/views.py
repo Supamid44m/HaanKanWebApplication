@@ -40,7 +40,7 @@ def reject_party(req, party_id):
 
 def delte_party(req,party_id):
     party = get_object_or_404(Party, pk=party_id)
-    party.delete()
+    party.reject()
     return redirect('/party/')
     
 def addApps(req):

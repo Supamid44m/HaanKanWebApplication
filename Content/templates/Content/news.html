@@ -36,14 +36,27 @@
 
             <div>
             </div>
-            <footer class="bg-zinc-500 h-10 rounded-b-lg">
-                <div>
-
+            <footer class="bg-zinc-500 h-16 rounded-b-lg ">
+                <div class="absolute ml-2">
+                    <i class="fa-solid fa-heart"></i>
+                    <span>{{i.likes.count}}</span>
                 </div>
 
-                <div class="border-solid border-slate-600 text-center mx-auto my-auto">
+                <div class="border-solid border-slate-600 text-center mx-auto my-auto bg-gray-200 w-24 rounded-md hover:bg-gray-400">
                     <a href="{{ i.get_absolute_url }}">อ่าน</a>
                 </div>
+
+                {%if user.is_superuser%}
+                <div class="border-2 w-28 rounded-md pl-2 pr-2 bg-red-500  hover:bg-red-700 ml-2 mt-2 ">
+                    <form action="{% url 'delete_news' i.id %}" method="POST">
+                        {% csrf_token %}
+                        <i class="fa-solid fa-trash"></i>
+                        <input type="submit" value="ลบข่าวนี้">
+                    </form>
+                    
+                </div>
+                {%else%}
+                {%endif%}
             </footer>
         
         </div>

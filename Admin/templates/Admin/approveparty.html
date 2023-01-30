@@ -3,16 +3,16 @@
 {%block title%}approveparty{%endblock%}
 
 {%block content%}
-<div style="margin-left: 25%;" class="" >
+<div style="margin-left: 12%;" class="" >
 {%if user.is_authenticated %}
         {%if user.is_superuser %}
-            <div class=" grid grid-cols-4  ">
-                <div class="border-2 w-20  rounded ">
+            <div class=" flex ml-6  ">
+                <div class="border-2 w-20  rounded  ml-10 ">
                     <p>ปาร์ตี้ทั้งหมด</p>
                     <span>{{partys | length}}</span>
                 </div>
 
-                <div class="border-2 w-20  rounded ">
+                <div class="border-2 w-20  rounded  ml-10  ">
                    
                         <div>
                             <span>ปาร์ตี้ที่อนุมัติแล้ว</span>
@@ -21,32 +21,32 @@
 
                 </div>
             
-                 <div class="border-2 w-20  rounded">
+                 <div class="border-2 w-20  rounded ml-10 ">
                     <span>ปาร์ตี้ที่รอการอนุมัติ</span>
                     {{partyunapprove| length}}
                 </div>
             </div>
 
 
-            <div class="">
+            <div class="grid gap-4 grid-cols-4 grid-rows-4">
                     
                    
                     {%for i in partys %}
-                <div class="text-lg mt-10 w-62 ml-16">
+                <div class="text-lg mt-10 w-64 ml-16   ">
                 
-                        <div class="border-2 border-black rounded-t-lg  ">
-                            <div class="pt-6 ml-10 mr-10 ">
+                        <div class="border-2 border-black rounded-t-lg bg-zinc-700    ">
+                            <div class="pt-6 ml-10 mr-10  ">
                                 <img src="{{i.apps.image.url}}" alt="image"  class="w-30 h-24  rounded-md" >
                                 
                             </div>
                     
-                            <div>
-                                <label for="title" class="text-xl text-bold"></label>
+                            <div class="flex">
+                                <label for="title" class="text-xl">ชื่อปาร์ตี้:  </label>
                                 <span class="text-md" id="title">{{i.title}}</span>
                             </div>
         
                             <div>
-                                <label for="owner">หัวตี้</label>
+                                <label for="owner">เจ้าของปาร์ตี้:  </label>
                                 <a href="#" class="text-md" id="owner">{{i.owner}}</a>
                                 
                             </div>
@@ -64,41 +64,58 @@
         
                         
                         </div>
-                        <footer class="bg-zinc-300 h-10 rounded-b-lg h-16">
+                        <footer class="bg-zinc-400 h-10 rounded-b-lg h-16 ">
 
                             
                             
                             {%if i.isApproved%}
-                            <div>
-                                <label for="">อนุมัติ<input type="checkbox" checked="checked" value="{{i.id}}" name="boxes"></label>
-                                <form method="POST" action="{% url 'delete_party' i.id %}">
-                                    {% csrf_token %}
-                                    <input type="submit" value="Delete">
-                                </form>
+                            <div class=" ml-2 ">
+                                
+                                <i class="fa-solid fa-check"></i>
+                                <a href="{{ i.get_absolute_url }}" class="ml-28">ดูรายละเอียด</a>
+                                <div class="border-2 w-32 rounded-md pl-2 pr-2 bg-red-500  hover:bg-red-700" > 
+                                    
+                                    <form method="POST" action="{% url 'delete_party' i.id %}">
+                                        {% csrf_token %}
+                                        <i class="fa-solid fa-trash"></i>
+                                        <input type="submit" value="ลบปาร์ตี้นี้">
+                                    </form>
+                                </div>
                             </div>
                             {%else%}
-                            <div>
+                            <div class=" ">
+                                
+                                
+                                
+                                <div class="flex ">
+                                
                                 <form method="POST" action="{% url 'approve_party' i.id %}">
                                     {% csrf_token %}
-                                    <input type="submit" value="Approve">
+                                    <div class="ml-10 border-2 rounded-md mt-6 ml-2 bg-green-300 hover:bg-green-500 pl-2 pr-2">
+                                        <i class="fa-solid fa-check"></i>
+                                        <input type="submit" value="อนุมัติ" class="" >
+                                    </div>
                                 </form>
                                 <form method="POST" action="{% url 'reject_party' i.id %}">
                                     {% csrf_token %}
-                                    <input type="submit" value="Reject">
+                                    <div class="ml-10 border-2 rounded-md mt-6  ml-4 bg-red-300 hover:bg-red-500 pl-2 pr-2">
+                                        <i class="fa-solid fa-xmark"></i>
+                                        <input type="submit" value="ไม่อนุมัติ" class="">
+                                    </div>
                                 </form>
-                                <label for="">อนุมัติ<input type="checkbox"  value="{{i.id}}" name="boxes"></label>
+                                </div>
                             </div>
                             {%endif%}
 
                         </footer>
                        
-                </div>
-                    {%endfor%}
+                    </div>
+                        {%endfor%}
                 
                 </div>
                 
                 
-                </form>
+            
                 
 
                

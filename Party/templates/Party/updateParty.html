@@ -4,21 +4,22 @@
 
 {%block content%}
 <div>
-{%if user in partys.members.all %}
+{%if user in partys.members.all and user == partys.owner  %}
 <div class="bg-zinc-700 w-3/12 mx-auto my-auto rounded-md my-10">
     <div class="bg-zinc-100 text-xl rounded-t-lg">
-        <span class="text-2xl">อัปเดต</span>
+        <span class="text-2xl">อัปเดตข้อมูลปาร์ตี้</span>
         </div>
     <form method="POST" style="margin-left:25%" action=" " class="" enctype="multipart/form-data" >
     <div class="text-xl ">
         {%csrf_token%}
         {{form.as_p}}
-        <div class="mt-2">
-                <input type="submit">
+        <div class="mt-6  bg-green-300 hover:bg-green-500 rounded-md w-20 " >
+                <input type="submit" value="อัปเดต">
         </div>
     </div>
     </form>
 </div>
+
 {%else%}
     <div class="text-center text-2xl">
         <span>คุณไม่ได้อยู่ในปาร์ตี้นี้</span>

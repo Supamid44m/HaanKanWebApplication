@@ -99,7 +99,7 @@ DATABASES = {
         #"NAME": BASE_DIR / "db.sqlite3",
         "ENGINE": "django.db.backends.mysql",
         "NAME": 'Haankan-webapp',
-        "USER": 'root',
+        "USER": 'User',
         "HOST": '127.0.0.1',
         "PORT": '3306',
         "PASSWORD": '1234',
@@ -154,6 +154,10 @@ USE_TZ = True
 STATIC_URL = "static/"
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
+STATICFILES_DIRS=[
+    BASE_DIR / "static"
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

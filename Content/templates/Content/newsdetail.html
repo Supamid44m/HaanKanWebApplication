@@ -1,16 +1,63 @@
 {%extends 'Content/components/base.html' %}
 
-{%block title%}Party-detail{%endblock%}
+{%block title%}{{news.title}}{%endblock%}
 
 {%block content%}
-<div style="margin-left: 25%;">
-<img src="{{news.image.url}}" alt="image">
-{{news.title}}
+<div style="margin-left: 25%;" class="bg-gray-200 rounded-md">
+    <div class="">
 
+        
+            <div class="text-2xl bg-zinc-700 rounded-t-lg">
+                <h1>{{news.title}}</h1>
+            </div>
 
+            <div class="w-64 mx-auto mt-2 ">
+                <img src="{{news.image.url}}" alt="image" class="rounded-md">
+            </div>
 
+            <div class="text-lg  ">
+                <label for="">รายละเอียด</label>
+                <p>{{news.desciption}}</p>
+            </div>
 
-{{news.desciption}}
+            <footer class="rounded-b-lg bg-zinc-700">
+                
+                
+                <div class="flex">
+                    {%if user in news.likes.all%}
+                    <div>
+                        
+                        <a href="{% url 'unlike_news' news.id %}"><i class="fa-solid fa-heart"></i></a>
+                    </div>
+                    {%else%}
+                    <div>
+                        
+                        <a href="{% url 'like_news' news.id %}"><i class="fa-regular fa-heart"></i></a>
+                    </div>
+                    {%endif%}
+                    
+                    
+                    <!-- {%if user in news.dislikes.all%}
+                    <div>
+                        <a href="{% url 'undislike_news' news.id %}"><i class="fa-solid fa-heart-crack"></i></a> 
+                    </div>
+                    {%else%}
+                    <div>
+                        <a href="{% url 'dislike_news' news.id %}"><i class="fa-regular fa-heart-crack"></i></a> 
+                    </div>
+                    {%endif%}
+                    -->
+    
+                    <p>{{party.like_count}}</p>
+                    <p>{{party.dislike_count}}</p>
+
+                    
+    
+                </div>
+               
+            </footer>
+            
+    </div>
 </div>
 
 

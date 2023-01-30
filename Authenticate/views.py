@@ -7,8 +7,10 @@ from django.contrib import messages
 from .forms import *
 from django.contrib.auth import login as auth_login ,authenticate
 from django.contrib.auth import logout
+from Profile.models import Profile
 
 # Create your views here.
+
 
 
 
@@ -17,6 +19,8 @@ def register(req):
         form=RegisterForm(req.POST)
         if form.is_valid():
             user=form.save()
+            profile = Profile(user=user)
+            profile.save()
             user = authenticate(username=form.cleaned_data['username'],password=form.cleaned_data['password1'],)
             auth_login(req, user)
             return redirect('/party/')

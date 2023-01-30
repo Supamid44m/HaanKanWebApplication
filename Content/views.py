@@ -14,5 +14,34 @@ def newsDetail(req,id):
     'news': get_object_or_404(News, pk=id)
   })
 
+def like_news(request, id):
+    user = request.user
+    news = get_object_or_404(News, pk=id)
+    news.like_news(user)
+    return redirect("/news/"+ str(id))
 
+
+def unlike_news(request, id):
+    news = get_object_or_404(News, pk=id)
+    news.unlike_news(request.user)
+    return redirect("/news/"+ str(id))
+
+
+def dislike_news(request, id):
+    news = get_object_or_404(News, pk=id)
+    news.dislike_news(request.user)
+    return redirect("/news/"+ str(id))
+
+
+def undislike_news(request, id):
+    news = get_object_or_404(News, pk=id)
+    news.undislike_news(request.user)
+    return redirect("/news/"+ str(id))
+
+def delete_news(req,id):
+    news= get_object_or_404(News,pk=id)
+    if req.user==news.writer and req.method == "POST":
+        news.delete()
+        return redirect('/news/')
+    
 

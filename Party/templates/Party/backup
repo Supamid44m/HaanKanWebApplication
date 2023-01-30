@@ -1,0 +1,331 @@
+
+{%extends 'Content/components/base.html' %}
+{%load static%}
+{%block title%}{{party.title}}{%endblock%}
+
+
+{%block content%}
+
+{% if party.isApproved %}
+<div style="margin-left: 100px; height:100%  "  class="border-2 bg-gray-200  relative container mx-auto  ">
+    <span class="text-2xl pl-6">รายละเอียดปาร์ตี้</span>
+   
+       
+        
+
+            <img src="{{party.apps.image.url}}" alt="" class="w-60 h-36 rounded-md ml-10 mt-2 ">
+            <br>
+        <div class="border-2 border-black w-96 rounded-md bg-zinc-700 h-fit w-72">
+            <div class="pt-6 pl-2 text-lg">
+                <label for="title">ชื่อ</label>
+                <span id="title" name="title">{{party.title}}</span>
+            </div>
+            
+            <div class="pt-6 pl-2 text-lg">
+                <label for="owner">เจ้าของปาร์ตี้</label>
+                <span id="owner" name="owner">{{party.owner}}</span>
+            </div>
+
+            <div class="pt-6 pl-2 text-lg">
+            <label for="apps">แอปพลิเคชั่น</label>
+            <span id="apps" name="apps">{{party.apps}}</span>
+            </div>
+
+            <div class="pt-6 pl-2 text-lg">
+                <label for="apps">จ่ายทุกวันที่</label>
+                <span id="apps" name="apps">{{party.paid_day}} ของเดือน</span>
+            </div>
+            
+            <div class="pt-6 pl-2 text-lg">
+                <label for="price">ราคาเต็ม</label>
+                <span id="price" name="title">{{party.price}} บาท</span>
+            </div>
+            
+            <div class="pt-6 pb-6 pl-2 text-lg">
+                <label for="price">ราคาเฉลี่ย</label>
+                <span id="price" name="title">{{party.priceavg}} บาท / คน</span>
+            </div>  
+            
+    </div>
+
+        
+        {%if user in party.members.all %}
+            <div>
+            
+        
+            
+                <span>{{party.bank}}</span>
+                <span class="ml-16">{{party.mask_bankaccount}}</span>
+            
+            
+                <img src="{{party.qrcodeImage.url}}" alt="image" class="w-64 h-64  rounded-md ">
+            
+                
+                <div class="text-lg">
+                    {%if days_left < 3 and  days_left > 0  %}
+                        <label for="paid_day">ต้องชำระในอีก</label>
+                        <span class="text-red-700" id="paid_day" name="paid_day">{{ days_left }} </span>
+                        <label for="paid_day">วัน</label>
+                    {% elif days_left == 0 %}
+                        <label for="paid_day">ต้องชำระในวันนี้</label>
+                    {%else%}
+                        <label for="paid_day" class="">ต้องชำระในอีก</label>
+                        <span class=" " id="paid_day" name="paid_day">{{ days_left }}</span> 
+                        <label for="paid_day">วัน</label>
+                    {%endif%}
+                </div>
+                
+                
+        
+                {%if user == party.owner%}
+
+                <div class=" absolute bottom-32 right-10 bg-yellow-500 hover:bg-yellow-700 rounded-md w-36 h-10 pr-2 pl-4 pb-2 pt-2 ">
+                    <i class="fa-solid fa-pen-to-square "></i>
+                    <a href="{%url 'update' party.id%}">แก้ไข</a>
+                </div>
+                
+
+                <div class="absolute bottom-16 right-10 bg-red-500 hover:bg-red-700 rounded-md w-36 h-10 pr-2 pl-4 pb-2 pt-2">
+                    
+                    <form method="POST" action="{% url 'delete_party' party.id %}">
+                        {% csrf_token %}
+                        <i class="fa-solid fa-trash"></i>
+                        <input type="submit" value="ลบปาร์ตี้  ">
+                    </form>
+                    
+                </div>
+                {%endif%}
+                
+                
+                            
+            
+
+                <div class="bg-red-500 hover:bg-red-700 absolute bottom-2 right-10 rounded-md w-36 h-10 pr-2 pl-4 pb-2 pt-2 ">
+                   
+                    <form method ='POST'  action="{% url 'leave' party.id %}" >
+                        {% csrf_token %}
+                        <i class="fa-solid fa-arrow-right-from-bracket "></i>
+                        <input type="submit" value="ออกจากปาร์ตี้" >
+                    </form>
+                </div>
+
+                <div class="">
+                        <div class="lg:w-2/5 mx-4 lg:mx-auto p-4  rounded-xl w-72 absolute bottom-0 right-10 left-10 bg-zinc-700  ">
+                            <div class="chat-messages space-y-3 " id="chat-messages">
+                                
+                                
+                                    {%for message in messages%}
+                                    <div class="p-4 bg-gray-200 rounded-xl">
+                                        <p class="font-semibold">{{message.user.username}}</p>
+                                        <p class="font-semibold">{{message.message}}</p>
+                                        <p class="text-sm">{{message.timestamp}}</p>
+
+                                        
+                                    </div>  
+                                    {%endfor%}
+                                
+                        </div>
+                        <div class=" mt-6 mx-4 lg:mx-auto p-4 bg-white rounded-xl">
+                            <form method="POST" class="flex" action=".">
+                                {%csrf_token%}
+                                <input type="text" name="content" class="flex-1 mr-3 " placeholder="Your message" id="chat-message-input">
+                                <button class="px-5 py-3 rounded-xl text-white bg-teal-600 hover:bg-teal-700" id="chat-message-submit"><i class="fa-solid fa-paper-plane"></i> Send</button>
+
+                            </form>
+                        </div>
+                </div> 
+
+
+            </div>
+            
+
+        {%endif%}
+       
+       
+          
+        
+
+       
+    
+        <div class="absolute top-2 right-10 border-2 border-black pl-6 pr-6 ">
+            <div class="">
+                <i class="fa-sharp fa-solid fa-users"></i>
+                <span class="mt-2">{{party.members.count}} / {{party.quantity}} คน</span>
+                
+            </div>
+            {%if party.members.count%}
+            <span>สมาชิกในปาร์ตี้</span>
+                {%for member in party.members.all %}
+                <div class="pt-2">
+                    {% if member.profile.profile_pic %}
+                    <img src="{{member.profile.profile_pic.url}}" alt="" class="rounded-full  w-8 h-8 inline-block p">
+                    {% else %}
+                    <img src="{% static 'Profile/images/defualtPIC.jpg' %}" alt="" class="rounded-full  w-8 h-8 inline-block" >
+                    {%endif%}
+                    
+
+                    {%if user == party.owner %}
+                    <a href="#">{{member}}</a>
+                        <div class="ml-10 border-2 rounded-md   ml-4 bg-red-300 hover:bg-red-500 pl-2 pr-2" >
+                            <form method="post" action="{% url 'delete_member' party.id member.id %}">
+                                {% csrf_token %}
+                                <i class="fa-solid fa-user-minus"></i>
+                                <input type="submit" value="Delete Member">
+                            </form>
+                        </div>
+                    
+                    {%else%}
+                    <a href="#">{{member}}</a>
+                    {%endif%}
+                </div>
+            
+                {%endfor%}
+            {%endif%}
+
+            {%if user == party.owner%}
+            <div class="pt-2">
+                {%if party.pending_members.all%}
+                <h2>สมาชิกที่ขอเข้าร่วม</h2>
+                
+                <div class="flex">
+                    {% for user in party.pending_members.all %}
+                        
+                        <h3>{{ user.username }}</h3>
+                        
+                        
+                        <form action="{% url 'accept_member' party.id user.id %}" method="POST" name="accept">
+                            {% csrf_token %}
+                            <div class="ml-10 border-2 rounded-md ml-2 bg-green-300 hover:bg-green-500 pl-2 pr-2">
+                            <i class="fa-solid fa-check"></i>
+                            <button type="submit" class="">accept</button>
+                            </div>
+                        </form>
+                    
+                        <form action="{% url 'reject_member' party.id user.id %}" method="POST">
+                            {% csrf_token %}
+                            <div class="ml-10 border-2 rounded-md   ml-4 bg-red-300 hover:bg-red-500 pl-2 pr-2">
+                                <i class="fa-solid fa-xmark"></i>
+                                <button type="submit" class="">Reject</button>
+                            </div>
+                        </form>
+                        
+                    {% endfor %}
+                </div>
+                {%else%}
+                
+                {%endif%}
+
+                <form method="POST" action="{% url 'add_member' party.id %}">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" value="Add Member">
+                </form>
+                
+            </div>
+            {%endif%}
+            <div>
+              
+                {%if user in party.likes.all%}
+                <div>
+                    <i class="fa-solid fa-heart"></i>
+                    <a href="{% url 'unlike_party' party.id %}">UnLike</a>
+                </div>
+                {%else%}
+                <div>
+                    <i class="fa-regular fa-heart"></i>
+                    <a href="{% url 'like_party' party.id %}">Like</a>
+                </div>
+                {%endif%}
+
+                {%if user in party.dislikes.all%}
+                <div>
+                    <a href="{% url 'undislike_party' party.id %}">UnDislike</a> 
+                </div>
+                {%else%}
+                <div>
+                    <a href="{% url 'dislike_party' party.id %}">Dislike</a> 
+                </div>
+                {%endif%}
+
+
+
+              
+                
+             
+               
+               
+                
+
+                <p>{{party.like_count}}</p>
+                <p>{{party.dislike_count}}</p>
+
+            </div>
+        </div>
+</div>
+
+  
+
+
+
+{{request.user.username|json_script:"json-username"}}
+
+{% block scripts %}{% endblock %}
+<script>
+    const party_id = {{party.id}};
+    const userName = "{{request.user.username}}";
+    const test = JSON.parse(document.getElementById('json-username').textContent);
+    const chatSocket = new WebSocket('ws://' + window.location.host + '/ws/party/' + party_id+'/');
+    
+   
+
+    chatSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+
+        if (data.message) {
+            let html = '<div class="p-4 bg-gray-200 rounded-xl">';
+            html += '<p class="font-semibold">' + data.username + '</p>'
+            html += '<p class="font-semibold">' + data.message + '</p></div>';
+
+            document.querySelector('#chat-messages').innerHTML += html;
+            scorllToBottom();
+        }
+    }
+
+    chatSocket.onclose = function(e) {
+        console.log('Connection closed');
+    }
+
+    document.querySelector('#chat-message-submit').onclick = function(e) {
+        e.preventDefault();
+        const messageInputDom = document.querySelector('#chat-message-input');
+        const message = messageInputDom.value;
+       
+
+        chatSocket.send(JSON.stringify({
+            'message': message,
+            'username':userName,
+            'party': party_id,
+        }));
+
+        messageInputDom.value = '';
+
+        return false;
+
+        
+    }
+    function scorllToBottom(){
+            const objDiv=document.querySelector('#chat-messages');
+            objDiv.scrollTop = objDiv.scrollHeight
+        }
+    scorllToBottom();
+</script>
+
+</div>
+
+
+{%else%}
+<div  class="text-center" >ไม่สามารถดูรายละเอียดได้เนื่องจากปาร์ตี้ยังไม่ได้รับการอนุมัติ</div>
+{%endif%}
+
+
+{%endblock%}
