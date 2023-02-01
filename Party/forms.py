@@ -41,3 +41,10 @@ class addMemberForm(ModelForm):
 class AddMemberForms(forms.Form):
     member = forms.ModelChoiceField(queryset=User.objects.all(), empty_label=None)
 
+class EvidenceForm(forms.ModelForm):
+    class Meta:
+        model = EvidenceimageParty
+        fields = ['evidenceimage']
+
+    evidenceimage = forms.ImageField(label='Upload Evidence of Payment')
+

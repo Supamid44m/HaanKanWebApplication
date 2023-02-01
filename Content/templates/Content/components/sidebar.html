@@ -3,12 +3,8 @@
     {%if user.is_authenticated %}
         {%if user.is_superuser %}
             <h3 class="w3-bar-item">Menu</h3>
-            <div>
-                <a href="{%url 'party'%}" class="w3-bar-item w3-button h-20 text-lg ">ดูปาร์ตี้ทั้งหมด</a>
-            </div>
             
-            <a href="#" class="w3-bar-item w3-button h-20 text-lg">ปาร์ตี้ของฉัน</a>
-            <a href="{%url 'createparty'%}" class="w3-bar-item w3-button h-20 text-lg">สร้างปาร์ตี้ใหม่</a>
+            <a href="{%url 'party'%}" class="w3-bar-item w3-button h-20 text-lg ">ดูปาร์ตี้ทั้งหมด</a>
             <a href="{%url 'approveparty'%}" class="w3-bar-item w3-button h-20 text-lg">ภาพรวมปาร์ตี้</a>
             <a href="{%url 'news'%}" class="w3-bar-item w3-button h-20 text-lg">ข่าวประชาสัมพันธ์</a>
             <a href="{%url 'writenews'%}" class="w3-bar-item w3-button h-20 text-lg">เขียนข่าวประชาสัมพันธ์</a>

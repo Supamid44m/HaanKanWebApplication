@@ -41,11 +41,32 @@ def partyDetail(req,id):
     party = get_object_or_404(Party, id=id)
     current_date = date.today().isoformat()
     messages = ChatMessage.objects.filter(party=party)
+    evidence = EvidenceimageParty.objects.filter(party=party)
     days_left = party.days_until_paid(current_date)
     form = None
+    upform=EvidenceForm()
     if req.user == party.owner:
         form = AddMemberForms()
-    return render(req,'Party/party_details.html', {'party': party, 'messages': messages,'days_left':days_left,"form":form})
+    return render(req,'Party/party_details.html', {'party': party, 'messages': messages,'days_left':days_left,"form":form,'evidence':evidence,"upform":upform})
+
+
+def show_evidence(req,id):
+    party = get_object_or_404(Party, id=id)
+    evidence = EvidenceimageParty.objects.filter(party=party)
+    return render(req,'Party/show_evidence.html', {'party': party, 'evidence':evidence,})
+
+def upload_evidence(request, id):
+    party = get_object_or_404(Party, id=id)
+    if request.method == 'POST':
+        form = EvidenceForm(request.POST, request.FILES)
+        if form.is_valid():
+            evidence = form.save(commit=False)
+            evidence.party = party
+            evidence.uploader=request.user
+            evidence.save()
+    return redirect('/party/' + str(id))
+   
+
 
 def add_member(req,id):
     party = get_object_or_404(Party, id=id)
@@ -149,6 +170,5 @@ def undislike_party(request, party_id):
     party = get_object_or_404(Party, pk=party_id)
     party.undislike_party(request.user)
     return redirect("/party/"+ str(party_id))
-
 
 

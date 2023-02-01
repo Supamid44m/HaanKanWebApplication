@@ -31,6 +31,9 @@ class Partymember(models.Model):
 '''
 
 
+
+
+
 # Create your models here.
 class Party(models.Model):
     #owner=models.CharField(max_length=500,null=True)
@@ -51,9 +54,7 @@ class Party(models.Model):
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_parties', blank=True)
     dislikes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='disliked_parties', blank=True)
     like_status = models.CharField(max_length=10, default='neutral')
-
-
-
+    
     def like_party(self, user):
         self.likes.add(user)
         self.dislikes.remove(user)
@@ -141,7 +142,7 @@ class Party(models.Model):
     
     
     def mask_bankaccount(self):
-        return "xxxxx" + self.bankaccount[-4:]
+        return "xxxxxxxx" + self.bankaccount[-2:]
     
 
 
@@ -149,8 +150,11 @@ class ChatMessage(models.Model):
     party = models.ForeignKey(Party, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     message = models.TextField()
-    image = models.ImageField(upload_to='Chat-message', null=True, blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
-
+class EvidenceimageParty(models.Model):
+    party = models.ForeignKey(Party, on_delete=models.CASCADE, related_name='EvidenceimageParty')
+    evidenceimage = models.ImageField(upload_to='evidence_of_payment', null=True)
+    uploader = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, related_name='uploader')
+    uploaded_at = models.DateTimeField(auto_now_add=True,null=True)
 

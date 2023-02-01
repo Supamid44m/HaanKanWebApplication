@@ -75,23 +75,26 @@
                 {%else%}
                     {%if user.is_authenticated%}
                        
-
-                        {%if user in i.members.all%}
-                            <div class="text-center" >
-                                <span>คุณอยู่ที่นี้แล้ว</span>
-                            </div>
-                        {%elif user in i.pending_members.all%}
-                            <div class="text-center" >
-                                <span>รอหัวตี้ตอบรับ</span>
-                            </div>
+                        {%if user.is_superuser%}
                         {%else%}
-                            <div class="text-center bg-gray-200 hover:bg-green-300 rounded-md w-20 mx-auto ">
-                                <form method ='POST'  action="{% url 'joins' i.id %}" >
-                                    {% csrf_token %}
-                                <input type="submit" value="ขอเข้าร่วม" >
-                                </form>
-                            </div>
+                        {%if user in i.members.all%}
+                        <div class="text-center" >
+                            <span>คุณอยู่ที่นี้แล้ว</span>
+                        </div>
+                    {%elif user in i.pending_members.all%}
+                        <div class="text-center" >
+                            <span>รอหัวตี้ตอบรับ</span>
+                        </div>
+                    {%else%}
+                        <div class="text-center bg-gray-200 hover:bg-green-300 rounded-md w-20 mx-auto ">
+                            <form method ='POST'  action="{% url 'joins' i.id %}" >
+                                {% csrf_token %}
+                            <input type="submit" value="ขอเข้าร่วม" >
+                            </form>
+                        </div>
+                    {%endif%}
                         {%endif%}
+                       
                     {%else%}
                     <div class="text-center">
                         <a href="{%url 'login'%}"><span class="">กรุณาเข้าสู่ะระบบเพื่อเข้าร่วมปาร์ตี้</span></a>

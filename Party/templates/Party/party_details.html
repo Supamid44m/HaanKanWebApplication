@@ -15,7 +15,7 @@
 
             <img src="{{party.apps.image.url}}" alt="" class="w-60 h-36 rounded-md ml-10 mt-2 ">
             <br>
-        <div class="border-2 border-black w-96 rounded-md bg-zinc-700 h-fit w-72">
+        <div class="border-2 border-black w-96 rounded-md bg-zinc-300 h-fit w-72">
             <div class="pt-6 pl-2 text-lg">
                 <label for="title">ชื่อ</label>
                 <span id="title" name="title">{{party.title}}</span>
@@ -233,7 +233,30 @@
             {%endif%}
         
         </div>
-        <div class="absolute bottom-72 right-10 flex ">
+        {%if user in party.members.all %}
+        <div class="absolute top-80 right-10 w-60 ">
+            
+            <form action="{% url 'upload_evidence' party.id %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{upform.as_p}}
+
+                <div class=" bg-green-500 hover:bg-green-700 rounded-md  h-10 pr-2 pl-4 pb-2 pt-2 mt-2">
+                    <i class="fa-solid fa-image"></i>
+                    <button type="submit">อัปโหลดหลักฐานการโอน</button>
+                </div>
+                
+            </form>
+        </div>
+
+        <div class="absolute bottom-80 right-10 w-60 bg-green-500 hover:bg-green-700 rounded-md  w-36 h-10 pr-2 pl-4 pb-2 pt-2">
+            <a href="{%url 'show_evidence' party.id%}">ดูหลักฐาน</a>
+        </div>
+        {%endif%}
+
+        
+
+        {%if user.is_authenticated %}
+            <div class="absolute bottom-64 right-10 flex ">
             <div class="text-xl">
                 <p>ถูกใจ</p>
             </div>
@@ -263,6 +286,8 @@
             <p>{{party.dislike_count}}</p>
             -->
         </div>
+        {%endif%}
+
 </div>
 
   
