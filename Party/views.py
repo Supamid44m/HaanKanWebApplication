@@ -7,6 +7,7 @@ from .models import Party , ChatMessage
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from datetime import datetime
+from django.contrib import messages as msg
 
 
 # Create your views here.
@@ -20,6 +21,9 @@ def crateParty(req):
     if req.method == "POST":
         form=cratePartyforms(req.POST,req.FILES)
         if form.is_valid():
+            use_price_avg = form.cleaned_data.get('use_price_avg')
+            if use_price_avg:
+                form.priceavg()
             owner=form.save(commit=False)
             owner.owner = req.user
             owner.save()
@@ -30,6 +34,17 @@ def crateParty(req):
         form=cratePartyforms()
     context={'form':form}
     return render(req,'Party/createParty.html',context)
+
+def update_party(req,id):
+    party = Party.objects.get(id=id)
+    form=cratePartyforms(req.POST or None ,req.FILES or None,instance=party)
+    if form.is_valid():
+        use_price_avg = form.cleaned_data.get('use_price_avg')
+        if use_price_avg:
+            form.priceavg()
+        form.save()   
+        return redirect('/party/'+str(id))
+    return render(req,'Party/updateParty.html',{'partys':party,'form':form})
 
 
 
@@ -50,10 +65,7 @@ def partyDetail(req,id):
     return render(req,'Party/party_details.html', {'party': party, 'messages': messages,'days_left':days_left,"form":form,'evidence':evidence,"upform":upform})
 
 
-def show_evidence(req,id):
-    party = get_object_or_404(Party, id=id)
-    evidence = EvidenceimageParty.objects.filter(party=party)
-    return render(req,'Party/show_evidence.html', {'party': party, 'evidence':evidence,})
+
 
 def upload_evidence(request, id):
     party = get_object_or_404(Party, id=id)
@@ -127,14 +139,6 @@ def reject_member(req, party_id, user_id):
     else:
         return redirect("/party/")
 
-def update_party(req,id):
-    party = Party.objects.get(id=id)
-    form=cratePartyforms(req.POST or None ,req.FILES or None,instance=party)
-    if form.is_valid():
-            form.save()   
-            return redirect('/party/'+str(id))
-    return render(req,'Party/updateParty.html',{'partys':party,'form':form})
-
 def search(req,):
     if req.method == "POST":
         searched= req.POST["searched"]
@@ -170,5 +174,12 @@ def undislike_party(request, party_id):
     party = get_object_or_404(Party, pk=party_id)
     party.undislike_party(request.user)
     return redirect("/party/"+ str(party_id))
+
+def show_evidence(req,id):
+    party = get_object_or_404(Party, id=id)
+    evidence = EvidenceimageParty.objects.filter(party=party)
+    return render(req,'Party/show_evidence.html', {'party': party, 'evidence':evidence,})
+
+
 
 

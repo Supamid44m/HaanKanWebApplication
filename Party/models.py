@@ -50,9 +50,11 @@ class Party(models.Model):
     image_height = models.IntegerField(null=True)
     isApproved=models.BooleanField('Approved',default=False)
     price = models.IntegerField(default=0,null=False)
+    priceaverage = models.FloatField(default=0.0,null=True,blank=True)
     paid_day = models.IntegerField(default=1,null=False,validators=[MinValueValidator(1), MaxValueValidator(31)])
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_parties', blank=True)
     dislikes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='disliked_parties', blank=True)
+    
     like_status = models.CharField(max_length=10, default='neutral')
     
     def like_party(self, user):
@@ -157,4 +159,13 @@ class EvidenceimageParty(models.Model):
     evidenceimage = models.ImageField(upload_to='evidence_of_payment', null=True)
     uploader = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, related_name='uploader')
     uploaded_at = models.DateTimeField(auto_now_add=True,null=True)
+
+
+    def delete_evidence(self, user):
+        if self.uploader == user:
+            self.delete()
+            return True
+        else:
+            return False
+        
 

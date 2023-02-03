@@ -27,4 +27,21 @@
 {%endif%}
 </div>
 
+
+<script>
+     function togglePriceAvg() {
+    let priceavg = document.getElementById("id_priceaverage");
+    let use_priceavg = document.getElementById("id_use_priceavg");
+    if (use_priceavg.checked) {
+      priceavg.style.display = "none";
+    } else {
+      priceavg.style.display = "block";
+    }
+  }
+
+
+  document.getElementById("id_use_priceavg").addEventListener("change", togglePriceAvg);
+  togglePriceAvg();
+</script>
+
 {%endblock%}

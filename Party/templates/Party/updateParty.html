@@ -5,7 +5,7 @@
 {%block content%}
 <div>
 {%if user in partys.members.all and user == partys.owner  %}
-<div class="bg-zinc-700 w-3/12 mx-auto my-auto rounded-md my-10">
+<div class="bg-zinc-300 w-3/12 mx-auto my-auto rounded-md my-10">
     <div class="bg-zinc-100 text-xl rounded-t-lg">
         <span class="text-2xl">อัปเดตข้อมูลปาร์ตี้</span>
         </div>
@@ -27,5 +27,21 @@
     
 {%endif%}
 </div>
+<script>
+    function togglePriceAvg() {
+   let priceavg = document.getElementById("id_priceaverage");
+   let use_priceavg = document.getElementById("id_use_priceavg");
+   if (use_priceavg.checked) {
+     priceavg.style.display = "none";
+     priceavg.value = "";
+   } else {
+     priceavg.style.display = "block";
+   }
+ }
+
+
+ document.getElementById("id_use_priceavg").addEventListener("change", togglePriceAvg);
+ togglePriceAvg();
+</script>
 
 {%endblock%}

@@ -4,9 +4,10 @@ from django.forms import ModelForm
 from .models import *
 
 class cratePartyforms(ModelForm):
+    use_priceavg = forms.BooleanField(widget=forms.CheckboxInput(attrs={'class':'form-control','placeholder':'ให้ระบบหารราคาให้'}), required=False,label='ให้เว็บหารราคาให้')
     class Meta:
         model=Party
-        fields=('title','apps','quantity','qrcodeImage','bank','bankaccount','price','paid_day')
+        fields=('title','apps','quantity','qrcodeImage','bank','bankaccount','price','priceaverage','paid_day')
         labels={
             'title':'ชื่อปาร์ตี้',
             'apps':'แอปพลิเคชั่น',
@@ -15,6 +16,7 @@ class cratePartyforms(ModelForm):
             'bank':'ธนาคาร',
             'bankaccount':'เลขบัญชี',
             'price':'ราคาเต็ม',
+            'priceaverage':'ราคาเฉลี่ย',
             'paid_day':'จ่ายทุกวันที่',
 
         }
@@ -25,9 +27,12 @@ class cratePartyforms(ModelForm):
             'bank':forms.Select(attrs={'placeholder':'ธนาคาร'}),
             'bankaccount':forms.TextInput(attrs={'placeholder':'เลขบัญชี'}),
             'price':forms.NumberInput(attrs={'class':'form-control','placeholder':'ราคา'}),
+            'priceaverage':forms.NumberInput(attrs={'class':'form-control','placeholder':'ราคาเฉลี่ย'}),
             'paid_day':forms.NumberInput(attrs={'class':'form-control','placeholder':'จ่ายทุกวันที่'})
 
         }
+        def priceavg(self):
+            return Party.priceavg()
 
 class addMemberForm(ModelForm):
     class Meta:
@@ -46,5 +51,5 @@ class EvidenceForm(forms.ModelForm):
         model = EvidenceimageParty
         fields = ['evidenceimage']
 
-    evidenceimage = forms.ImageField(label='Upload Evidence of Payment')
+    evidenceimage = forms.ImageField(label='อัปโหลดหลักฐานการโอน')
 

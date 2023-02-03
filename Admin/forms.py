@@ -44,12 +44,12 @@ class WriteNewsforms(ModelForm):
         model=News
         fields=('title','image','desciption')
         labels={
-            'title':'หัวข่าว',
+            'title':'หัวข้อข่าว',
             'image':'Image',
             'desciption':'รายละเอียด'
         }
         widgets={
-            'title': forms.TextInput(attrs={'class':'form-control','placeholder':'หัวข่าว'}),
+            'title': forms.TextInput(attrs={'class':'form-control','placeholder':'หัวข้อข่าว'}),
             'desciption': forms.Textarea(attrs={'class':'form-control','placeholder':'รายละเอียด'}),
         }
 

@@ -12,6 +12,21 @@ from Profile.models import Profile
 # Create your views here.
 
 
+def login_user(req):
+    if req.method == "POST":
+        username = req.POST['username']
+        password = req.POST['password']
+        user = authenticate(req, username=username, password=password)
+        if user is not None:
+            auth_login(req, user)
+            return redirect("/party/")
+        else:
+            messages.success(req,("ไม่สามารถเข้าสู่ระบบได้กรุณาลองอีกครั้ง"))
+            return redirect('login_user')
+    
+    else:
+        return render(req,"Authenticate/login.html",{})
+
 
 
 def register(req):
