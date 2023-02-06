@@ -15,6 +15,23 @@ from PIL import Image
 class Apps(models.Model):
     name=models.CharField(max_length=500,null=True)
     image=models.ImageField(upload_to='Appimage',null=True)
+    isApproved=models.BooleanField('Approved',default=False)
+
+
+    def approve(self):
+        self.isApproved = True
+        self.save()
+
+    def reject(self):
+        self.delete()
+
+    def handle_approval(self, user):
+        if user.is_superuser:
+            self.isApproved = True
+        else:
+            self.isApproved = False
+        self.save()
+
     def __str__(self):
         return self.name
 
@@ -22,21 +39,9 @@ class Banks(models.Model):
     name=models.CharField(max_length=500,null=True)
     def __str__(self):
         return self.name
-'''
-class Partymember(models.Model):
-    fname=models.CharField(max_length=500,null=True)
-    lname=models.CharField(max_length=500,null=True)
-    def __str__(self):
-        return self.fname
-'''
-
-
-
-
 
 # Create your models here.
 class Party(models.Model):
-    #owner=models.CharField(max_length=500,null=True)
     owner=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,null=True,related_name='owner')
     members=models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
     pending_members = models.ManyToManyField(User, related_name="pending_member")
@@ -91,11 +96,24 @@ class Party(models.Model):
     def days_until_paid(self, current_date):
         paid_day = self.paid_day
         current_date = date.fromisoformat(current_date)
+        max_day = self.get_max_day(current_date.month, current_date.year)
+        if paid_day > max_day:
+            paid_day = max_day
         paid_date = date(current_date.year, current_date.month, paid_day)
         if paid_date < current_date:
-            paid_date = paid_date.replace(month=paid_date.month+1)
+            paid_date = paid_date.replace(month=paid_date.month + 1)
         difference = paid_date - current_date
         return difference.days
+
+    def get_max_day(self,month, year):
+        if month in [1, 3, 5, 7, 8, 10, 12]:
+            return 31
+        elif month == 2:
+            if year % 4 == 0 and (year % 100 != 0 or year % 400 == 0):
+                return 29
+            return 28
+        return 30
+    
     
     def __str__(self):
         return self.title 

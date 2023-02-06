@@ -30,12 +30,16 @@
 <script>
     function togglePriceAvg() {
    let priceavg = document.getElementById("id_priceaverage");
+   let pricelabels = document.getElementById("id_priceaverage").previousElementSibling;
    let use_priceavg = document.getElementById("id_use_priceavg");
+   
    if (use_priceavg.checked) {
      priceavg.style.display = "none";
-     priceavg.value = "";
+     priceavg.value="";
+     pricelabels.style.display = "none";
    } else {
      priceavg.style.display = "block";
+     pricelabels.style.display = "block";
    }
  }
 

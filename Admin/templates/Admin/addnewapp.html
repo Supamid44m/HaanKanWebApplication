@@ -6,9 +6,9 @@
 {%block content%}
 
 <div>
-    <div style="margin-left:25%">
+    <div style="margin-left:25%" class="">
         {%if user.is_authenticated%}
-                {%if user.is_superuser%}
+              
                 <div class="border-2 w-56 bg-zinc-300 rounded border-black ">
                     <form action="" method="POST" enctype="multipart/form-data">
                         {%csrf_token%} 
@@ -27,7 +27,91 @@
                     <input type="submit" class="hover:bg-sky-700 border-2">
                     </form>
                 </div>
-                {%endif%}
+
+
+
+        {%if user.is_superuser%}
+            <div class="grid gap-4 grid-cols-4 grid-rows-4">
+                {%for app in apps%}
+                    <div class="text-lg mt-10 w-64   ">
+                        
+                            <div class="border-2 border-black rounded-t-lg bg-zinc-700    ">
+                                <div class="pt-6 ml-10 mr-10  ">
+                                    <img src="{{app.image.url}}" alt="image"  class="w-30 h-24  rounded-md" >
+                                    
+                                </div>
+                        
+                                <div class="flex">
+                                    <label for="title" class="text-xl">ชื่อแอป:  </label>
+                                    <span class="text-md" id="title">{{app.name}}</span>
+                                </div>
+                                
+
+                            </div>
+                            <footer class="bg-zinc-400 h-10 rounded-b-lg h-16 ">
+
+                            
+                            
+                                {%if app.isApproved%}
+                                <div class=" ml-2 ">
+                                    
+                                    <i class="fa-solid fa-check"></i>
+                                    <a href="" class="ml-28">แก้ไข</a>
+                                    <div class="border-2 w-32 rounded-md pl-2 pr-2 bg-red-500  hover:bg-red-700" > 
+                                        
+                                        <form method="POST" action="{% url 'delete_app' app.id %}">
+                                            {% csrf_token %}
+                                            <i class="fa-solid fa-trash"></i>
+                                            <input type="submit" value="ลบแอป">
+                                        </form>
+                                    </div>
+                                </div>
+                                {%else%}
+                                <div class=" ">
+                                    
+                                    
+                                    
+                                    <div class="flex ">
+                                    
+                                    <form method="POST" action="{% url 'approve_app' app.id %}">
+                                        {% csrf_token %}
+                                        <div class="ml-10 border-2 rounded-md mt-6 ml-2 bg-green-300 hover:bg-green-500 pl-2 pr-2">
+                                            <i class="fa-solid fa-check"></i>
+                                            <input type="submit" value="อนุมัติ" class="" >
+                                        </div>
+                                    </form>
+                                    <form method="POST" action="{% url 'reject_app' app.id %}">
+                                        {% csrf_token %}
+                                        <div class="ml-10 border-2 rounded-md mt-6  ml-4 bg-red-300 hover:bg-red-500 pl-2 pr-2">
+                                            <i class="fa-solid fa-xmark"></i>
+                                            <input type="submit" value="ไม่อนุมัติ" class="">
+                                        </div>
+                                    </form>
+                                    </div>
+                                </div>
+                                {%endif%}
+    
+                            </footer>
+                    </div>
+                    
+                    
+
+
+
+            
+                {%endfor%}
+            </div>
+            
+
+
+
+                    
+        {%endif%}
+                
+
+
+
+
         {%else%}
             <div class="text-center">
                 <span>คุณไม่มีสิทธ์เข้าถึงหน้านี้</span>

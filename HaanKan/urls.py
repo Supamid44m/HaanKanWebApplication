@@ -8,13 +8,14 @@ from Party import consumers
 
 
 urlpatterns = [
+    
     path("party/", include('Party.urls')),
     path("admin/", admin.site.urls),
     path("Admin/", include('Admin.urls')),
     path('news/', include('Content.urls')),
     path('profile/', include('Profile.urls')),
     path('accounts/', include('allauth.urls')),
-    path('authenticate/', include('Authenticate.urls')),
+    path('', include('Authenticate.urls')),
     path("authenticate/",include("django.contrib.auth.urls")),
     
     

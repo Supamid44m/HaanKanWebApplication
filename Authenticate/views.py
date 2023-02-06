@@ -13,6 +13,8 @@ from Profile.models import Profile
 
 
 def login_user(req):
+    if req.user.is_authenticated:
+        return redirect("/party/")
     if req.method == "POST":
         username = req.POST['username']
         password = req.POST['password']
@@ -30,6 +32,8 @@ def login_user(req):
 
 
 def register(req):
+    if req.user.is_authenticated:
+        return redirect("/party/")
     if req.method == "POST":
         form=RegisterForm(req.POST)
         if form.is_valid():
