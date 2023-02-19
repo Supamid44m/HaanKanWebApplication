@@ -6,12 +6,6 @@ from django.contrib.auth import get_user_model
 
 # Create your views here.
 
-def show_app(req):
-    if req.user.is_superuser:
-        context={"app":Apps.objects.all()}
-        return render(req,'Party/party.html',context)
-    else:
-         return redirect('party')
 
 def showuser(req):
     if req.user.is_superuser:
@@ -60,7 +54,7 @@ def addApps(req):
             app.handle_approval(req.user)
             app.save()
             print("yes")
-            return redirect('/Admin/addapp')
+            return redirect('/app')
             
     else:
         form=AddnewAppforms()
@@ -68,20 +62,87 @@ def addApps(req):
     context={'form':form,'apps':app}
     return render(req,'Admin/addnewapp.html',context)
 
+def showApps(req):
+    if req.user.is_superuser:
+        app=Apps.objects.all()
+        return render(req,'Admin/applist.html',{'apps':app})
+    else:
+         return redirect('party')
+
 def approve_app(req, app_id):   
     app = get_object_or_404(Apps, pk=app_id)
     app.approve()
-    return redirect('/Admin/addapp')
+    return redirect('/Admin/applist')
 
 def reject_app(req, app_id):
     app = get_object_or_404(Apps, pk=app_id)
     app.reject()
-    return redirect('/Admin/addapp')
+    return redirect('/Admin/applist')
 
 def delete_app(req,app_id):
-    app = get_object_or_404(Apps, pk=app_id)
-    app.reject()
-    return redirect('/Admin/addapp')
+    if req.user.is_superuser:
+        app = get_object_or_404(Apps, pk=app_id)
+        app.reject()
+        return redirect('/Admin/applist')
+    else:
+        return redirect('party')
+
+
+def edit_app(req,app_id):
+    app = Apps.objects.get(id=app_id)
+    form=AddnewAppforms(req.POST or None ,req.FILES or None,instance=app)
+    if form.is_valid():
+        form.save()
+        messages.success(req,("แก้ไขสำเร็จ"))
+        return redirect('/Admin/applist')
+        
+    return render(req,'Admin/updateApp.html',{'apps':app,'form':form})
+
+def showBanks(req):
+    if req.user.is_superuser:
+        bank=Banks.objects.all()
+        return render(req,'Admin/bankslist.html',{'banks':bank})
+    else:
+         return redirect('party')
+
+def addBanks(req):
+    if req.user.is_superuser:
+        bank=Banks.objects.all()
+        if req.method == 'POST':
+            form = AddbankForms(req.POST,)
+            if form.is_valid():
+                bank=form.save(commit=False)
+                bank.save()
+                return redirect('/Admin/addbanks')
+        else:
+            form=AddbankForms()
+    else:
+        return redirect('party')
+
+    context={'form':form,'banks':bank}
+    return render(req,'Admin/addbanks.html',context)
+
+
+def delete_bank(req,bank_id):
+    if req.user.is_superuser:
+        bank = get_object_or_404(Banks, pk=bank_id)
+        bank.deletebanks()
+        return redirect('/Admin/banklist')
+    else:
+        return redirect('party')
+
+def edit_bank(req,bank_id):
+    if req.user.is_superuser:
+        bank = Banks.objects.get(id=bank_id)
+        form=AddbankForms(req.POST or None ,req.FILES or None,instance=bank)
+        if form.is_valid():
+            form.save()
+            messages.success(req,("แก้ไขสำเร็จ"))
+            return redirect('/Admin/banklist')
+            
+        return render(req,'Admin/updatebank.html',{'bank':bank,'form':form})
+    else:
+        return redirect('party')
 
 
 

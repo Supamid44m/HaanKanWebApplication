@@ -13,7 +13,7 @@ from django.contrib import messages
 # Create your views here.
 
 def showParty(req):
-    context={"party":Party.objects.all()}
+    context={"partys":Party.objects.all()}
     return render(req,'Party/party.html',context)
 
 @login_required
@@ -46,7 +46,7 @@ def update_party(req,party_id):
         if use_price_avg:
             form.priceavg()
         form.save()
-        messages.success(req,("สร้างสำเร็จ"))
+        messages.success(req,("แก้ไขสำเร็จ"))
         return redirect('/party/'+str(party_id))
         
     return render(req,'Party/updateParty.html',{'partys':party,'form':form})

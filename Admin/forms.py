@@ -1,6 +1,6 @@
 from django import forms
 from .models import *
-from Party.models import Party,Apps
+from Party.models import Party,Apps,Banks
 from Content.models import News
 
 from django.forms import ModelForm
@@ -27,7 +27,9 @@ class ApprovePartyforms(ModelForm):
         }
 
 class AddnewAppforms(ModelForm):
+
     class Meta:
+        style='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
         model=Apps
         fields=('name','image')
         labels={
@@ -35,8 +37,22 @@ class AddnewAppforms(ModelForm):
             'image':'รูป',
         }
         widgets={
-            'name': forms.TextInput(attrs={'class':'form-control','placeholder':'ขื่อแอป'}),
+            'name': forms.TextInput(attrs={'class':style,'placeholder':'ขื่อแอป'}),
+            'image': forms.FileInput(attrs={'class':"block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400",'placeholder':'ขื่อแอป'}),
             
+        }
+class AddbankForms(ModelForm):
+    class Meta:
+        model=Banks
+        style='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+        fields=('name',)
+        labels={
+            'name':'ชื่อธนาคาร',
+            
+        }
+        widgets={
+            'name': forms.TextInput(attrs={'class':style,'placeholder':'ชื่อธนาคาร'}),
+           
         }
 
 class WriteNewsforms(ModelForm):

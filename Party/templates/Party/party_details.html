@@ -172,7 +172,7 @@
                     
 
                     {%if user == party.owner and user != member %}
-                    <a href="#">{{member}}</a>
+                    <a href="{%url 'profile' member.id %}">{{member}}</a>
                         <div class="ml-10 border-2 rounded-md   ml-4 bg-red-300 hover:bg-red-500 pl-2 pr-2" >
                             <form method="post" action="{% url 'delete_member' party.id member.id %}">
                                 {% csrf_token %}
@@ -182,7 +182,7 @@
                         </div>
                     {%else%}
                     
-                    <a href="#">{{member}}</a>
+                    <a href="{%url 'profile' member.id %}">{{member}}</a>
                     {%endif%}
                 </div>
             

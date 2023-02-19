@@ -15,100 +15,88 @@
     
 
 </div>
-<div class="grid gap-4 grid-cols-4 grid-rows-4 ">
-    {% for i in party %}
-        {% if i.isApproved %}
-        <div style="margin-left:25%" class="bg-zinc-700 w-80 h-30 rounded-md mt-20 ml-20 " >
-            
-            <div class="text-lg ">
+<div class="grid grid-cols-4 gap-4 mb-4">
+    {% for party in partys %}
+        {% if party.isApproved %}
+        <div class="max-w-sm rounded overflow-hidden shadow-lg bg-zinc-300 mt-10">
+            <img class="w-full" src="{{party.apps.image.url}}" alt="image">
+            <div class="px-6 py-4">
+              <div class="font-bold text-xl mb-2">{{party.title}}</div>
+              <p class="text-gray-700 text-base ">
+                แอปพลิเคชั่น:{{party.apps.name}}
+              </p>
+              <p class="text-gray-700 text-base">
+                จำนวน: {{party.quantity}} คน
+              </p>
+              <p class="text-gray-700 text-base">
+                ราคาเต็ม:{{party.price}} บาท
+              </p>
+              <p class="text-gray-700 text-base">
+                ราคาเฉลี่ย:
+                {{party.priceavg}} บาท/คน
                 
-                <div class="border-2 border-black rounded-t-lg ">
-                    <div class="pt-6 text-center ml-16">
-                        <img src="{{i.apps.image.url}}" alt="image"  class="w-52 h-24  rounded-md" >
-                        
-                    </div>
-            
-                    <div>
-                        <label for="title" class="text-xl text-bold">รายการ:</label>
-                        <span class="text-md" id="title">{{i.title}}</span>
-                    </div>
-
-                    <div>
-                        <label for="description">แอปพลิเคชั่น:</label>
-                        <span class="text-md" id="description">{{i.apps.name}}</span>
-                    </div>
-
-                    <div>
-                        <label for="description">จำนวน:</label>
-                        <span class="text-md" id="description">{{i.quantity}} คน</span>
-                    </div>
-                    
-                    <div>
-                        <label for="description">ราคาเต็ม:</label>
-                        <span class="text-md" id="description">{{i.price}} บาท</span>
-                    </div>
-                    
-
-                    <div class="">
-                        <label for="description">ราคาเฉลี่ย:</label>
-                        <span class="text-md" id="description">{{i.priceavg}}บาท/คน </span>
-                    </div>
-                </div>
+              </p>
+              
+              {{party.members.count}}/{{party.quantity}}
+            </div>
+            <div class="px-6 pt-4 pb-2">
+              
             </div>
 
-            <footer class="bg-zinc-400 h-10 rounded-b-lg h-16">
-                <div class="">
-                    <i class="fa-sharp fa-solid fa-users"></i>
-                    <span class="mt-2">{{i.members.count}} / {{i.quantity}} คน</span>
-                    <a href="{{ i.get_absolute_url }}" class="ml-28">ดูรายละเอียด</a>
-                </div>
 
-                <div class="absolute">
-                    <i class="fa-solid fa-heart"></i>
-                    <span>{{i.likes.count}}</span>
-                </div>
-                
-                {%if i.members.count >= i.quantity %}
-                <div class="border-solid border-slate-600 text-center mx-auto my-auto">
-                    <a href="{%url 'createparty'%}">เต็ม</a>
-                </div>
+
+
+
+            {%if party.members.count >= party.quantity %}
+            <div  class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-300 rounded-lg hover:bg-bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500      dark:focus:ring-red-800">
+               เต็ม
+            </div>
+
+
+            {%else%}
+                {%if user.is_authenticated%}
+                    {%if user.is_superuser%}
+
+                    {%else%}
+
+                            {%if user in party.members.all%}
+                            <a href="{{ party.get_absolute_url }}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-emerald-300 rounded-lg hover:bg-bg-emerald-500 focus:ring-4 focus:outline-none focus:ring-emerald-300 dark:bg-emerald-500 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
+                                คุณอยู่ที่นี้แล้ว
+
+                            </a>
+                            {%elif user in party.pending_members.all%}
+                                <div  class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-amber-300 rounded-lg hover:bg-bg-amber-500 focus:ring-4 focus:outline-none focus:ring-amber-300 dark:bg-amber-500 ">
+                                    รอหัวตี้ตอบรับ
+                                </div>
+                            {%else%}
+                                <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-emerald-300 rounded-lg hover:bg-bg-emerald-500 focus:ring-4 focus:outline-none focus:ring-emerald-300 dark:bg-emerald-500 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800">
+                                    <form method ='POST'  action="{% url 'joins' party.id %}" >
+                                        {% csrf_token %}
+                                    <input type="submit" value="ขอเข้าร่วม" >
+                                    </form>
+                                </a>
+                            {%endif%}
+                    {%endif%}
+                       
                 {%else%}
-                    {%if user.is_authenticated%}
-                       
-                        {%if user.is_superuser%}
-                        {%else%}
-                        {%if user in i.members.all%}
-                        <div class="text-center" >
-                            <span>คุณอยู่ที่นี้แล้ว</span>
-                        </div>
-                    {%elif user in i.pending_members.all%}
-                        <div class="text-center" >
-                            <span>รอหัวตี้ตอบรับ</span>
-                        </div>
-                    {%else%}
-                        <div class="text-center bg-gray-200 hover:bg-green-300 rounded-md w-20 mx-auto ">
-                            <form method ='POST'  action="{% url 'joins' i.id %}" >
-                                {% csrf_token %}
-                            <input type="submit" value="ขอเข้าร่วม" >
-                            </form>
-                        </div>
-                    {%endif%}
-                        {%endif%}
-                       
-                    {%else%}
-                    <div class="text-center">
-                        <a href="{%url 'login'%}"><span class="">กรุณาเข้าสู่ะระบบเพื่อเข้าร่วมปาร์ตี้</span></a>
-                    </div>
-                    {%endif%}
+                    <a href="{%url 'login'%}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-emerald-300 rounded-lg hover:bg-bg-emerald-500 focus:ring-4 focus:outline-none focus:ring-emerald-300 dark:bg-emerald-500 dark:hover:bg-emerald-700 dark:focus:ring-emerald-800 ">
+                        กรุณาเข้าสู่ะระบบเพื่อเข้าร่วมปาร์ตี้
 
-
+                    </a>
                 {%endif%}
-                
-                
-            </footer>
-        </div>
 
-        {% endif%}
+
+               
+                
+
+
+            {%endif%}
+            
+        </div>
+        
+
+        {% endif%}  
+        
     {% endfor %}
 </div>
 

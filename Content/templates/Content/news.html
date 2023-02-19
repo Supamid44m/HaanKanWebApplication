@@ -5,56 +5,46 @@
 
 {%block content%}
 <div class=" ml-20">
-    <i class="fa-solid fa-magnifying-glass"></i>
-    <input type="search" value="ค้นหา" class="border-2 border-black rounded-md">
+    
 </div>
 <div class="grid grid-cols-4">
     {% for i in news %}
         <div style="margin-left:25%" class="bg-zinc-700 w-80 h-30 rounded-md mt-20 ml-20" >
-            <div class="pt-6 " >
-                <img src="{{ i.image.url }}" alt="image" class="w-24 h-24  rounded-md" >
-               
-            </div>
-            <div>
-                <label for="title" class="text-xl text-bold">หัวข้อข่าว</label>
-                <span class="text-md" id="title">{{i.title}}</span>
-            </div>
+            
+            
+            <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                <a href="#">
+                    <img class="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" />
+                </a>
+                <div class="p-5">
+                    <a href="#">
+                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{i.title}}</h5>
+                    </a>
+                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400"></p>
+                    <a href="{{ i.get_absolute_url }}" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        อ่าน
+                        <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    </a>
 
-        
+                    <div class="">
+                        <i class="fa-solid fa-heart"></i>
+                        <span>{{i.likes.count}}</span>
+                    </div>
 
-            <div>
-                <label for="news">สร้างโดย</label>
-                <span class="text-md" id="news">{{i.writer}}</span>
-            </div>
-
-            <div>
-                <p class="bg-emerald-300 w-300 h-30"></p>
-            </div>
-
-            <div>
-            </div>
-            <footer class="bg-zinc-500 h-16 rounded-b-lg ">
-                <div class="absolute ml-2">
-                    <i class="fa-solid fa-heart"></i>
-                    <span>{{i.likes.count}}</span>
+                    {%if user.is_superuser%}
+                    <div class="border-2 w-28 rounded-md pl-2 pr-2 bg-red-500  hover:bg-red-700 ml-2 mt-2 ">
+                        <form action="{% url 'delete_news' i.id %}" method="POST">
+                            {% csrf_token %}
+                            <i class="fa-solid fa-trash"></i>
+                            <input type="submit" value="ลบข่าวนี้">
+                        </form>
+                        
+                    </div>
+                    {%else%}
+                    {%endif%}
                 </div>
+            </div>
 
-                <div class="border-solid border-slate-600 text-center mx-auto my-auto bg-gray-200 w-24 rounded-md hover:bg-gray-400">
-                    <a href="{{ i.get_absolute_url }}">อ่าน</a>
-                </div>
-
-                {%if user.is_superuser%}
-                <div class="border-2 w-28 rounded-md pl-2 pr-2 bg-red-500  hover:bg-red-700 ml-2 mt-2 ">
-                    <form action="{% url 'delete_news' i.id %}" method="POST">
-                        {% csrf_token %}
-                        <i class="fa-solid fa-trash"></i>
-                        <input type="submit" value="ลบข่าวนี้">
-                    </form>
-                    
-                </div>
-                {%else%}
-                {%endif%}
-            </footer>
         
         </div>
     {% endfor %}

@@ -1,38 +1,56 @@
 {%load static%}
-<header class="bg-zinc-800 h-32 ">
-
-    <div><a href="{%url 'party' %}"><h1 class="text-center text-2xl py-4 text-gray-50">Haankan</h1></a></div>
-    <div>
-    
-
-        {%if user.is_authenticated %}
-            {%if user.is_superuser %}
-            <div style="margin-left:100px" class="text-slate-200 ">
-            {% if user.profile.profile_pic %}
-            <img src="{{user.profile.profile_pic.url}}" alt="" class="rounded-full  w-12 h-12 inline-block " id="user" >
-            {% else %}
-            <img src="{% static 'Profile/images/defualtPIC.jpg' %}" alt="" class="rounded-full  w-12 h-12 inline-block " id="user" >
-            {%endif%}
-            <label for="user">ผู้ใช้:</label>
-            <span id="user">{{user.username}} (admin)</span>
+<nav class="fixed top-0 z-50 w-full bg-white border-b border-emerald-300 dark:bg-emerald-300 dark:border-emerald-300">
+    <div class="px-3 py-3 lg:px-5 lg:pl-3">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center justify-start">
+          
+          <a href="{%url 'party'%}" class="flex ml-2 md:mr-24">
             
-           
+            <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Haankan</span>
+          </a>
+        </div>
+        <div class="flex items-center">
+            <div class="flex items-center ml-3">
+              <div>
+               {%if user.is_authenticated %}
+                  {%if user.is_superuser %}
+
+                     <button type="button" class="flex text-sm bg-emerald-300 rounded-full focus:ring-4 focus:ring-emerald-300 dark:focus:ring-emerald-300" aria-expanded="false" data-dropdown-toggle="dropdown-user">
+                     
+                        {% if user.profile.profile_pic %}
+                        <img src="{{user.profile.profile_pic.url}}" alt="" class="rounded-full  w-12 h-12 inline-block " id="user" >
+                        {% else %}
+                        <img src="{% static 'Profile/images/defualtPIC.jpg' %}" alt="" class="rounded-full  w-12 h-12 inline-block " id="user" >
+                        {%endif%}
+                        <a href="{%url 'profile' request.user.id%}">{{user.username}} (admin)</a>
+                        
+                        
+                     </button>
+
+
+                  {%else%}
+                  <button type="button" class="flex text-sm bg-emerald-300 rounded-full focus:ring-4 focus:ring-emerald-300 dark:focus:ring-emerald-300" aria-expanded="false" data-dropdown-toggle="dropdown-user">
+                     {% if user.profile.profile_pic %}
+                     <img src="{{user.profile.profile_pic.url}}" alt="" class="rounded-full  w-12 h-12 inline-block " id="user" >
+                     {% else %}
+                     <img src="{% static 'Profile/images/defualtPIC.jpg' %}" alt="" class="rounded-full  w-12 h-12 inline-block " id="user" >
+                     {%endif%}
+                     <a href="{%url 'profile' request.user.id%}">{{user.username}}</a>
+                        
+                  </button>
+                  {%endif%}
+               {%else%}
+
+
+                {%endif%}
+
+
+              </div>
+              
             </div>
-            {%else%}
-            <div style="margin-left:100px" class="text-slate-200">
-            {% if user.profile.profile_pic %}
-            <img src="{{user.profile.profile_pic.url}}" alt="" class="rounded-full  w-12 h-12 inline-block " id="user" >
-            {% else %}
-            <img src="{% static 'Profile/images/defualtPIC.jpg' %}" alt="" class="rounded-full  w-12 h-12 inline-block " id="user" >
-            {%endif%}
-                <label for="usern">ผู้ใช้:</label>
-                <span id="user">{{user.username}}</span>
-                
-            </div>
-            {%endif%}
-        {%else%}
-            
-        {%endif%}
-    
+          </div>
+      </div>
     </div>
-</header>
+  </nav>
+
+

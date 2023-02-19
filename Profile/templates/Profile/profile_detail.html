@@ -1,10 +1,28 @@
-{%extends 'Content/components/base.html' %}
 
+{%extends 'Content/components/base.html' %}
+{%load static%}
 {%block title%}Profile-detail{%endblock%}
 
 
 {%block content%}
 
+{%if profile%}
+    {% if profile.profile_pic %}
+        <img src="{{profile.profile_pic.url}}" alt="">
+        {% else %}
+        <img src="{% static 'Profile/images/defualtPIC.jpg' %}" alt="" class="rounded-full  w-8 h-8 inline-block" >
+    {%endif%}
 
+    {{profile.user.username}}
+    {{profile.user.first_name}}
+    {{profile.user.last_name}}
+
+
+    {%if user.id == profile.user.id%}
+    
+    <a href="{% url 'editprofile' %}">แก้ไข</a>
+    {%else%}
+    {%endif%}
+{%endif%}
 
 {%endblock %}

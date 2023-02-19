@@ -7,23 +7,24 @@
 {%if user.is_authenticated %}
         {%if user.is_superuser %}
             <div class=" flex ml-6  ">
-                <div class="border-2 w-20  rounded  ml-10 ">
-                    <p>ปาร์ตี้ทั้งหมด</p>
-                    <span>{{partys | length}}</span>
+               
+                
+                <div class="block max-w-sm p-6 bg-white border border-blue-200 rounded-lg shadow  dark:bg-blue-800 dark:border-blue-700 ">
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">ปาร์ตี้ทั้งหมด</h5>
+                    <p class="font-normal text-gray-700 dark:text-gray-400">{{partys | length}}</p>
                 </div>
 
-                <div class="border-2 w-20  rounded  ml-10  ">
-                   
-                        <div>
-                            <span>ปาร์ตี้ที่อนุมัติแล้ว</span>
-                            {{partyapprove| length}}
-                        </div>
 
+                <div  class="block max-w-sm p-6 bg-white border border-green-500 rounded-lg shadow  dark:bg-green-600 dark:border-green-600  ml-10">
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">ปาร์ตี้ที่อนุมัติแล้ว</h5>
+                    <p class="font-normal text-gray-700 dark:text-gray-400">{{partyapprove| length}}</p>
                 </div>
             
-                 <div class="border-2 w-20  rounded ml-10 ">
-                    <span>ปาร์ตี้ที่รอการอนุมัติ</span>
-                    {{partyunapprove| length}}
+                
+
+                <div  class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-amber-400 dark:border-amber-400  ml-10">
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">ปาร์ตี้ที่รอการอนุมัติ</h5>
+                    <p class="font-normal text-gray-700 dark:text-gray-400">{{partyunapprove| length}}</p>
                 </div>
             </div>
 
@@ -110,6 +111,23 @@
                         </footer>
                        
                     </div>
+                    
+                    <div class="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 mt-10">
+                        <a href="#">
+                            <img class="rounded-t-lg" src="/docs/images/blog/image-1.jpg" alt="" />
+                        </a>
+                        <div class="p-5">
+                            <a href="#">
+                                <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Noteworthy technology acquisitions 2021</h5>
+                            </a>
+                            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+                            <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                Read more
+                                <svg aria-hidden="true" class="w-4 h-4 ml-2 -mr-1" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            </a>
+                        </div>
+                    </div>
+
                         {%endfor%}
                 
                 </div>

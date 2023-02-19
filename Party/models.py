@@ -40,6 +40,9 @@ class Banks(models.Model):
     def __str__(self):
         return self.name
 
+    def deletebanks(self):
+        self.delete()
+
 # Create your models here.
 class Party(models.Model):
     owner=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,null=True,related_name='owner')
@@ -59,7 +62,6 @@ class Party(models.Model):
     paid_day = models.IntegerField(default=1,null=False,validators=[MinValueValidator(1), MaxValueValidator(31)])
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_parties', blank=True)
     dislikes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='disliked_parties', blank=True)
-    
     like_status = models.CharField(max_length=10, default='neutral')
     
     def like_party(self, user):
