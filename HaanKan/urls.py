@@ -19,7 +19,8 @@ urlpatterns = [
     path("authenticate/",include("django.contrib.auth.urls")),
     path('app',views.addApps,name="addapps"),
     path("",authview.login_user,name="login_user"),
-    path("register",authview.register,name="register")
+    path("register",authview.register,name="register"),
+    path("changepassword",authview.change_password,name="change_password")
    
     
     

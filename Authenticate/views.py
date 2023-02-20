@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.contrib import messages
 from .forms import *
 from django.contrib.auth import login as auth_login ,authenticate
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from Profile.models import Profile
 
@@ -48,4 +49,22 @@ def register(req):
 
     context={"form":form}
     return render(req,"Authenticate/register.html",context)
+
+
+def change_password(req):
+    if req.user.is_authenticated:
+        if req.method == 'POST':
+            form = PasswordChangeForm(req.user, req.POST)
+            if form.is_valid():
+                user = form.save()
+                messages.success(req, 'Your password was successfully updated!')
+                return redirect('/party/')
+            else:
+                messages.error(req, 'Please correct the error below.')
+        else:
+            form = PasswordChangeForm(req.user)
+        return render(req, 'Authenticate/changepassword.html', {'form': form})
+    else:
+        return redirect('/party/')
+
 
