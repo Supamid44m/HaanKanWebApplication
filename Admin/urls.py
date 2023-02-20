@@ -17,6 +17,8 @@ urlpatterns =[
     path('addbank/', views.addBanks, name='addbanks'),
     path('bank/delete/<int:bank_id>', views.delete_bank, name='delete_bank'),
     path('bank/<int:bank_id>/update/', views.edit_bank, name='edit_bank'),
+    path('editprofile/<int:user_id>/', views.editprofile, name='edit_profileAd'),
+    path('deleteuser/<int:user_id>/',views.delete_user,name='delete_user'),
     path('writenews',views.writeNews,name="writenews"),
 
 

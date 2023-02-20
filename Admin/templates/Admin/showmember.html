@@ -7,7 +7,7 @@
 {%if user.is_authenticated %}
     {%if user.is_superuser %}
     <div>
-        <div style="margin-left:25%">
+       
             
             <table style="width:100%" class="border-2">
                 
@@ -23,7 +23,7 @@
                 <tbody class="border-2">
                     {%for i in users%}
                     <tr >
-                        <td class="border-2">{{i.username}}</td>
+                        <td class="border-2"><a href="{%url 'profile' i.id%}">{{i.first_name}}</a></td>
                         <td class="border-2">{{i.first_name}}</td>
                         <td class="border-2">{{i.last_name}}</td>
                         <td class="border-2">{{i.date_joined}}</td>
@@ -44,6 +44,17 @@
                             {%endif%}
 
                         </td>
+                        
+                        <td class="border-2">
+                          <a href="{%url 'edit_profileAd' i.id  %}">แก้ไข</a>
+
+                        </td>
+
+                        <td class="border-2">
+                            <a href="{%url 'delete_user' i.id  %}">ลบ</a>
+  
+                          </td>
+                        
                     </tr>
                     
                 </tbody>
@@ -52,7 +63,7 @@
                 {%endfor%}
             </table>
         
-        </div>
+       
 
     </div>
     {%else%}

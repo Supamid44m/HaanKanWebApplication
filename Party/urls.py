@@ -23,6 +23,8 @@ urlpatterns =[
     path('<int:party_id>/undislike/', views.undislike_party, name='undislike_party'),
     path('<int:party_id>/upload_evidence/', views.upload_evidence, name='upload_evidence'),
     path('<int:party_id>/evidence/', views.show_evidence, name='show_evidence'),
+    path('<int:party_id>/evidence/<int:evidence_id>/delete/', views.delete_evidence, name='delete_evidence'),
+
     #path('<int:party_id>/delete_evidence/', views.delete_evidence, name='delete_evidence'),
     #path('ws/party/<int:party_id>/', consumers.ChatConsumer.as_asgi())
     

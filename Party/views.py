@@ -8,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from datetime import datetime
 from django.contrib import messages 
+import os
 
 
 # Create your views here.
@@ -182,6 +183,12 @@ def show_evidence(req,party_id):
     evidence = EvidenceimageParty.objects.filter(party=party)
     return render(req,'Party/show_evidence.html', {'party': party, 'evidence':evidence,})
 
-
-
+def delete_evidence(req, party_id, evidence_id):
+    evidence = get_object_or_404(EvidenceimageParty, id=evidence_id, party_id=party_id)
+    if req.user == evidence.uploader:
+        if evidence.evidenceimage:
+            
+            os.remove(os.path.join(settings.MEDIA_ROOT, evidence.evidenceimage.name))
+        evidence.delete()
+    return redirect('/party/' + str(party_id)+'/evidence/')
 

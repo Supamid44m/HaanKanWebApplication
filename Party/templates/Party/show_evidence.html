@@ -8,31 +8,33 @@
     <a href="{{ party.get_absolute_url }}" class="ml-28">back</a>
     <div class="grid grid-cols-4 gap-4">
         {%for img in evidence%}
-        <div style="margin-left:25%" class="bg-zinc-700 w-80 h-30 rounded-md mt-20 ml-20 rounded-t-lg  rounded-b-lg" >
-
-            <header class="bg-green-500 rounded-t-lg">
-               
-            </header>
-
-            <div>
-                <img src="{{img.evidenceimage.url}}" alt="image" class="w-80  h-60 rounded-t-lg " >
+        <div class="max-w-sm rounded overflow-hidden shadow-lg">
+            <img class="w-full" src="{{img.evidenceimage.url}}" alt="Sunset in the mountains">
+            <div class="px-6 py-4">
+              <div class="font-bold text-xl mb-2">by <a href="{%url 'profile' img.uploader.id %}">{{img.uploader}} </a></div>
+              
+              <p class="text-gray-700 text-base">
+                อัปโหลดเมื่อ:
+                {{img.uploaded_at}}
+              </p>
+              
             </div>
-
-            <footer class="bg-zinc-300 rounded-b-lg">
-                <div>
-                    <label for="uploader">เพิ่มโดย</label>
-                    <span id="uploader">{{img.uploader}}</span>
-                </div>
-
-                <div>
-                    <label for="uploader">วันที่</label>
-                    <span id="uploader">{{img.uploaded_at}}</span>
-                </div>
+            {%if user == img.uploader %}
+            <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-300 rounded-lg hover:bg-bg-red-500 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-700 dark:focus:ring-red-800">
                 
-                
-            </footer>
+                    <form method="post" action="{% url 'delete_evidence' party.id img.id %}">
+                        {% csrf_token %}
+                        <input type="submit" value="Delete">
+                    </form>
+            </a>
+                    {%else%}
+
+
+                    {%endif%}
             
-        </div>
+            
+          </div>
+        
         
         {%endfor%}
       </div>

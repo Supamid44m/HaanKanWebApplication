@@ -165,3 +165,38 @@ def writeNews(req):
     context={'form':form}
     return render(req,'Admin/writenews.html',context)
 
+
+
+def editprofile(req,user_id):
+    profile = get_object_or_404(Profile, user_id=user_id)
+    user = profile.user
+    
+    if req.method == "POST":
+      userform=UserUpdateForm(req.POST or None, req.FILES or None,instance=user)
+      profileform=ProfileUpdateform(req.POST or None, req.FILES or None,instance=profile)
+      if  userform.is_valid()  and profileform.is_valid():
+          userform.save()
+          profileform.save()
+        
+          return redirect('/Admin/alluser')
+    else:
+      userform=UserUpdateForm(req.POST or None, req.FILES or None,instance=user)
+      profileform=ProfileUpdateform(req.POST or None, req.FILES or None,instance=req.user)
+    context = {
+        'user_form':  userform,
+        'profile_form': profileform,
+    }
+     
+    return render(req,'Profile/editeprofile.html',context)
+
+def delete_user(req,user_id):
+    user = get_object_or_404(User,id=user_id)
+    if user == req.user:
+        return redirect('/Admin/alluser')
+    elif  user.is_superuser:
+        return redirect('/Admin/alluser')
+        
+    else:
+         user.delete()
+
+

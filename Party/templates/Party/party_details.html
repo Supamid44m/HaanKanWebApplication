@@ -7,7 +7,7 @@
 {%block content%}
 
 {% if party.isApproved %}
-<div style="margin-left: 100px; height:100%  "  class="border-2 bg-gray-200  relative container mx-auto  ">
+<div style=""  class="border-2 bg-gray-200  relative container mx-auto  ">
     <span class="text-2xl pl-6">รายละเอียดปาร์ตี้</span>
    
 
@@ -260,11 +260,7 @@
             <a href="{%url 'show_evidence' party.id%}">ดูหลักฐานการโอน</a>
         </div>
 
-        {%if msg%}
-            {%for m in msg%}
-                {{m}}    
-            {%endfor%}
-        {%endif%}
+       
         {%endif%}
 
         
