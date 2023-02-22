@@ -137,7 +137,7 @@ def search(req,):
         return render(req,'Party/searchParty.html',
         {
             'searched':searched,
-            'party':party
+            'partys':party
         })
     else:
         return render(req,'Party/searchParty.html',{})

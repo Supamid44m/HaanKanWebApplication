@@ -49,7 +49,7 @@ class Party(models.Model):
     members=models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
     pending_members = models.ManyToManyField(User, related_name="pending_member")
     title = models.CharField(max_length=500,null=False)
-    apps = models.ForeignKey(Apps, on_delete=models.CASCADE)
+    apps = models.ForeignKey(Apps, on_delete=models.CASCADE,null=False,blank=False)
     quantity = models.IntegerField(default=0,null=True)
     bank=models.ForeignKey(Banks,on_delete=models.CASCADE,null=True)
     bankaccount= models.CharField(max_length=500,null=True)

@@ -14,8 +14,8 @@ class News(models.Model):
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_news', blank=True)
     dislikes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='disliked_news', blank=True)
     like_status = models.CharField(max_length=10, default='neutral')
-
-
+    uploaded_at = models.DateTimeField(auto_now_add=True,null=True)
+    
 
     def like_news(self, user):
         self.likes.add(user)
