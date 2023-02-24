@@ -5,24 +5,34 @@
 
 {%block content%}
 
-<div>
-    <div style="margin-left:25%" class="">
+
+    
         {%if user.is_authenticated%}
                 {%if user.is_superuser%}
-                <div class="border-2 bg-zinc-300 rounded  border-black w-90 text  w-80 h-82 " >
-                    <form action="" method="POST" enctype="multipart/form-data" class="pt-2 ">
-                        {%csrf_token%} 
-                        {{form.as_p}}
-                        
-                    <input type="submit">
-                    </form>
-                </div>
+                <section class="bg-white">
+                    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
+                       
+                        <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-zinc-300 ">
+                            <div href="#" class="text-center mt-10 mb-6 text-2xl font-semibold text-zinc-900 dark:text-zinc-900 ">
+                            
+                                เขียนข่าว
+                            </div>
+                            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                                
+                                <form class="space-y-4 md:space-y-6" action="#" method="POST" enctype="multipart/form-data">
+                                    {%csrf_token%}
+                                    {{form.as_p}}
+                                    <button type="submit" class="w-full  bg-emerald-500 hover:bg-bg-emerald-700 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-emerald-500 dark:hover:bg-emerald-700 text-zinc-900 ">โพสต์</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                  </section>
                 {%endif%}
         {%else%}
             <div class="text-center">
                 <span>คุณไม่มีสิทธ์เข้าถึงหน้านี้</span>
             </div>
         {%endif%}
-    </div>
-</div>
+
 {%endblock%}

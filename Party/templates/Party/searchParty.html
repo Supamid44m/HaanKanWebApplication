@@ -57,7 +57,7 @@
                                     {%if user.is_superuser%}
         
                                     {%else%}
-                                    <a href="" class="inline-block px-6 py-2.5 bg-red-500 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out">เต็ม</a>
+                                    <a href="" class="mx-auto inline-block px-6 py-2.5 bg-red-500 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out">เต็ม</a>
                                     {%endif%}
         
                             
@@ -67,16 +67,16 @@
                                 {%if user.is_authenticated%}
                                     {%if not user.is_superuser%}
                                         {%if user in party.members.all%}
-                                        <a href="{{ party.get_absolute_url }}" class="inline-block px-6 py-2.5 bg-emerald-500 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-emerald-700 hover:shadow-lg focus:bg-emerald-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-emerald-800 active:shadow-lg transition duration-150 ease-in-out">
+                                        <a href="{{ party.get_absolute_url }}" class="mx-auto inline-block px-6 py-2.5 bg-emerald-500 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-emerald-700 hover:shadow-lg focus:bg-emerald-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-emerald-800 active:shadow-lg transition duration-150 ease-in-out">
                                             คุณอยู่ที่นี้แล้ว
         
                                         </a>
                                         {%elif user in party.pending_members.all%}
-                                            <div  class="inline-block px-6 py-2.5 bg-amber-500 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md  hover:shadow-lg focus:bg-amber-700 focus:shadow-lg focus:outline-none focus:ring-0  active:shadow-lg transition duration-150 ease-in-out ">
+                                            <div  class="mx-auto inline-block px-6 py-2.5 bg-amber-500 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md  hover:shadow-lg focus:bg-amber-700 focus:shadow-lg focus:outline-none focus:ring-0  active:shadow-lg transition duration-150 ease-in-out ">
                                                 รอหัวตี้ตอบรับ
                                             </div>
                                         {%else%}
-                                            <a href="#" class="inline-block px-6 py-2.5 bg-emerald-500 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-emerald-700 hover:shadow-lg focus:bg-emerald-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-emerald-800 active:shadow-lg transition duration-150 ease-in-out">
+                                            <a href="#" class="mx-auto inline-block px-6 py-2.5 bg-emerald-500 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-emerald-700 hover:shadow-lg focus:bg-emerald-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-emerald-800 active:shadow-lg transition duration-150 ease-in-out">
                                                 <form method ='POST'  action="{% url 'joins' party.id %}" >
                                                     {% csrf_token %}
                                                 <input type="submit" value="ขอเข้าร่วม" >
@@ -90,7 +90,7 @@
                                     {%endif%}
                                     
                                 {%else%}
-                                <a href="{%url 'login_user'%}" class="inline-block px-6 py-2.5 bg-red-500 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out">
+                                <a href="{%url 'login_user'%}" class="mx-auto inline-block px-6 py-2.5 bg-red-500 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out">
                                     กรุณาเข้าสู่ะระบบเพื่อเข้าร่วมปาร์ตี้
             
                                 </a>

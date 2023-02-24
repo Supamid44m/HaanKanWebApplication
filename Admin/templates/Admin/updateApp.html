@@ -1,236 +1,30 @@
-{%load static%}
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"></link>
-    
-    </style>
-    <title>{%block title%} {%endblock%}</title>
- </head>
+
+ {%extends 'Content/components/base.html' %}
 
 
-<nav class="fixed top-0 z-50 w-full bg-white border-b border-emerald-300 dark:bg-emerald-300 dark:border-emerald-300">
-    <div class="px-3 py-3 lg:px-5 lg:pl-3">
-      <div class="flex items-center justify-between">
-        <div class="flex items-center justify-start">
-          <button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button" class="inline-flex items-center p-2 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600">
-              <span class="sr-only">Open sidebar</span>
-              
-              <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                 <path clip-rule="evenodd" fill-rule="evenodd" d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"></path>
-              </svg>
-           </button>
-          <a href="{%url 'party'%}" class="flex ml-2 md:mr-24">
-            
-            <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Haankan</span>
-          </a>
-        </div>
-        <div class="flex items-center">
-            <div class="flex items-center ml-3">
-              <div>
-               {%if user.is_authenticated %}
-                  {%if user.is_superuser %}
+ {%block title%}updateapp{%endblock%}
+ 
+ {%block content%}
 
-                     <button type="button" class="flex text-sm bg-emerald-300 rounded-full focus:ring-4 focus:ring-emerald-300 dark:focus:ring-emerald-300" aria-expanded="false" data-dropdown-toggle="dropdown-user">
-                     
-                        {% if user.profile.profile_pic %}
-                        <img src="{{user.profile.profile_pic.url}}" alt="" class="rounded-full  w-12 h-12 inline-block " id="user" >
-                        {% else %}
-                        <img src="{% static 'Profile/images/defualtPIC.jpg' %}" alt="" class="rounded-full  w-12 h-12 inline-block " id="user" >
-                        {%endif%}
-                        <span>{{user.username}} (admin)</span>
-                        
-                     </button>
-
-
-                  {%else%}
-                  <button type="button" class="flex text-sm bg-emerald-300 rounded-full focus:ring-4 focus:ring-emerald-300 dark:focus:ring-emerald-300" aria-expanded="false" data-dropdown-toggle="dropdown-user">
-                     {% if user.profile.profile_pic %}
-                     <img src="{{user.profile.profile_pic.url}}" alt="" class="rounded-full  w-12 h-12 inline-block " id="user" >
-                     {% else %}
-                     <img src="{% static 'Profile/images/defualtPIC.jpg' %}" alt="" class="rounded-full  w-12 h-12 inline-block " id="user" >
-                     {%endif%}
-                     <span>{{user.username}} </span>
-                  </button>
-                  {%endif%}
-               {%else%}
-
-
-                {%endif%}
-
-
-              </div>
-              
-            </div>
-          </div>
-      </div>
-    </div>
-  </nav>
-  
-  <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-zinc-900 dark:bg-zinc-900" aria-label="Sidebar">
-     <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-zinc-900">
-        <ul class="space-y-2">
-         {%if user.is_authenticated %}
-            {%if user.is_superuser %}
-                  <li class="pt-10">
-                     <a href="{%url 'party'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
-                        
-                        <span class="ml-3">ดูปาร์ตี้ทั้งหมด</span>
-                     </a>
-                  </li>
-                  <li class="pt-10">
-                     <a href="{%url 'approveparty'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
-                        <span class="flex-1 ml-3 whitespace-nowrap">ภาพรวมปาร์ตี้</span>
-                     </a>
-                  </li>
-                  <li class="pt-10">
-                     <a href="{%url 'news'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
-                       
-                        <span class="flex-1 ml-3 whitespace-nowrap">ข่าวประชาสัมพันธ์</span>
-            
-                     </a>
-                  </li>
-                  <li class="pt-10">
-                     <a href="{%url 'writenews'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
-                       
-                        <span class="flex-1 ml-3 whitespace-nowrap">เขียนข่าวประชาสัมพันธ์</span>
-                     </a>
-                  </li>
-                  <li class="pt-10">
-                     <a href="{%url 'addapps'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
-                      
-                        <span class="flex-1 ml-3 whitespace-nowrap">เพิ่มแอป</span>
-                     </a>
-                  </li>
-                  <li class="pt-10">
-                     <a href="{%url 'apps_list'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
-                        
-                        <span class="flex-1 ml-3 whitespace-nowrap">ดูรายการแอป</span>
-                     </a>
-                  </li>
-                  <li class="pt-10">
-                     <a href="{%url 'addbanks'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
-                        
-                        <span class="flex-1 ml-3 whitespace-nowrap">เพิ่มธนาคาร</span>
-                     </a>
-                  </li>
-                  <li class="pt-10">
-                     <a href="{%url 'banks_list'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
-                        
-                        <span class="flex-1 ml-3 whitespace-nowrap">ดูรายการธนาคาร</span>
-                     </a>
-                  </li>
-                  <li class="pt-10">
-                     <a href="{%url 'alluser'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
-                        
-                        <span class="flex-1 ml-3 whitespace-nowrap">ดูสมาชิกทั้งหมด</span>
-                     </a>
-                  </li>
-                  <li class="pt-10">
-                     <a href="{%url 'logout'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
-                        
-                        <span class="flex-1 ml-3 whitespace-nowrap">ออกจากระบบ</span>
-                     </a>
-                  </li>
-               {%else%}
-               <li class="pt-10">
-                  <a href="{%url 'party'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
-                     
-                     <span class="ml-3">ดูปาร์ตี้ทั้งหมด</span>
-                  </a>
-               </li>
-
-               <li class="pt-10">
-                  <a href="#" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
-                     
-                     <span class="ml-3">ปาร์ตี้ของฉัน</span>
-                  </a>
-               </li>
-               
-               <li class="pt-10">
-                  <a href="{%url 'createparty'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
-                     
-                     <span class="ml-3">สร้างปาร์ตี้ใหม่</span>
-                  </a>
-               </li>
-
-               <li class="pt-10">
-                  <a href="{%url 'news'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
-                     
-                     <span class="ml-3">ข่าวประชาสัมพันธ์</span>
-                  </a>
-               </li>
-               
-               <li class="pt-10">
-                  <a href="{%url 'addapps'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
-                     
-                     <span class="ml-3">เพิ่มแอป</span>
-                  </a>
-               </li>
-
-               <li class="pt-10">
-                  <a href="{%url 'logout'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
-                     
-                     <span class="ml-3">ออกจากระบบ</span>
-                  </a>
-               </li>
-
-             
-
-               {%endif%}
-            {%else%}
-               <li class="pt-10">
-                  <a href="{%url 'party'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
-                     
-                     <span class="ml-3">ดูปาร์ตี้ทั้งหมด</span>
-                  </a>
-               </li>
-
-               <li class="pt-10">
-                  <a href="{%url 'news'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
-                     
-                     <span class="ml-3">ข่าวประชาสัมพันธ์</span>
-                  </a>
-               </li>
-
-
-               <li class="pt-10">
-                  <a href="{%url 'register'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
-                     
-                     <span class="ml-3">สมัครสมาชิก</span>
-                  </a>
-               </li>
-
-               <li class="pt-10">
-                  <a href="{%url 'login_user'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
-                     
-                     <span class="ml-3">เข้าสู่ระบบ</span>
-                  </a>
-               </li>
-
-
-            {%endif%}
-        </ul>
-     </div>
-  </aside>
-  
-  <div class="p-4 sm:ml-64">
-   <div class="p-4   rounded-lg dark:border-gray-700 mt-14">
-         <div class="grid grid-cols-3 gap-4 mb-4">
-            <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-               <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-            </div>
-            <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-               <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-            </div>
-            <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
-               <p class="text-2xl text-gray-400 dark:text-gray-500">+</p>
-            </div>
-         </div>
-         
+ <section class="bg-white">
+   <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
+      
+       <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-zinc-300 ">
+           <div href="#" class="text-center mt-10 mb-6 text-2xl font-semibold text-zinc-900 dark:text-zinc-900 ">
+           
+               แก้ไขข้อมูลแอปพลิเคชัน
+           </div>
+           <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+            <img src="{{apps.image.url}}" class="w-96 h-40 rounded-lg" />
+               <form class="space-y-4 md:space-y-6" action="#" method="POST" enctype="multipart/form-data">
+                   {%csrf_token%}
+                   {{form.as_p}}
+                   <button type="submit" class="w-full  bg-emerald-500 hover:bg-bg-emerald-700 focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-emerald-500 dark:hover:bg-emerald-700 text-zinc-900 ">อัปเดต</button>
+               </form>
+           </div>
+       </div>
    </div>
-  </div>
-  
+ </section>
+
+ {%endblock%}
+ 

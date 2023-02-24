@@ -28,7 +28,7 @@ def approveParty(req):
     else:
         messages.success(req,("คุณไม่มีสิทธ์เข้าถึง"))
         return redirect('party')
-    return render(req,"Admin/approveparty.html")
+    
 
 def approve_party(req, party_id):
     party = get_object_or_404(Party, pk=party_id)

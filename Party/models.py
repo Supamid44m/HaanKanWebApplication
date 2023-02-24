@@ -16,6 +16,7 @@ class Apps(models.Model):
     name=models.CharField(max_length=500,null=True)
     image=models.ImageField(upload_to='Appimage',null=True)
     isApproved=models.BooleanField('Approved',default=False)
+    
 
 
     def approve(self):

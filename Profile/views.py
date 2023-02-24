@@ -22,7 +22,6 @@ def editprofile(req):
     
     user = req.user
     profile = user.profile
-    form = ProfileUpdateform(instance=profile)
     if req.method == "POST":
       userform=UserUpdateForm(req.POST or None, req.FILES or None,instance=user)
       profileform=ProfileUpdateform(req.POST or None, req.FILES or None,instance=profile)
@@ -33,10 +32,34 @@ def editprofile(req):
           return redirect('/profile/'+str(req.user.id))
     else:
       userform=UserUpdateForm(req.POST or None, req.FILES or None,instance=user)
-      profileform=ProfileUpdateform(req.POST or None, req.FILES or None,instance=req.user)
+      profileform=ProfileUpdateform(req.POST or None, req.FILES or None,instance=profile)
     context = {
         'user_form':  userform,
         'profile_form': profileform,
+        
     }
      
     return render(req,'Profile/editeprofile.html',context)
+
+def like_profile(request,user_id,):
+    profile = get_object_or_404(Profile, id=user_id)
+    profile.like_profile(request.user)
+    return redirect("/profile/"+ str(profile.user.id))
+
+
+def unlike_profile(request,user_id):
+    profile = get_object_or_404(Profile, id=user_id)
+    profile.unlike_profile(request.user)
+    return redirect("/profile/"+ str(profile.user.id))
+
+
+def dislike_profile(request,user_id):
+    profile = get_object_or_404(Profile, id=user_id)
+    profile.dislike_profile(request.user)
+    return redirect("/profile/"+ str(profile.user.id))
+
+
+def undislike_profile(request,user_id):
+    profile = get_object_or_404(Profile, id=user_id)
+    profile.undislike_profile(request.user)
+    return redirect("/profile/"+ str(profile.user.id))
