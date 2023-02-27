@@ -8,9 +8,9 @@ from django.conf import settings
 
 class News(models.Model):
     writer=models.ForeignKey(User,on_delete=models.CASCADE,null=True)
-    title=models.CharField(max_length=500)
-    image=models.ImageField(upload_to='Newsimages',null=True,)
-    desciption=models.TextField(max_length=500)
+    title=models.CharField(max_length=500,null=True,blank=False)
+    image=models.ImageField(upload_to='Newsimages',null=True,blank=False)
+    desciption=models.TextField(max_length=100000,null=True,blank=True)
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_news', blank=True)
     dislikes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='disliked_news', blank=True)
     like_status = models.CharField(max_length=10, default='neutral')
@@ -54,4 +54,7 @@ class News(models.Model):
     
     def get_absolute_url(self):      
         return reverse('news_detail', kwargs={"id":self.id})
+    
+    def get_short_description(self):
+        return self.desciption[:70]
     

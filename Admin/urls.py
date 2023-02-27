@@ -20,6 +20,7 @@ urlpatterns =[
     path('editprofile/<int:user_id>/', views.editprofile, name='edit_profileAd'),
     path('deleteuser/<int:user_id>/',views.delete_user,name='delete_user'),
     path('writenews',views.writeNews,name="writenews"),
+    
 
 
 

@@ -22,7 +22,7 @@
                         {% else %}
                         <img src="{% static 'Profile/images/defualtPIC.jpg' %}" alt="" class="rounded-full  w-12 h-12 inline-block " id="user" >
                         {%endif%}
-                        <a href="{%url 'profile' request.user.id%}">{{user.username}} (admin)</a>
+                        <a href="{%url 'profile' request.user.id%}" class="hover:underline">{{user.username}} (admin)</a>
                         
                         
                      </button>
@@ -35,7 +35,7 @@
                      {% else %}
                      <img src="{% static 'Profile/images/defualtPIC.jpg' %}" alt="" class="rounded-full  w-12 h-12 inline-block " id="user" >
                      {%endif%}
-                     <a href="{%url 'profile' request.user.id%}">{{user.username}}</a>
+                     <a href="{%url 'profile' request.user.id%} " class="hover:underline">{{user.username}}</a>
                         
                   </button>
                   {%endif%}

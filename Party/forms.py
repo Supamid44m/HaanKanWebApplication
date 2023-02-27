@@ -50,16 +50,16 @@ class addMemberForm(ModelForm):
         fields=('members',)
         labels={'members':'เพิ่มสมาชิก'}
         widgets={
-            'members':forms.SelectMultiple(attrs={'placeholder':'เพิ่มสมาชิก'})
+            'members':forms.SelectMultiple(attrs={'placeholder':'เพิ่มสมาชิก','class':'',})
         }
     
 class AddMemberForms(forms.Form):
-    member = forms.ModelChoiceField(queryset=User.objects.filter(is_superuser=False), empty_label=None)
+    member = forms.ModelChoiceField(queryset=User.objects.filter(is_superuser=False), empty_label=None,label="เพิ่มสมาชิก",widget=forms.Select(attrs={'class': 'block appearance-none w-full bg-gray-50 border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline'}))
 
 class EvidenceForm(forms.ModelForm):
     class Meta:
         model = EvidenceimageParty
         fields = ['evidenceimage']
 
-    evidenceimage = forms.ImageField(label='อัปโหลดหลักฐานการโอน')
+    evidenceimage = forms.ImageField(label='อัปโหลดหลักฐานการโอน',widget=forms.FileInput(attrs={'class':"block w-full text-sm text-zinc-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-grey-300 dark:border-gray-600 dark:placeholder-gray-400",}))
 

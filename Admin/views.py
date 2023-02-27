@@ -3,8 +3,9 @@ from Party.models import *
 from django.contrib import messages
 from .forms import *
 from django.contrib.auth import get_user_model
+from Content.models import News
 
-# Create your views here.
+
 
 
 def showuser(req):
@@ -46,21 +47,26 @@ def delte_party(req,party_id):
     return redirect('/Admin/approveparty')
     
 def addApps(req):
-    app=Apps.objects.all()
-    if req.method == 'POST':
-        form = AddnewAppforms(req.POST,req.FILES)
-        if form.is_valid():
-            app=form.save(commit=False)
-            app.handle_approval(req.user)
-            app.save()
-            print("yes")
-            return redirect('/app')
-            
-    else:
-        form=AddnewAppforms()
+    if req.user.is_authenticated:
+        app=Apps.objects.all()
+        if req.method == 'POST':
+            form = AddnewAppforms(req.POST,req.FILES)
+            if form.is_valid():
+                app=form.save(commit=False)
+                app.handle_approval(req.user)
+                app.save()
+                print("yes")
+                return redirect('/app')
+                
+        else:
+            form=AddnewAppforms()
 
-    context={'form':form,'apps':app}
-    return render(req,'Admin/addnewapp.html',context)
+        context={'form':form,'apps':app}
+        return render(req,'Admin/addnewapp.html',context)
+    else:
+      messages.success(req,("กรุณาเข้าสู่ระบบ"))
+      return redirect('party')
+
 
 def showApps(req):
     if req.user.is_superuser:
@@ -89,14 +95,17 @@ def delete_app(req,app_id):
 
 
 def edit_app(req,app_id):
-    app = Apps.objects.get(id=app_id)
-    form=AddnewAppforms(req.POST or None ,req.FILES or None,instance=app)
-    if form.is_valid():
-        form.save()
-        messages.success(req,("แก้ไขสำเร็จ"))
-        return redirect('/Admin/applist')
-        
-    return render(req,'Admin/updateApp.html',{'apps':app,'form':form})
+    if req.user.is_superuser:
+        app = Apps.objects.get(id=app_id)
+        form=AddnewAppforms(req.POST or None ,req.FILES or None,instance=app)
+        if form.is_valid():
+            form.save()
+            messages.success(req,("แก้ไขสำเร็จ"))
+            return redirect('/Admin/applist')
+            
+        return render(req,'Admin/updateApp.html',{'apps':app,'form':form})
+    else:
+         return redirect('party')
 
 def showBanks(req):
     if req.user.is_superuser:
@@ -109,7 +118,7 @@ def addBanks(req):
     if req.user.is_superuser:
         bank=Banks.objects.all()
         if req.method == 'POST':
-            form = AddbankForms(req.POST,)
+            form = AddbankForms(req.POST)
             if form.is_valid():
                 bank=form.save(commit=False)
                 bank.save()
@@ -131,6 +140,8 @@ def delete_bank(req,bank_id):
     else:
         return redirect('party')
 
+
+
 def edit_bank(req,bank_id):
     if req.user.is_superuser:
         bank = Banks.objects.get(id=bank_id)
@@ -146,24 +157,25 @@ def edit_bank(req,bank_id):
 
 
 
-
-
-
-
-
 def writeNews(req):
-    if req.method == 'POST':
-        form = WriteNewsforms(req.POST,req.FILES)
-        if form.is_valid():
-            writer=form.save()
-            writer.writer = req.user
-            writer.save()
-            return redirect('/news/')
+    if req.user.is_superuser:
+        if req.method == 'POST':
+            form = WriteNewsforms(req.POST,req.FILES)
+            if form.is_valid():
+                writer=form.save()
+                writer.writer = req.user
+                writer.save()
+                return redirect('/news/')
+        else:
+            form=WriteNewsforms()
+            
+        context={'form':form}
+        return render(req,'Admin/writenews.html',context)
     else:
-        form=WriteNewsforms()
-        
-    context={'form':form}
-    return render(req,'Admin/writenews.html',context)
+        return redirect('party')
+    
+
+
 
 
 
@@ -190,13 +202,17 @@ def editprofile(req,user_id):
     return render(req,'Profile/editeprofile.html',context)
 
 def delete_user(req,user_id):
-    user = get_object_or_404(User,id=user_id)
-    if user == req.user:
-        return redirect('/Admin/alluser')
-    elif  user.is_superuser:
-        return redirect('/Admin/alluser')
-        
+    if req.user.is_superuser:
+        user = get_object_or_404(User,id=user_id)
+        if user == req.user:
+            return redirect('/Admin/alluser')
+        elif user.is_superuser:
+            return redirect('/Admin/alluser')
+        else:
+            user.delete()
+            return redirect('/Admin/alluser')
     else:
-         user.delete()
+        return redirect('party')
+
 
 

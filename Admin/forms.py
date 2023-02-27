@@ -61,7 +61,8 @@ class WriteNewsforms(ModelForm):
     class Meta:
         model=News
         style='bg-gray-50 border border-gray-300 text-zinc-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-grey-300 dark:border-gray-600 dark:placeholder-gray-400 dark:text-zinc-900 dark:focus:ring-zinc-500 dark:focus:border-zinc-500'
-        fields=('title','image','desciption')
+        exclude = ('writer',)
+        fields=('title','image','desciption',)
         labels={
             'title':'หัวข้อข่าว',
             'image':'Image',
@@ -71,6 +72,10 @@ class WriteNewsforms(ModelForm):
             'title': forms.TextInput(attrs={'class':style,'placeholder':'หัวข้อข่าว'}),
             'desciption': forms.Textarea(attrs={'class':style,'placeholder':'รายละเอียด'}),
             'image':forms.FileInput(attrs={'class':"block w-full text-sm text-zinc-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-grey-300 dark:border-gray-600 dark:placeholder-gray-400",}),
+        }
+        help_texts = {
+            'title': None,
+            'desciption': None,
         }
 
 class UserUpdateForm(ModelForm):

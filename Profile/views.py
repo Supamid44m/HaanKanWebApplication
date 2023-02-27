@@ -19,47 +19,67 @@ def profiledetail(req,user_id):
 
 
 def editprofile(req):
-    
-    user = req.user
-    profile = user.profile
-    if req.method == "POST":
-      userform=UserUpdateForm(req.POST or None, req.FILES or None,instance=user)
-      profileform=ProfileUpdateform(req.POST or None, req.FILES or None,instance=profile)
-      if  userform.is_valid()  and profileform.is_valid():
-          userform.save()
-          profileform.save()
-        
-          return redirect('/profile/'+str(req.user.id))
+    if req.user.is_authenticated:
+      user = req.user
+      profile = user.profile
+      if req.method == "POST":
+        userform=UserUpdateForm(req.POST or None, req.FILES or None,instance=user)
+        profileform=ProfileUpdateform(req.POST or None, req.FILES or None,instance=profile)
+        if  userform.is_valid()  and profileform.is_valid():
+            userform.save()
+            profileform.save()
+          
+            return redirect('/profile/'+str(req.user.id))
+      else:
+        userform=UserUpdateForm(req.POST or None, req.FILES or None,instance=user)
+        profileform=ProfileUpdateform(req.POST or None, req.FILES or None,instance=profile)
+      context = {
+          'user_form':  userform,
+          'profile_form': profileform,
+          
+      }
+      
+      return render(req,'Profile/editeprofile.html',context)
     else:
-      userform=UserUpdateForm(req.POST or None, req.FILES or None,instance=user)
-      profileform=ProfileUpdateform(req.POST or None, req.FILES or None,instance=profile)
-    context = {
-        'user_form':  userform,
-        'profile_form': profileform,
-        
-    }
-     
-    return render(req,'Profile/editeprofile.html',context)
+      messages.success(req,("กรุณาเข้าสู่ระบบ"))
+      return redirect('party')
 
-def like_profile(request,user_id,):
-    profile = get_object_or_404(Profile, id=user_id)
-    profile.like_profile(request.user)
-    return redirect("/profile/"+ str(profile.user.id))
+def like_profile(req,user_id,):
+    if req.user.is_authenticated:
+      profile = get_object_or_404(Profile, id=user_id)
+      profile.like_profile(req.user)
+      return redirect("/profile/"+ str(profile.user.id))
+    else:
+      messages.success(req,("กรุณาเข้าสู่ระบบ"))
+      return redirect('party')
 
 
-def unlike_profile(request,user_id):
-    profile = get_object_or_404(Profile, id=user_id)
-    profile.unlike_profile(request.user)
-    return redirect("/profile/"+ str(profile.user.id))
+def unlike_profile(req,user_id):
+    if req.user.is_authenticated:
+      profile = get_object_or_404(Profile, id=user_id)
+      profile.unlike_profile(req.user)
+      return redirect("/profile/"+ str(profile.user.id))
+    else:
+      messages.success(req,("กรุณาเข้าสู่ระบบ"))
+      return redirect('party')
 
 
-def dislike_profile(request,user_id):
-    profile = get_object_or_404(Profile, id=user_id)
-    profile.dislike_profile(request.user)
-    return redirect("/profile/"+ str(profile.user.id))
+def dislike_profile(req,user_id):
+    if req.user.is_authenticated:
+      profile = get_object_or_404(Profile, id=user_id)
+      profile.dislike_profile(req.user)
+      return redirect("/profile/"+ str(profile.user.id))
+    else:
+      messages.success(req,("กรุณาเข้าสู่ระบบ"))
+      return redirect('party')
 
 
-def undislike_profile(request,user_id):
-    profile = get_object_or_404(Profile, id=user_id)
-    profile.undislike_profile(request.user)
-    return redirect("/profile/"+ str(profile.user.id))
+def undislike_profile(req,user_id):
+    if req.user.is_authenticated:
+      profile = get_object_or_404(Profile, id=user_id)
+      profile.undislike_profile(req.user)
+      return redirect("/profile/"+ str(profile.user.id))
+    else:
+      messages.success(req,("กรุณาเข้าสู่ระบบ"))
+      return redirect('party')
+

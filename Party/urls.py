@@ -6,6 +6,7 @@ from . import consumers
 
 urlpatterns =[
     path('',views.showParty,name="party"),
+    path('myparty',views.showMyParty,name='myparty'),
     path('create/',views.crateParty,name='createparty'),
     path('<int:id>',views.partyDetail,name='partydetails'),
     path('<int:party_id>/update/',views.update_party,name='update'),
