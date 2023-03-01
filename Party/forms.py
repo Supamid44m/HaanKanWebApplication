@@ -53,8 +53,36 @@ class addMemberForm(ModelForm):
             'members':forms.SelectMultiple(attrs={'placeholder':'เพิ่มสมาชิก','class':'',})
         }
     
-class AddMemberForms(forms.Form):
-    member = forms.ModelChoiceField(queryset=User.objects.filter(is_superuser=False), empty_label=None,label="เพิ่มสมาชิก",widget=forms.Select(attrs={'class': 'block appearance-none w-full bg-gray-50 border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded-lg shadow leading-tight focus:outline-none focus:shadow-outline'}))
+class AddMemberForms(forms.ModelForm):
+    members = forms.ModelChoiceField(
+        queryset=User.objects.filter(is_superuser=False),
+        widget=forms.Select,
+        required=False
+    )
+
+    class Meta:
+        model = Party
+        fields = ('members',)
+
+    def __init__(self, *args, **kwargs):
+        self.party = kwargs.pop('party')
+        super().__init__(*args, **kwargs)
+        self.fields['members'].queryset = User.objects.exclude(
+            id__in=self.party.members.all()
+        ).exclude(
+            id__in=self.party.pending_members.all()
+        ).exclude(
+            is_superuser=True
+        )
+
+    def save(self, commit=True):
+        party = self.party
+        user = self.cleaned_data['members']
+        party.members.add(user)
+        if commit:
+            party.save()
+        return party
+
 
 class EvidenceForm(forms.ModelForm):
     class Meta:

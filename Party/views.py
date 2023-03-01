@@ -72,7 +72,7 @@ def update_party(req,party_id):
 
 
 def partyDetail(req,id):
-    party = get_object_or_404(Party, id=id)
+    party = get_object_or_404(Party, pk=id)
     current_date = date.today().isoformat()
     messages = ChatMessage.objects.filter(party=party)
     evidence = EvidenceimageParty.objects.filter(party=party)
@@ -80,18 +80,19 @@ def partyDetail(req,id):
     form = None
     upform=EvidenceForm()
     if req.user == party.owner:
-        form = AddMemberForms()
+        form = AddMemberForms(party=party)
     return render(req,'Party/party_details.html', {'party': party, 'msgs': messages,'days_left':days_left,"form":form,'evidence':evidence,"upform":upform})
 
 
-def add_member(req,party_id):
-    party = get_object_or_404(Party, id=party_id)
+def add_member(req,pk):
+    party = get_object_or_404(Party, pk=pk)
     if req.user == party.owner and req.method == "POST":
-        form = AddMemberForms(req.POST)
+        form = AddMemberForms(req.POST, party=party)
         if form.is_valid():
-            member = form.cleaned_data['member']
-            party.members.add(member)
-    return redirect('/party/' + str(party_id))
+            form.save()
+        else:
+            form = AddMemberForms(party=party)
+    return redirect('/party/' + str(pk))
 
 def delete_member(req,party_id,member_id):
     party = get_object_or_404(Party, id=party_id)
@@ -111,7 +112,6 @@ def join(req, party_id):
 
 
 def delete_party(req,party_id):
-
     party = get_object_or_404(Party,id=party_id)
     if req.user==party.owner and req.method == "POST":
         party.reject()

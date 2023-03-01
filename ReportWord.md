@@ -8,3 +8,7 @@
 
 
 #  if request.user.is_authenticated: return redirect('home')
+
+
+
+# In Django, the commit parameter is often used in save methods to control whether changes to the model instance should be saved to the database or not. When commit=True, the changes are saved to the database immediately. When commit=False, the changes are not saved to the database and the model instance is returned so that you can perform additional operations on it.

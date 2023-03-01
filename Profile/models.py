@@ -11,7 +11,7 @@ from django.urls import reverse
 class Profile(models.Model):
     user=models.OneToOneField(User,null=True,on_delete=models.CASCADE)
     profile_pic = models.ImageField(null=True,upload_to="images/profliepic",blank=True)
-    bio=models.TextField(null=True,blank=True)
+    bio=models.TextField(null=True,blank=True,default="")
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_profile', blank=True)
     dislikes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='disliked_profile', blank=True)
     like_status = models.CharField(max_length=10, default='neutral')
