@@ -13,6 +13,9 @@ import os
 from pathlib import Path
 from django.utils import timezone
 from django.core.asgi import get_asgi_application
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,12 +25,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-*$g5b301aua5g*+##=tj6m2#4&pb(p%-*zul=1di0i05)p-o+8"
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG") == "TRUE"
 
-ALLOWED_HOSTS = []
+production_host= os.getenv('PRODUCTION_HOST')
+
+ALLOWED_HOSTS = [production_host] if production_host is not None else []
 
 
 # Application definition
@@ -99,11 +104,11 @@ DATABASES = {
         #"ENGINE": "django.db.backends.sqlite3",
         #"NAME": BASE_DIR / "db.sqlite3",
         "ENGINE": "django.db.backends.mysql",
-        "NAME": 'Haankan-webapp',
-        "USER": 'root',
-        "HOST": '127.0.0.1',
-        "PORT": '3306',
-        "PASSWORD": '1234',
+        "NAME": os.getenv('DB_NAME'),
+        "USER": os.getenv('DB_USER'),
+        "HOST": os.getenv('DB_HOST'),
+        "PORT": os.getenv('PORT'),
+        "PASSWORD": os.getenv('DB_PASSWORD'),
     }
 }
 

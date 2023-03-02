@@ -65,6 +65,15 @@ class Party(models.Model):
     dislikes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='disliked_parties', blank=True)
     like_status = models.CharField(max_length=10, default='neutral')
     
+    def save(self, *args, **kwargs):
+        # Check if there are too many members
+        if self.members.count() >= self.quantity:
+            # Delete any pending members
+            self.pending_members.clear()
+
+        # Call the parent class's save method to save the changes to the database
+        super().save(*args, **kwargs)
+
     def like_party(self, user):
         self.likes.add(user)
         self.dislikes.remove(user)
