@@ -30,9 +30,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
         username = self.scope["user"].username
         party = self.scope['url_route']['kwargs']['party_id']
 
-        await self.save_message(username,party,message)
+        if message.strip(): # Check if the message is not empty or whitespace only
+            await self.save_message(username, party, message)
         
         
+    
 
         # Send message to party group
         await self.channel_layer.group_send(
@@ -57,6 +59,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         }))
     
     @sync_to_async
+    
     def save_message(self,username,party,message):
         user=User.objects.get(username=username)
         party=Party.objects.get(id=party)
