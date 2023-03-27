@@ -75,15 +75,22 @@ def showApps(req):
     else:
          return redirect('party')
 
-def approve_app(req, app_id):   
-    app = get_object_or_404(Apps, pk=app_id)
-    app.approve()
-    return redirect('/Admin/applist')
+def approve_app(req, app_id):
+    if req.user.is_superuser:
+        app = get_object_or_404(Apps, pk=app_id)
+        app.approve()
+        return redirect('/Admin/applist')
+    else:
+         return redirect('party')
+
 
 def reject_app(req, app_id):
-    app = get_object_or_404(Apps, pk=app_id)
-    app.reject()
-    return redirect('/Admin/applist')
+    if req.user.is_superuser:
+        app = get_object_or_404(Apps, pk=app_id)
+        app.reject()
+        return redirect('/Admin/applist')
+    else:
+         return redirect('party')
 
 def delete_app(req,app_id):
     if req.user.is_superuser:

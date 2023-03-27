@@ -36,11 +36,11 @@ def crateParty(req):
                 party.owner = req.user
                 party.isApproved = True
                 party.save()
-                form.save_m2m()   
+                form.save_m2m()  
                 party.members.add(req.user)
                 messages.success(req,("สร้างสำเร็จ"))
                 
-                return redirect('/party/')
+                return redirect('/party/myparty')
         else:
             form=cratePartyforms()
         context={'form':form}
@@ -52,7 +52,7 @@ def crateParty(req):
 def update_party(req,party_id):
     if req.user.is_authenticated : 
         party = Party.objects.get(id=party_id)
-        form=cratePartyforms(req.POST or None ,req.FILES or None,instance=party)
+        form=EditPartyforms(req.POST or None ,req.FILES or None,instance=party)
         if form.is_valid():
             use_price_avg = form.cleaned_data.get('use_price_avg')
             if use_price_avg:
@@ -105,6 +105,15 @@ def join(req, party_id):
     party = get_object_or_404(Party, id= party_id)
     if req.method == 'POST':
         party.pending_members.add(req.user)
+        party.save()
+        return redirect('/party/' + str(party_id) )
+    else:
+        return render(req, 'Party/party.html', {'partys': party})
+    
+def cancel_join(req,party_id):
+    party = get_object_or_404(Party, id=party_id)
+    if req.method == 'POST':
+        party.pending_members.remove(req.user)
         party.save()
         return redirect('/party/' + str(party_id) )
     else:
@@ -210,4 +219,5 @@ def delete_evidence(req, party_id, evidence_id):
         return redirect('/party/' + str(party_id)+'/evidence/')
     else:
         return redirect('/party/' + str(party_id)+'/evidence/')
+
 

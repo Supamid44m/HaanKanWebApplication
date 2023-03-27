@@ -11,6 +11,7 @@ urlpatterns =[
     path('<int:id>',views.partyDetail,name='partydetails'),
     path('<int:party_id>/update/',views.update_party,name='update'),
     path('<int:party_id>/join/', views.join, name='joins'),
+    path('<int:party_id>/cancel_join/', views.cancel_join, name='cancel_join'),
     path('<int:party_id>/leave/', views.leave, name='leave'),
     path('<int:party_id>/delete/',views.delete_party,name="delete"),
     path("<int:party_id>/accept/<int:user_id>/", views.accept_member, name="accept_member"),

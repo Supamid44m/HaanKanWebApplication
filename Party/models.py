@@ -9,7 +9,8 @@ from django.contrib.auth import get_user_model
 from django.db.models.signals import post_delete
 from django.dispatch import receiver
 from PIL import Image
-
+from django.db.models.signals import m2m_changed
+from django.dispatch import receiver
    
 
 class Apps(models.Model):
@@ -32,6 +33,13 @@ class Apps(models.Model):
         else:
             self.isApproved = False
         self.save()
+
+    def __str__(self):
+        return self.name
+    
+class Category(models.Model):
+    name=models.CharField(max_length=500,null=True)
+    image=models.ImageField(upload_to='CategoryImage',null=True)
 
     def __str__(self):
         return self.name
@@ -64,16 +72,13 @@ class Party(models.Model):
     likes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='liked_parties', blank=True)
     dislikes = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='disliked_parties', blank=True)
     like_status = models.CharField(max_length=10, default='neutral')
-    
-    def save(self, *args, **kwargs):
-        # Check if there are too many members
+
+    def clear_pending_members(self):
         if self.members.count() >= self.quantity:
-            # Delete any pending members
             self.pending_members.clear()
 
-        # Call the parent class's save method to save the changes to the database
-        super().save(*args, **kwargs)
-
+    
+        
     def like_party(self, user):
         self.likes.add(user)
         self.dislikes.remove(user)

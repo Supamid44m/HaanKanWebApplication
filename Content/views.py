@@ -6,7 +6,7 @@ from Admin.forms import WriteNewsforms
 
 # Create your views here.
 def showNews(req):
-    context={"news":News.objects.all}
+    context={"news":News.objects.all()}
     return render(req,'Content/news.html',context)
 
 def newsDetail(req,id):
