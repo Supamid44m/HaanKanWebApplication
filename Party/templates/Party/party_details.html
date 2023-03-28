@@ -350,8 +350,8 @@
     const party_id = "{{party.id}}";
     const userName = "{{request.user.username}}";
     const test = JSON.parse(document.getElementById('json-username').textContent);
+    //const chatSocket = new WebSocket('wss://81ae-2403-6200-8822-a16a-a18a-6808-c249-29f9.ap.ngrok.io/ws/party/' + party_id+'/');
     const chatSocket = new WebSocket('ws://' + window.location.host + '/ws/party/' + party_id+'/');
-    
    
 
     chatSocket.onmessage = function(e) {
