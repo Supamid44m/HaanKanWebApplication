@@ -15,7 +15,10 @@ services:
     volumes:
       - "mysqldata:/var/lib/mysql"
   web:
-    image: haankan:latest
+    build: 
+        context: .
+        dockerfile: Dockerfile
+    image: haankan_63114540446
     restart: on-failure
     ports:
       - "9307:8000"
