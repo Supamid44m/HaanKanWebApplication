@@ -106,6 +106,7 @@ def join(req, party_id):
     if req.method == 'POST':
         party.pending_members.add(req.user)
         party.save()
+        messages.success(req,("รอหัวตี้ตอบรับ"))
         return redirect('/party/' + str(party_id) )
     else:
         return render(req, 'Party/party.html', {'partys': party})
@@ -124,6 +125,7 @@ def delete_party(req,party_id):
     party = get_object_or_404(Party,id=party_id)
     if req.user==party.owner and req.method == "POST":
         party.reject()
+        messages.success(req,("ลบสำเร็จ"))
         return redirect('/party/')
     else:
          return redirect('/party/' + str(party_id))
@@ -200,6 +202,7 @@ def upload_evidence(request, party_id):
             evidence.party = party
             evidence.uploader=request.user
             evidence.save()
+            messages.success(request,("อัปโหลดสำเร็จ"))
     return redirect('/party/' + str(party_id))
 
 def show_evidence(req,party_id):

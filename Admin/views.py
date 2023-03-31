@@ -14,7 +14,7 @@ def showuser(req):
         users = User.objects.all()
         return render(req,"Admin/showmember.html",{'users': users})
     else:
-        messages.success(req,("คุณไม่มีสิทธ์เข้าถึง"))
+        
         return redirect('party')
         
 
@@ -27,7 +27,7 @@ def approveParty(req):
                 'partyunapprove':Party.objects.filter(isApproved=False)
             })
     else:
-        messages.success(req,("คุณไม่มีสิทธ์เข้าถึง"))
+        
         return redirect('party')
     
 
@@ -55,7 +55,6 @@ def addApps(req):
                 app=form.save(commit=False)
                 app.handle_approval(req.user)
                 app.save()
-                print("yes")
                 return redirect('/app')
                 
         else:

@@ -59,7 +59,6 @@ def delete_news(req,id):
     
 
 def edit_news(req,id):
-    print(id)
     if req.user.is_superuser:
         new=get_object_or_404(News,pk=id)
         form=WriteNewsforms(req.POST or None ,req.FILES or None,instance=new)

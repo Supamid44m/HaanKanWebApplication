@@ -26,7 +26,11 @@
               </div>
               <div class="p-6">
                 {%if user == party.owner%}
-                <h5 class="font-bold text-lg mb-3">{{party.title}} <i class="fa-solid fa-crown text-yellow-500 text-xl" ></i></h5>
+                <h5 class="font-bold text-lg mb-3">{{party.title}} <i class="fa-solid fa-crown text-yellow-500 text-xl" ></i> 
+                    {% if party.pending_members.all %}
+                    <i class="fa-solid fa-user-clock text-emerald-500  text-lg"></i>
+                   {% endif %}</h5>
+               
                 {%elif user in party.members.all and user != party.owner %}
                 <h5 class="font-bold text-lg mb-3">{{party.title}} <i class="fa-solid fa-person text-emerald-500 text-xl"></i><i class="fa-solid fa-person-dress text-emerald-500 text-xl"></i></h5>
                 {%else%}
