@@ -55,7 +55,12 @@ def addApps(req):
                 app=form.save(commit=False)
                 app.handle_approval(req.user)
                 app.save()
-                return redirect('/app')
+                if req.user.is_superuser:
+                    messages.success(req,("เพิ่มสำเร็จ"))
+                    return redirect('/Admin/applist')
+                else:
+                    messages.success(req,("เพิ่มสำเร็จ รอผู้ดูละระบบอนุมัติ"))
+                    return redirect('/app')
                 
         else:
             form=AddnewAppforms()
@@ -128,7 +133,8 @@ def addBanks(req):
             if form.is_valid():
                 bank=form.save(commit=False)
                 bank.save()
-                return redirect('/Admin/addbanks')
+                messages.success(req,("เพิ่มสำเร็จ"))
+                return redirect('/Admin/banklist')
         else:
             form=AddbankForms()
     else:

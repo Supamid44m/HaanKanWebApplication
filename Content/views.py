@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, render,redirect
 from Content.models import *
 from .models import News
 from Admin.forms import WriteNewsforms
-
+from django.contrib import messages 
 # Create your views here.
 def showNews(req):
     context={"news":News.objects.all()}
@@ -66,6 +66,7 @@ def edit_news(req,id):
             writer=form.save()
             writer.writer = req.user
             writer.save()
+            messages.success(req,("แก้ไขสำเร็จ"))
             return redirect('/news/')
         else:
             new=get_object_or_404(News,pk=id)

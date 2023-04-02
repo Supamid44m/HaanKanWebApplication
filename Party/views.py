@@ -18,15 +18,23 @@ def showParty(req):
     return render(req,'Party/party.html',context)
 
 def showMyParty(req):
-    current_user = req.user
-    parties = Party.objects.filter(members__exact=current_user)
-    context={"partys":parties}
-    return render(req,'Party/myparty.html',context)
-    
+    if req.user.is_authenticated:
+        if  req.user.is_superuser:
+                return redirect('party')
+        current_user = req.user
+        parties = Party.objects.filter(members__exact=current_user)
+        context={"partys":parties}
+        return render(req,'Party/myparty.html',context)
+    else:
+        messages.success(req,("กรุณาเข้าสู่ระบบ"))
+        return redirect('party')
+        
 
 def crateParty(req):
     if req.user.is_authenticated:
-        if req.method == "POST":
+        if  req.user.is_superuser:
+            return redirect('party')
+        if  req.method == "POST":
             form=cratePartyforms(req.POST,req.FILES)
             if form.is_valid():
                 use_price_avg = form.cleaned_data.get('use_price_avg')

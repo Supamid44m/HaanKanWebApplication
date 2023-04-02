@@ -15,5 +15,6 @@ RUN pip install -r requirements.txt
 COPY . /app
 
 ENV PYTHONUNBUFFERED 1
-#ENV DATABASE_URL=mysql://mysql:mysql@localhost:3306/mysql
+#ENV DATABASE_URL=mysql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+
 
