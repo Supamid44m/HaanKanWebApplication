@@ -217,11 +217,14 @@ def delete_user(req,user_id):
     if req.user.is_superuser:
         user = get_object_or_404(User,id=user_id)
         if user == req.user:
+            messages.success(req,("ไม่สามารถลบผู้ใช้งานนี้ได้"))
             return redirect('/Admin/alluser')
         elif user.is_superuser:
+            messages.success(req,("ไม่สามารถลบผู้ดูแลระบบได้"))
             return redirect('/Admin/alluser')
         else:
             user.delete()
+            messages.success(req,("ลบสำเร็จ"))
             return redirect('/Admin/alluser')
     else:
         return redirect('party')

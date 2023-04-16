@@ -9,7 +9,7 @@
             <div class=" flex  mb-6 lg:mb-0  ml-10 ">
                
                 
-                <div class="block max-w-sm p-6 bg-white border border-blue-200 rounded-lg shadow  dark:bg-blue-800 dark:border-blue-700 ">
+                <div class="block max-w-sm p-6 bg-white border border-zinc-900 rounded-lg shadow  dark:bg-zinc-800 dark:border-zinc-700 ">
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-white dark:text-white">ปาร์ตี้ทั้งหมด</h5>
                     <p class="text-xl text-white dark:text-white">{{partys | length}}</p>
                 </div>
@@ -55,10 +55,11 @@
                     <p class="text-gray-500 mb-4">
                         ราคาเต็ม:{{party.price}} บาท
                     </p>
-                    <p class="text-gray-500 mb-4">
-                        ราคาเฉลี่ย:
-                    {{party.priceavg}} บาท/คน
-                    </p>
+                    {%if party.priceaverage%}
+                    <p class="text-gray-500 mb-4">ราคาเฉลี่ย: {{party.priceaverage}} บาท / คน</p>
+                    {%else%}
+                    <p class="text-gray-500 mb-4">ราคาเฉลี่ย: {{party.priceavg}} บาท / คน</p>
+                    {%endif%}
                     
                     <p class="text-gray-500 mb-4">
                         <i class="fa-solid fa-users"></i>

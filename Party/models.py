@@ -46,13 +46,14 @@ class Category(models.Model):
 
 class Banks(models.Model):
     name=models.CharField(max_length=500,null=True)
+    
     def __str__(self):
         return self.name
 
     def deletebanks(self):
         self.delete()
 
-# Create your models here.
+
 class Party(models.Model):
     owner=models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,null=True,related_name='owner')
     members=models.ManyToManyField(settings.AUTH_USER_MODEL, blank=True)
