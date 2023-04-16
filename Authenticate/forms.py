@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 
 class RegisterForm(UserCreationForm):
-	style='bg-gray-50 border border-gray-300 text-zinc-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-grey-300 dark:border-gray-600 dark:placeholder-gray-400 dark:text-zinc-900 dark:focus:ring-zinc-500 dark:focus:border-zinc-500'
+	style='bg-gray-50 border border-gray-300 text-zinc-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-grey-300 dark:border-gray-600 dark:placeholder-gray-400 dark:text-zinc-900 dark:focus:ring-zinc-500 dark:focus:border-zinc-500 mb-4'
 	email = forms.EmailField(widget=forms.EmailInput(attrs={'class':style}))
 	first_name = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'class':style}))
 	last_name = forms.CharField(max_length=50,widget=forms.TextInput(attrs={'class':style})) 

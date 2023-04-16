@@ -6,7 +6,7 @@
 {%block content%}
 
 
-
+<h1 class="ml-10 text-2xl">ปาร์ตี้ของ @{{user.username}}</h1>
 <div class="grid grid-cols-4 gap-4 mb-4">
     {% for party in partys %}
         {% if party.isApproved %}
