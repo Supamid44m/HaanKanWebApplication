@@ -180,7 +180,10 @@ class Party(models.Model):
     
     
     def mask_bankaccount(self):
-        return "xxxxxxxx" + self.bankaccount[-2:]
+        if self.bankaccount.isdigit():
+            return "xxxxxxxx" + self.bankaccount[-2:]
+        else:
+            return self.bankaccount
     
 
 

@@ -197,7 +197,7 @@
     </div>
       <img
         src="{{party.qrcodeImage.url}}"
-        class="object-cover rounded-xl h-64"
+        class="object-cover rounded-xl w-auto h-64 bg-cover shadow-lg relative overflow-hidden"
         alt=""
       />
       <div class="font-semibold py-4">
@@ -244,7 +244,7 @@
                     </div>
                     
                 </form>
-            <div class="mt-2 mx-auto inline-block px-6 py-2.5 bg-emerald-500 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-emerald-700 hover:shadow-lg focus:bg-emerald-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-emerald-800 active:shadow-lg transition duration-150 ease-in-out ">
+            <div class="mt-2 mx-auto inline-block px-6 py-2.5 bg-sky-400 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-sky-500 hover:shadow-lg focus:bg-emerald-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-emerald-800 active:shadow-lg transition duration-150 ease-in-out ">
                 <a href="{%url 'show_evidence' party.id%}">ดูหลักฐานการโอน</a>
             </div>
 

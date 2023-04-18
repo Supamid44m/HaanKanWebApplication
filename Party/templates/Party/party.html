@@ -22,7 +22,7 @@
             <div class="relative block bg-white rounded-lg shadow-lg  max-h-sm max-w-sm  xl:max-h-sm max-w-lg ">
               <div class="flex">
                 <div
-                  class="relative overflow-hidden bg-no-repeat bg-cover relative overflow-hidden bg-no-repeat bg-cover shadow-lg rounded-lg mx-4 -mt-4"
+                  class="relative overflow-hidden bg-no-repeat  bg-no-repeat bg-cover shadow-lg rounded-lg mx-4 -mt-4"
                   data-mdb-ripple="true" data-mdb-ripple-color="light">
                   <img src="{{party.apps.image.url}}" class="w-96 h-40 " />
                   <a href="{{ party.get_absolute_url }}">
@@ -39,7 +39,7 @@
                     <i class="fa-solid fa-user-clock text-emerald-500  text-lg"></i>
                    {% endif %}</h5>
                 {%elif user in party.members.all and user != party.owner %}
-                <h5 class="font-bold text-lg mb-3">{{party.title}} <i class="fa-solid fa-person text-emerald-500 text-xl"></i><i class="fa-solid fa-person-dress text-emerald-500 text-xl"></i></h5>
+                <h5 class="font-bold text-lg mb-3">{{party.title}} <i class="fa-solid fa-person text-yellow-500 text-xl"></i><i class="fa-solid fa-person-dress text-yellow-500 text-xl"></i></h5>
                 {%else%}
                 <h5 class="font-bold text-lg mb-3">{{party.title}}</h5>
                 {%endif%}

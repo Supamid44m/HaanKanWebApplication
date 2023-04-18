@@ -5,7 +5,7 @@
 {%if user.is_superuser %}
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
     <table class="w-full text-sm text-left text-gray-500 dark:text-zinc-400">
-        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-emerald-300 dark:text-black">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-black dark:text-white">
             <tr>
                 <th scope="col" class="px-6 py-3">
                     ชื่อธนาคาร
@@ -23,11 +23,11 @@
         <tbody>
             {%for bank in banks%}
 
-            <tr class="bg-white border-b dark:bg-zinc-900 dark:border-gray-700">
-                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+            <tr class="bg-white border-b dark:bg-white dark:border-gray-700">
+                <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-black">
                     {{bank.name}}
                 </th>
-                <td class="px-6 py-4">
+                <td class="px-6 py-4 text-black">
                     <form method="POST" action="{% url 'delete_bank' bank.id %}">
                         {% csrf_token %}
                         <div class="hover:text-red-700">
@@ -36,7 +36,7 @@
                         </div>
                     </form>
                 </td>
-                <td class="px-6 py-4">
+                <td class="px-6 py-4 text-black">
                     <a href="{% url 'edit_bank' bank.id %}" class="hover:underline">แก้ไข</a>
                 </td>
                 
