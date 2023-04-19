@@ -49,7 +49,7 @@
             
         </div>
         <div class="w-full">
-            <div class="text-lg font-semibold"><a href="{%url 'profile' member.id%}">{{member.username}}</a></div>
+            <div class="text-lg font-semibold hover:underline"><a href="{%url 'profile' member.id%}">{{member.username}}</a></div>
             {%if user == party.owner and user != member %}
             
                         <div class=" mx-auto inline-block px-6 py-2.5 bg-red-500 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out " >
@@ -93,7 +93,7 @@
         
 
         <div class="w-full">
-            <div class="text-lg font-semibold"><a href="{%url 'profile' user.id%}">{{user.username}}</a></div>
+            <div class="text-lg font-semibold hover:underline"><a href="{%url 'profile' user.id%}">{{user.username}}</a></div>
                 <div class="flex">
                     <form action="{% url 'accept_member' party.id user.id %}" method="POST" name="accept">
                         {% csrf_token %}

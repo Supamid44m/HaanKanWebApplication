@@ -1,77 +1,77 @@
-<aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-zinc-900 dark:bg-zinc-900" aria-label="Sidebar">
-    <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-black">
+<aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full  border-r border-black sm:translate-x-0  bg-black" aria-label="Sidebar">
+    <div class="h-full px-3 pb-4 overflow-y-auto bg-black">
        <ul class="space-y-2">
         {%if user.is_authenticated %}
            {%if user.is_superuser %}
                  <li class="pt-10">
-                    <a href="{%url 'party'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
+                    <a href="{%url 'party'%}" class="flex items-center p-2 text-base font-normal  rounded-lg text-white  hover:bg-zinc-700">
                        
                        <span class="ml-3">ดูปาร์ตี้ทั้งหมด</span>
                     </a>
                  </li>
                  <li class="pt-10">
-                    <a href="{%url 'approveparty'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
+                    <a href="{%url 'approveparty'%}" class="flex items-center p-2 text-base font-normal rounded-lg text-white hover:bg-zinc-700">
                        <span class="flex-1 ml-3 whitespace-nowrap">จัดการปาร์ตี้</span>
                     </a>
                  </li>
                  <li class="pt-10">
-                    <a href="{%url 'news'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
+                    <a href="{%url 'news'%}" class="flex items-center p-2 text-base font-normal  rounded-lg  text-white hover:bg-zinc-700">
                       
                        <span class="flex-1 ml-3 whitespace-nowrap">ข่าวประชาสัมพันธ์</span>
            
                     </a>
                  </li>
                  <li class="pt-10">
-                    <a href="{%url 'writenews'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
+                    <a href="{%url 'writenews'%}" class="flex items-center p-2 text-base font-normal  rounded-lg text-white hover:bg-zinc-700">
                       
                        <span class="flex-1 ml-3 whitespace-nowrap">เขียนข่าวประชาสัมพันธ์</span>
                     </a>
                  </li>
                  <li class="pt-10">
-                    <a href="{%url 'addapps'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
+                    <a href="{%url 'addapps'%}" class="flex items-center p-2 text-base font-normal  rounded-lg text-white hover:bg-zinc-700">
                      
                        <span class="flex-1 ml-3 whitespace-nowrap">เพิ่มรายการแอปพลิเคชันสตรีมมิ่ง</span>
                     </a>
                  </li>
                  <li class="pt-10">
-                    <a href="{%url 'apps_list'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
+                    <a href="{%url 'apps_list'%}" class="flex items-center p-2 text-base font-normal  rounded-lg text-white hover:bg-zinc-700">
                        
                        <span class="flex-1 ml-3 whitespace-nowrap">ดูรายการแอปพลิเคชันสตรีมมิ่ง</span>
                     </a>
                  </li>
                  <li class="pt-10">
-                    <a href="{%url 'addbanks'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
+                    <a href="{%url 'addbanks'%}" class="flex items-center p-2 text-base font-normal rounded-lg text-white hover:bg-zinc-700">
                        
                        <span class="flex-1 ml-3 whitespace-nowrap">เพิ่มรายการธนาคาร</span>
                     </a>
                  </li>
                  <li class="pt-10">
-                    <a href="{%url 'banks_list'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
+                    <a href="{%url 'banks_list'%}" class="flex items-center p-2 text-base font-normal  rounded-lg text-white hover:bg-zinc-700">
                        
                        <span class="flex-1 ml-3 whitespace-nowrap">ดูรายการธนาคาร</span>
                     </a>
                  </li>
                  <li class="pt-10">
-                    <a href="{%url 'alluser'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
+                    <a href="{%url 'alluser'%}" class="flex items-center p-2 text-base font-normal  rounded-lg text-white hover:bg-zinc-700">
                        
                        <span class="flex-1 ml-3 whitespace-nowrap">สมาชิกทั้งหมด</span>
                     </a>
                  </li>
                  <li class="pt-10">
-                    <a href="{%url 'logout'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
+                    <a href="{%url 'logout'%}" class="flex items-center p-2 text-base font-normal  rounded-lg text-white hover:bg-zinc-700">
                        
                        <span class="flex-1 ml-3 whitespace-nowrap">ออกจากระบบ</span>
                     </a>
                  </li>
               {%else%}
               <li class="pt-10">
-                 <a href="{%url 'party'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
+                 <a href="{%url 'party'%}" class="flex items-center p-2 text-base font-normal  rounded-lg text-white hover:bg-zinc-700">
                     
                     <span class="ml-3">ดูปาร์ตี้ทั้งหมด</span>
                  </a>
               </li>
               <li class="pt-10">
-               <a href="{%url 'myparty'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
+               <a href="{%url 'myparty'%}" class="flex items-center p-2 text-base font-normal  rounded-lg text-white hover:bg-zinc-700">
                   
                   <span class="ml-3">ดูปาร์ตี้ของฉัน</span>
                </a>
@@ -80,28 +80,28 @@
               
               
               <li class="pt-10">
-                 <a href="{%url 'createparty'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
+                 <a href="{%url 'createparty'%}" class="flex items-center p-2 text-base font-normal  rounded-lg text-white hover:bg-zinc-700">
                     
                     <span class="ml-3">สร้างปาร์ตี้ใหม่</span>
                  </a>
               </li>
 
               <li class="pt-10">
-                 <a href="{%url 'news'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
+                 <a href="{%url 'news'%}" class="flex items-center p-2 text-base font-normal  rounded-lg text-white  hover:bg-zinc-700">
                   
                     <span class="ml-3">ข่าวประชาสัมพันธ์</span>
                  </a>
               </li>
               
               <li class="pt-10">
-                 <a href="{%url 'addapps'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
+                 <a href="{%url 'addapps'%}" class="flex items-center p-2 text-base font-normal  rounded-lg text-white hover:bg-zinc-700">
                   
                     <span class="ml-3">ร้องขอแอปพลิเคชันใหม่</span>
                  </a>
               </li>
 
               <li class="pt-10">
-                 <a href="{%url 'logout'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
+                 <a href="{%url 'logout'%}" class="flex items-center p-2 text-base font-normal  rounded-lg text-white  hover:bg-zinc-700">
                   <i class="fa-solid fa-arrow-right-from-bracket text-white"></i>
                     <span class="ml-3">ออกจากระบบ</span>
                  </a>
@@ -112,14 +112,14 @@
               {%endif%}
            {%else%}
               <li class="pt-10">
-                 <a href="{%url 'party'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
+                 <a href="{%url 'party'%}" class="flex items-center p-2 text-base font-normal  rounded-lg text-white  hover:bg-zinc-700">
                     
                     <span class="ml-3">ดูปาร์ตี้ทั้งหมด</span>
                  </a>
               </li>
 
               <li class="pt-10">
-                 <a href="{%url 'news'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
+                 <a href="{%url 'news'%}" class="flex items-center p-2 text-base font-normal  rounded-lg text-white  hover:bg-zinc-700">
                   
                     <span class="ml-3">ข่าวประชาสัมพันธ์</span>
                  </a>
@@ -127,14 +127,14 @@
 
 
               <li class="pt-10">
-                 <a href="{%url 'register'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
+                 <a href="{%url 'register'%}" class="flex items-center p-2 text-base font-normal  rounded-lg text-white hover:bg-zinc-700">
                     
                     <span class="ml-3">สมัครสมาชิก</span>
                  </a>
               </li>
 
               <li class="pt-10">
-                 <a href="{%url 'login_user'%}" class="flex items-center p-2 text-base font-normal text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-zinc-700">
+                 <a href="{%url 'login_user'%}" class="flex items-center p-2 text-base font-normal  rounded-lg text-white hover:bg-zinc-700">
                     
                     <span class="ml-3">เข้าสู่ระบบ</span>
                  </a>

@@ -1,12 +1,12 @@
 {%load static%}
-<nav class="fixed top-0 z-50 w-full bg-white border-b border-emerald-300 dark:bg-emerald-300 dark:border-emerald-300">
+<nav class="fixed top-0 z-50 w-full  border-b border-emerald-300 bg-emerald-300 border-emerald-300">
     <div class="px-3 py-3 lg:px-5 lg:pl-3">
       <div class="flex items-center justify-between">
         <div class="flex items-center justify-start">
           
           <a href="{%url 'party'%}" class="flex ml-2 md:mr-24">
             
-            <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">Haankan</span>
+            <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap text-white">Haankan</span>
           </a>
         </div>
         <div class="flex items-center">
@@ -15,7 +15,7 @@
                {%if user.is_authenticated %}
                   {%if user.is_superuser %}
 
-                     <button type="button" class="flex text-sm bg-emerald-300 rounded-full focus:ring-4 focus:ring-emerald-300 dark:focus:ring-emerald-300" aria-expanded="false" data-dropdown-toggle="dropdown-user">
+                     
                      
                         {% if user.profile.profile_pic %}
                         <img src="{{user.profile.profile_pic.url}}" alt="" class="rounded-full  w-12 h-12 inline-block " id="user" >
@@ -25,11 +25,11 @@
                         <a href="{%url 'profile' request.user.id%}" class="hover:underline">{{user.username}} (admin)</a>
                         
                         
-                     </button>
+                    
 
 
                   {%else%}
-                  <button type="button" class="flex text-sm bg-emerald-300 rounded-full focus:ring-4 focus:ring-emerald-300 dark:focus:ring-emerald-300" aria-expanded="false" data-dropdown-toggle="dropdown-user">
+                  
                      {% if user.profile.profile_pic %}
                      <img src="{{user.profile.profile_pic.url}}" alt="" class="rounded-full  w-12 h-12 inline-block " id="user" >
                      {% else %}
@@ -37,7 +37,7 @@
                      {%endif%}
                      <a href="{%url 'profile' request.user.id%} " class="hover:underline">{{user.username}}</a>
                         
-                  </button>
+              
                   {%endif%}
                {%else%}
 

@@ -10,7 +10,7 @@
             
             {% for party in partys %}
                 
-                <div class="mb-6 lg:mb-0 mt-10 ml-10">
+                <div class="mb-6 lg:mb-0 mt-10 ml-10 flex">
                     <div class="relative block bg-white rounded-lg shadow-lg">
                       <div class="flex">
                         <div
@@ -39,7 +39,7 @@
                             จำนวน: {{party.quantity}} คน
                         </p>
                         <p class="text-gray-500 mb-4">
-                            ราคาเต็ม:{{party.price}} บาท
+                            ราคาเต็ม: {{party.price}} บาท
                         </p>
                         {%if party.priceaverage%}
                         <p class="text-gray-500 mb-4">ราคาเฉลี่ย: {{party.priceaverage}} บาท/คน</p>

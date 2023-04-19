@@ -16,11 +16,14 @@
         <div
           class="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0"
         >
+        <a href="{%url 'party'%}"> 
           <img
-            src="{% static 'Logo/images/logo.png' %}"
-            class="w-full"
-            alt="Sample image"
+          src="{% static 'Logo/images/logo.png' %}"
+          class="max-w-md xl:mx-auto max-w-lg md:mx-auto"
+          alt=""
           />
+        </a>
+         
         </div>
         <div class="xl:ml-20 xl:w-5/12 lg:w-5/12 md:w-8/12 mb-12 md:mb-0">
           <form method="POST">
@@ -40,7 +43,7 @@
               <p class="text-center font-semibold mx-4 mb-0">Login</p>
             </div>
   
-            <!-- Email input -->
+            
             <div class="mb-6">
               <input
                 type="text"
@@ -51,7 +54,7 @@
               />
             </div>
   
-            <!-- Password input -->
+            
             <div class="mb-6">
               <input
                 type="password"
