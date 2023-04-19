@@ -65,7 +65,7 @@
               />
             </div>
 
-            <div class="text-yellow-700">
+            <div class="text-yellow-700" id="m">
                 {%if messages%}
                 {%for m in messages%}
                 
@@ -98,7 +98,13 @@
       </div>
     </div>
   </section>
-
+  <script>
+    var message = document.getElementById("m");
+    setTimeout(function(){
+       message.style.display="none";
+ 
+    },2000);
+  </script>
 
 
 
