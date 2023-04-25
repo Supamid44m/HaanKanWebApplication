@@ -193,7 +193,8 @@
     {%if user in party.members.all %}
       <div class="font-semibold text-xl py-4">
             <span>{{party.bank}}</span>
-            <span class="">{{party.mask_bankaccount}}</span>
+            <span class="" id="bank-account-display"></span>
+            <button id="toggle-mask-button" class="border-2 rounded-full hover:bg-gray-200 px-2 md:text-sm">เปิดหมายเลขบัญชี</button>
     </div>
       <img
         src="{{party.qrcodeImage.url}}"
@@ -206,10 +207,10 @@
             <span class="text-red-700" id="paid_day" name="paid_day">{{ days_left }} </span>
             <label for="paid_day">วัน</label>
         {% elif days_left == 0 %}
-            
+            <label for="paid_day" class="text-red-700">ต้องชำระวันนี้</label>
         {%else%}
             <label for="paid_day" class="">ต้องชำระในอีก</label>
-            <span class=" " id="paid_day" name="paid_day">{{ days_left }}</span> 
+            <span class="" id="paid_day" name="paid_day">{{ days_left }}</span> 
             <label for="paid_day">วัน</label>
         {%endif%}
 
@@ -395,6 +396,31 @@
         }
         
     scorllToBottom();
+
+    var toggleMaskButton = document.getElementById('toggle-mask-button');
+    var accountDisplay = document.getElementById('bank-account-display');
+    var bankAccount = "{{party.bankaccount}}";
+
+    if (bankAccount.match(/^\d+$/)) {
+    // ซ่อนเลข
+    var maskedAccount = "xxxxxxxxxx" + bankAccount.slice(-2);
+    accountDisplay.textContent = maskedAccount;
+    } else {
+   // ถ้ามีตัวอักษรไม่ซ่อนเลข
+    accountDisplay.textContent = bankAccount;
+    toggleMaskButton.style.display = 'none'; // ซ่อนปุ่ม
+    }
+
+    toggleMaskButton.addEventListener('click', function() {
+    if (accountDisplay.textContent === maskedAccount) {
+        accountDisplay.textContent = bankAccount;
+        toggleMaskButton.textContent = 'ซ่อนหมายเลขบัญชี';
+    } else {
+        accountDisplay.textContent = maskedAccount;
+        toggleMaskButton.textContent = 'เปิดหมายเลขบัญชี';
+    }
+    });
+    
 </script>
 
 

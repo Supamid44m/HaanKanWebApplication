@@ -101,6 +101,13 @@
               </li>
 
               <li class="pt-10">
+               <a href="{%url 'profile' request.user.id%}" class="flex items-center p-2 text-base font-normal  rounded-lg text-white hover:bg-zinc-700">
+                
+                  <span class="ml-3">ดูโปรไฟล์</span>
+               </a>
+            </li>
+
+              <li class="pt-10">
                  <a href="{%url 'logout'%}" class="flex items-center p-2 text-base font-normal  rounded-lg text-white  hover:bg-zinc-700">
                   <i class="fa-solid fa-arrow-right-from-bracket text-white"></i>
                     <span class="ml-3">ออกจากระบบ</span>

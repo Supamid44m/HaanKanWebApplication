@@ -6,7 +6,7 @@
           
           <a href="{%url 'party'%}" class="flex ml-2 md:mr-24">
             
-            <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap text-white">Haankan</span>
+            <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap text-white hover:text-black ">Haankan</span>
           </a>
         </div>
         <div class="flex items-center">
@@ -22,7 +22,7 @@
                         {% else %}
                         <img src="{% static 'Profile/images/defualtPIC.jpg' %}" alt="" class="rounded-full  w-12 h-12 inline-block " id="user" >
                         {%endif%}
-                        <a href="{%url 'profile' request.user.id%}" class="hover:underline">{{user.username}} (admin)</a>
+                        <a href="{%url 'profile' request.user.id%}" class="  font-semibold text-white hover:text-black ">{{user.username}} (admin)</a>
                         
                         
                     
@@ -35,7 +35,7 @@
                      {% else %}
                      <img src="{% static 'Profile/images/defualtPIC.jpg' %}" alt="" class="rounded-full  w-12 h-12 inline-block " id="user" >
                      {%endif%}
-                     <a href="{%url 'profile' request.user.id%} " class="hover:underline">{{user.username}}</a>
+                     <a href="{%url 'profile' request.user.id%} " class="  font-semibold text-white hover:text-black">{{user.username}}</a>
                         
               
                   {%endif%}
