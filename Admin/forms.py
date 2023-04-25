@@ -35,7 +35,7 @@ class AddnewAppforms(ModelForm):
         model=Apps
         fields=('name','image')
         labels={
-            'name':'ชื่อแอป',
+            'name':'ชื่อแอปพลิเคชัน',
             'image':'รูป',
         }
         widgets={
