@@ -23,7 +23,7 @@
             <p class="pb-6">{{news.desciption}}</p>
             
             
-            {%if user.is_authenticated%}
+            {%if user.is_authenticated and not user.is_superuser%}
                 {%if user in news.likes.all%}
                 <div>
                     

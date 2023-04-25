@@ -275,7 +275,7 @@
         </div>
 
         <div>
-            {%if user.is_authenticated %}
+            {%if user.is_authenticated and not user.is_superuser%}
             <div class="">
             
                 กดถูกใจปาร์ตี้นี้

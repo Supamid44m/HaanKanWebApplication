@@ -33,7 +33,7 @@
            
         </div>
         <div>
-            {%if user.id != profile.user.id%}
+            {%if user.id != profile.user.id and not user.is_superuser%}
             <div class="flex space-x-6 ml-80">
                 {%if user in profile.likes.all%}
                 <div>
