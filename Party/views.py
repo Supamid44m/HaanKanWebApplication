@@ -147,8 +147,8 @@ def leave(req, party_id):
         return render(req, 'Party/party.html', {'partys': party})
 
 def accept_member(req, party_id, user_id):
-    party = Party.objects.get(id=party_id)
-    user = User.objects.get(id=user_id)
+    party = get_object_or_404(Party,id=party_id)
+    user = get_object_or_404(User,id=user_id)
     if req.user == party.owner:
         party.accept_member(user)
         return redirect("/party/"+ str(party_id))
@@ -156,8 +156,8 @@ def accept_member(req, party_id, user_id):
         return redirect("/party/")
 
 def reject_member(req, party_id, user_id):
-    party = Party.objects.get(id=party_id)
-    user = User.objects.get(id=user_id)
+    party = get_object_or_404(Party,id=party_id)
+    user = get_object_or_404(User,id=user_id)
     if req.user == party.owner:
         party.reject_member(user)
         return redirect("/party/"+ str(party_id))

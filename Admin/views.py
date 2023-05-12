@@ -11,7 +11,7 @@ from Content.models import News
 def showuser(req):
     if req.user.is_superuser:
         User = get_user_model()
-        users = User.objects.all()
+        users = User.objects.filter(is_superuser=False)
         return render(req,"Admin/showmember.html",{'users': users})
     else:
         
