@@ -1,0 +1,77 @@
+{%extends 'Content/components/base.html' %}
+
+{%block title%}news{%endblock%}
+
+
+{%block content%}
+
+<div class="grid grid-cols-4">
+    {% for new in news %}
+
+            <div class="mb-6 lg:mb-0 mt-10 ml-10 flex">
+                <div class="relative block bg-white rounded-lg shadow-lg">
+                  <div class="flex">
+                    <div
+                      class="relative overflow-hidden bg-no-repeat bg-cover relative overflow-hidden bg-no-repeat bg-cover shadow-lg rounded-lg mx-4 -mt-4"
+                      data-mdb-ripple="true" data-mdb-ripple-color="light">
+                      <img src="{{new.image.url}}" class="w-96 h-40" />
+                      <a href="{{ new.get_absolute_url }}">
+                        <div
+                          class="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed opacity-0 hover:opacity-100 transition duration-300 ease-in-out"
+                          style="background-color: rgba(251, 251, 251, 0.15)"></div>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="p-6">
+                    <h5 class="font-bold text-lg mb-3">{{new.title}}</h5>
+                    <p class="text-gray-500 mb-4">
+                      <small>เมื่อเวลา <u>{{new.uploaded_at}}</u> โดย
+                        <span  class="text-gray-900 ">{{new.writer}}</span></small>
+                    </p>
+
+                    <p class="text-gray-500 mb-4 break-words" >
+                      {{new.get_short_description}}...
+                       
+                    </p>
+                    
+                      <div class="">
+                        <i class="fa-solid fa-heart text-xl text-emerald-300"></i>
+                        <span>{{new.likes.count}}</span>
+                      </div>
+                    <div class="flex space-x-12 mt-2">
+                      <a href="{{ new.get_absolute_url }}" data-mdb-ripple="true" data-mdb-ripple-color="light"
+                      class="inline-block px-6 py-2.5 bg-emerald-500 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-emerald-700 hover:shadow-lg focus:bg-emerald-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-emerald-800 active:shadow-lg transition duration-150 ease-in-out">อ่านข่าว</a>
+                          
+            
+                        {%if user.is_superuser%}
+                            <div class="inline-block px-6 py-2.5 bg-red-600 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out">
+                                <form action="{% url 'delete_news' new.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <i class="fa-solid fa-trash"></i>
+                                    <input type="submit" value="ลบข่าวนี้">
+                                </form>
+                                
+                            </div>
+
+    
+                            {%else%}
+                        {%endif%}
+                        
+                    </div>
+                   
+                  </div>
+
+                 
+
+               
+                </div>
+
+               
+              </div>
+            
+
+        
+        
+    {% endfor %}
+</div>
+{%endblock%}

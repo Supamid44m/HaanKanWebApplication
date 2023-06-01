@@ -1,0 +1,56 @@
+{%extends 'Content/components/base.html' %}
+
+
+{%block title%}addnewApps{%endblock%}
+
+{%block content%}
+
+
+    
+        {%if user.is_authenticated%}
+              
+        
+            <section class="bg-white">
+                <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto mt-52  lg:py-0">
+                   
+                    <div class="w-full  rounded-lg shadow border md:mt-0 sm:max-w-md xl:p-0 bg-zinc-300 border-bg-emerald-500">
+                        {%if user.is_superuser %}
+                        <div href="#" class="text-center mt-10 text-2xl font-semibold text-zinc-900 ">
+                        
+                            เพิ่มแอปพลิเคชันสตรีมมิ่ง
+                        </div>
+                        {%else%}
+                        <div href="#" class="text-center mt-10  text-2xl font-semibold text-zinc-900 ">
+                        
+                            ร้องขอเพิ่มแอปพลิเคชันสตรีมมิ่ง
+                        </div>
+                        {%endif%}
+                        <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                            
+                            <form class="space-y-4 md:space-y-6" action="#" method="POST" enctype="multipart/form-data">
+                                {%csrf_token%}
+                                {{form.as_p}}
+                                <button type="submit" class="w-full   focus:ring-4 focus:outline-none focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center bg-emerald-500 hover:bg-emerald-700 text-zinc-900 hover:underline  ">เพิ่ม</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+              </section>
+          
+
+
+
+      
+                
+
+
+
+
+        {%else%}
+            <div class="text-center">
+                <span>คุณไม่มีสิทธ์เข้าถึงหน้านี้</span>
+            </div>
+        {%endif%}
+    
+
+{%endblock%}

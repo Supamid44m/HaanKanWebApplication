@@ -1,0 +1,156 @@
+{%extends 'Content/components/base.html' %}
+
+{%block title%}approveparty{%endblock%}
+
+{%block content%}
+<div  class="" >
+{%if user.is_authenticated %}
+        {%if user.is_superuser %}
+            <div class=" flex  mb-6 lg:mb-0  ml-10 ">
+               
+                
+                <div class="block max-w-sm p-6 bg-white border border-zinc-900 rounded-lg shadow  dark:bg-zinc-800 dark:border-zinc-700 ">
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-white dark:text-white">ปาร์ตี้ทั้งหมด</h5>
+                    <p class="text-xl text-white dark:text-white">{{partys | length}}</p>
+                </div>
+            </div>
+
+
+            <div class="grid grid-cols-4 gap-4 mb-4">
+                    
+                   
+            {%for party in partys %}
+            <div class="mb-6 lg:mb-0 mt-10 ml-10 flex">
+                <div class="relative block bg-white rounded-lg shadow-lg">
+                  <div class="flex">
+                    <div
+                      class="relative overflow-hidden bg-no-repeat bg-cover relative overflow-hidden bg-no-repeat bg-cover shadow-lg rounded-lg mx-4 -mt-4"
+                      data-mdb-ripple="true" data-mdb-ripple-color="light">
+                      <img src="{{party.apps.image.url}}" class="w-96 h-40" />
+                      <a href="{{ party.get_absolute_url }}">
+                        <div
+                          class="absolute top-0 right-0 bottom-0 left-0 w-full h-full overflow-hidden bg-fixed opacity-0 hover:opacity-100 transition duration-300 ease-in-out"
+                          style="background-color: rgba(251, 251, 251, 0.15)"></div>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="p-6">
+                    {%if user == party.owner%}
+                    <h5 class="font-bold text-lg mb-3">{{party.title}} <i class="fa-solid fa-crown text-yellow-500 text-xl" ></i></h5>
+                    {%elif user in party.members.all and user != party.owner %}
+                    <h5 class="font-bold text-lg mb-3">{{party.title}} <i class="fa-solid fa-person text-emerald-500 text-xl"></i><i class="fa-solid fa-person-dress text-emerald-500 text-xl"></i></h5>
+                    {%else%}
+                    <h5 class="font-bold text-lg mb-3">{{party.title}}</h5>
+                    {%endif%}
+                    <p class="text-gray-500 mb-4">
+                        เจ้าของปาร์ตี้:
+                    <a href="{%url 'profile' party.owner.id %}">{{party.owner}} </a>
+                    </p>
+                    <p class="text-gray-500 mb-4">
+                        แอปพลิเคชั่น:{{party.apps.name}}
+                    </p>
+                    <p class="text-gray-500 mb-4">
+                        จำนวน: {{party.quantity}} คน
+                    </p>
+                    <p class="text-gray-500 mb-4">
+                        ราคาเต็ม: {{party.price}} บาท
+                    </p>
+                    {%if party.priceaverage%}
+                    <p class="text-gray-500 mb-4">ราคาเฉลี่ย: {{party.priceaverage}} บาท / คน</p>
+                    {%else%}
+                    <p class="text-gray-500 mb-4">ราคาเฉลี่ย: {{party.priceavg}} บาท / คน</p>
+                    {%endif%}
+                    
+                    <p class="text-gray-500 mb-4">
+                        <i class="fa-solid fa-users"></i>
+                        {{party.members.count}}/{{party.quantity}}
+                    </p>
+                    <div class="mb-4 ">
+                        <i class="fa-solid fa-heart text-xl text-emerald-300"></i>
+                        <span>{{party.likes.count}}</span>
+                    </div>
+
+                     
+                    <div class="flex space-x-12  ">
+                        
+                        {%if party.isApproved%}
+                        
+                            
+                            
+                                <div class="mx-auto inline-block px-6 py-2.5 bg-red-500 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out">
+                                    <form method="POST" action="{% url 'delete_party' party.id %}">
+                                        {% csrf_token %}
+                                    
+                                        <input type="submit" value="ลบปาร์ตี้นี้">
+                                    </form>
+                                </div>
+                            
+                        
+                        {%else%}
+                        
+                        <form method="POST" action="{% url 'approve_party' party.id %}">
+                            {% csrf_token %}
+                            <div class=" mx-auto inline-block px-6 py-2.5 bg-emerald-500 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-emerald-700 hover:shadow-lg focus:bg-emerald-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-emerald-800 active:shadow-lg transition duration-150 ease-in-out">
+                                <i class="fa-solid fa-check"></i>
+                                <input type="submit" value="อนุมัติ" class="" >
+                            </div>
+                        </form>
+
+                        <form method="POST" action="{% url 'reject_party' party.id %}">
+                            {% csrf_token %}
+                            <div class="mx-auto inline-block px-6 py-2.5 bg-red-500 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out">
+                                <i class="fa-solid fa-xmark"></i>
+                                <input type="submit" value="ไม่อนุมัติ" class="">
+                            </div>
+                        </form>
+                    </div>
+                
+               
+                {%endif%}
+            </div>
+               
+        </div>
+
+       
+
+     
+      </div>
+                
+
+
+            
+        </div>
+            
+                
+                
+                
+                    
+                   
+
+            {%endfor%}
+                   
+                      
+                
+                
+            
+                
+
+               
+            </div>
+           
+
+               
+            
+               
+        {%else%}
+            <div class="text-center">คุณไม่มีสิทธ์เข้าถึง</div>
+        {%endif%}
+
+    
+            
+{%endif%}
+
+
+</div>
+
+{%endblock%}

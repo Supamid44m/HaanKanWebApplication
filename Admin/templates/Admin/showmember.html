@@ -1,0 +1,107 @@
+{%extends 'Content/components/base.html' %}
+
+
+{%block title%}Alluser{%endblock%}
+
+{%block content%}
+{%if user.is_authenticated %}
+    {%if user.is_superuser %}
+
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-zinc-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-black dark:text-white">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        ชื่อผู้ใช้
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        ชื่อ
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        นามสกุล
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        วันที่สมัครสมาชิก
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        เข้าสู่ระบบล่าสุด
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        แอดมินผู้ใช้
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        แก้ไขผู้ใช้งาน
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        ลบผู้ใช้งาน
+                    </th>
+                    
+                    
+                </tr>
+            </thead>
+            
+            <tbody>
+                {%for member in users%}
+    
+                <tr class="bg-white border-b dark:bg-white dark:border-gray-700">
+                    <th scope="row" class="px-6 py-4 font-medium text-black whitespace-nowrap dark:text-black">
+                        <a href="{%url 'profile' member.id%}" class="hover:underline">{{member.username}}</a>
+                    </th>
+
+
+                    <td class="px-6 py-4 text-black">
+                        {{member.first_name}}
+                    </td>
+
+                    <td class="px-6 py-4 text-black">
+                        {{member.last_name}}
+                    </td>
+
+                    <td class="px-6 py-4 text-black">
+                        {{member.date_joined}}
+                    </td>
+
+                    <td class="px-6 py-4 text-black">
+                        {{member.last_login}}
+                    </td>
+                    <td class="px-6 py-4 text-black">
+                        {%if member.is_superuser%}
+                        <div>Yes</div>
+                        {%else%}
+                        <div>No</div>
+                        {%endif%}
+
+                    </td>
+
+
+                    <td class="px-6 py-4 text-black">
+                       
+                        <a href="{%url 'edit_profileAd' member.id  %}" class="hover:underline">แก้ไข</a>
+                    </td>
+                    <td class="px-6 py-4 text-black">
+                        <form method="POST" action="{%url 'delete_user' member.id  %}">
+                            {% csrf_token %}
+                            <div class="hover:text-red-700">
+                            <i class="fa-solid fa-trash "></i>
+                            <input type="submit" value="ลบผู้ใช้งาน">
+                            </div>
+                        </form>
+                    </td>
+                    
+                    
+                </tr>
+                
+            </tbody>
+            {%endfor%}
+        </table>
+    </div>
+    
+    {%else%}
+    <div>คุณไม่มีสิทธ์เข้าถึง</div>
+    {%endif%}
+
+{%else%}
+<div>กรุณาเข้าสู่ระบบ</div>
+{%endif%}
+
+{%endblock%}

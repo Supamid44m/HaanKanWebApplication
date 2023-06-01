@@ -1,0 +1,434 @@
+
+{%extends 'Content/components/base.html' %}
+{%load static%}
+{%block title%}{{party.title}}{%endblock%}
+
+
+{%block content%}
+
+{% if party.isApproved %}
+
+  
+
+
+
+<div class="container mx-auto shadow-lg rounded-lg ">
+    
+<div class="px-5 py-5 flex justify-between items-center bg-white  border-b-2 ">
+  <div class="font-semibold text-2xl">{{party.title}}</div>
+ 
+  
+</div>
+
+<div class="flex flex-row justify-between bg-white">
+  
+  <div class="flex flex-col w-2/5 border-r-2 overflow-y-auto">
+    {%if party.members.count%}
+        {%for member in party.members.all %}
+        <div
+        class="flex flex-row py-4 px-2 justify-center items-center border-b-2"
+        >
+        
+        
+        
+        <div class="w-1/4">
+            
+            {% if member.profile.profile_pic %}
+            
+            <img
+            src="{{member.profile.profile_pic.url}}"
+            class="object-cover h-12 w-12 rounded-full"
+            alt=""/>
+            {% else %}
+            <img
+            src="{% static 'Profile/images/defualtPIC.jpg' %}"
+            class="object-cover h-12 w-12 rounded-full"
+            alt=""/>
+
+            {%endif%}
+            
+        </div>
+        <div class="w-full">
+            <div class="text-lg font-semibold hover:underline"><a href="{%url 'profile' member.id%}">{{member.username}}</a></div>
+            {%if user == party.owner and user != member %}
+            
+                        <div class=" mx-auto inline-block px-6 py-2.5 bg-red-500 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out " >
+                            <form method="post" action="{% url 'delete_member' party.id member.id %}">
+                                {% csrf_token %}
+                                <i class="fa-solid fa-user-minus"></i>
+                                <input type="submit" value="ลบสมาชิก">
+                            </form>
+                        </div>
+                    
+            {%else%}
+            {%endif%}
+        </div>
+        </div>
+        {%endfor%}
+    {%endif%}
+{%if user == party.owner%}
+    {%if party.pending_members.all%}
+    
+
+
+    {% for user in party.pending_members.all %}
+    <div class="flex flex-row py-4 px-2 justify-center items-center border-b-2  ">
+        <div class="w-1/4">
+            
+            {% if user.profile.profile_pic %}
+            
+            <img
+            src="{{user.profile.profile_pic.url}}"
+            class="object-cover h-12 w-12 rounded-full"
+            alt=""/>
+            {% else %}
+            <img
+            src="{% static 'Profile/images/defualtPIC.jpg' %}"
+            class="object-cover h-12 w-12 rounded-full"
+            alt=""/>
+
+            {%endif%}
+            
+        </div>
+        
+
+        <div class="w-full">
+            <div class="text-lg font-semibold hover:underline"><a href="{%url 'profile' user.id%}">{{user.username}}</a></div>
+                <div class="flex">
+                    <form action="{% url 'accept_member' party.id user.id %}" method="POST" name="accept">
+                        {% csrf_token %}
+                        <div class="mx-auto inline-block px-6 py-2.5 bg-emerald-500 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-emerald-700 hover:shadow-lg focus:bg-emerald-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-emerald-800 active:shadow-lg transition duration-150 ease-in-out   ">
+                        <i class="fa-solid fa-check"></i>
+                        <button type="submit" class="">ยอมรับ</button>
+                        </div>
+                    </form>
+                
+                    <form action="{% url 'reject_member' party.id user.id %}" method="POST">
+                        {% csrf_token %}
+                        <div class="ml-2 mx-auto inline-block px-6 py-2.5 bg-red-500 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out">
+                            <i class="fa-solid fa-xmark"></i>
+                            <button type="submit" class="">ปฏิเสธ</button>
+                        </div>
+                    </form>
+                </div>
+               
+        </div>
+
+
+
+
+    </div>
+    
+    
+    
+    {% endfor %}
+
+
+
+    {%else%}
+                
+    {%endif%}
+    {%if party.pending_members.count%}
+
+    {%else%}
+
+        {%if party.members.count >= party.quantity%}
+    
+    
+        {%else%}
+        <div class="flex flex-row py-4 px-2 justify-center items-center border-b-2  ">
+            <form method="POST" action="{% url 'add_member' party.id %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="เพิ่มสมาชิก" class="mt-2 mx-auto inline-block px-6 py-2.5 bg-emerald-500 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-emerald-700 hover:shadow-lg focus:bg-emerald-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-emerald-800 active:shadow-lg transition duration-150 ease-in-out   ">
+            </form>
+        </div>
+    
+
+        
+        {%endif%}
+    {%endif%}
+{%else%}
+                
+{%endif%}
+    
+    
+    
+  
+  </div>
+
+  <!-- message -->
+  <div class="w-full px-5 flex flex-col justify-between">
+    {%if user in party.members.all %}
+    <div class="flex flex-col mt-5">
+        <div class="chat-messages space-y-3 " id="chat-messages">
+                                
+                                
+            {%for msg in msgs%}
+            <div class="p-4 bg-gray-200 rounded-xl">
+                <p class="font-semibold">{{msg.user.username}}</p>
+                <p class="font-semibold">{{msg.message}}</p>
+                <p class="text-sm">{{msg.timestamp}}</p>
+
+                
+            </div>  
+            {%endfor%}
+        
+        </div>
+        <div class=" lg:mx-auto p-4 bg-white rounded-xl">
+            <form method="POST" class="flex" action=".">
+                {%csrf_token%}
+                <input type="text" name="content" class="bg-gray-200 rounded-lg mr-2 w-96" placeholder="Your message" id="chat-message-input">
+                <button class="mt-2 mx-auto inline-block px-6 py-2.5 bg-emerald-500 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-emerald-700 hover:shadow-lg focus:bg-emerald-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-emerald-800 active:shadow-lg transition duration-150 ease-in-out " id="chat-message-submit"><i class="fa-solid fa-paper-plane"></i> Send</button>
+
+            </form>
+        </div>
+    </div>
+    {%endif%}
+  </div>
+  <!-- end message -->
+  <div class="w-2/5 border-l-2 px-5">
+
+    <div class="flex flex-col">
+    {%if user in party.members.all %}
+      <div class="font-semibold text-xl py-4">
+            <span>{{party.bank}}</span>
+            <span class="" id="bank-account-display"></span>
+            <button id="toggle-mask-button" class="border-2 rounded-full hover:bg-gray-200 px-2 md:text-sm">เปิดหมายเลขบัญชี</button>
+    </div>
+      <img
+        src="{{party.qrcodeImage.url}}"
+        class="object-cover rounded-xl w-auto h-64 bg-cover shadow-lg relative overflow-hidden"
+        alt=""
+      />
+      <div class="font-semibold py-4">
+        {%if days_left <= 3 and  days_left > 0  %}
+            <label for="paid_day">ต้องชำระในอีก</label>
+            <span class="text-red-700" id="paid_day" name="paid_day">{{ days_left }} </span>
+            <label for="paid_day">วัน</label>
+        {% elif days_left == 0 %}
+            <label for="paid_day" class="text-red-700">ต้องชำระวันนี้</label>
+        {%else%}
+            <label for="paid_day" class="">ต้องชำระในอีก</label>
+            <span class="" id="paid_day" name="paid_day">{{ days_left }}</span> 
+            <label for="paid_day">วัน</label>
+        {%endif%}
+
+      </div>
+      {%endif%}
+
+        <div class="font-light border-2 rounded-lg">
+            <p class="text-lg">ชื่อ: {{party.title}} </p>
+            <p class="text-lg">เจ้าของปาร์ตี้: {{party.owner}}</p>
+            <p class="text-lg">แอปพลิเคชั่น: {{party.apps}}</p>
+            <p class="text-lg">จ่ายทุกวันที่: {{party.paid_day}} ของเดือน</p>
+            <p class="text-lg">ราคาเต็ม: {{party.price}} ของเดือน</p>
+            {%if party.priceaverage%}
+            <p class="text-lg">ราคาเฉลี่ย: {{party.priceaverage}} บาท / คน</p>
+            {%else%}
+            <p class="text-lg">ราคาเฉลี่ย: {{party.priceavg}} บาท / คน</p>
+            {%endif%}
+        </div>
+
+        <div class="mt-2">
+            {%if user in party.members.all %}
+
+                
+                
+                <form action="{% url 'upload_evidence' party.id %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{upform.as_p}}
+
+                    <div class="mt-2 mx-auto inline-block px-6 py-2.5 bg-emerald-500 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-emerald-700 hover:shadow-lg focus:bg-emerald-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-emerald-800 active:shadow-lg transition duration-150 ease-in-out   ">
+                        <i class="fa-solid fa-image"></i>
+                        <button type="submit">อัปโหลดหลักฐานการโอน</button>
+                    </div>
+                    
+                </form>
+            <div class="mt-2 mx-auto inline-block px-6 py-2.5 bg-sky-400 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-sky-500 hover:shadow-lg focus:bg-emerald-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-emerald-800 active:shadow-lg transition duration-150 ease-in-out ">
+                <a href="{%url 'show_evidence' party.id%}">ดูหลักฐานการโอน</a>
+            </div>
+
+            {%endif%}
+        </div>
+        <div class="flex mt-2">
+            {%if user == party.owner%}
+
+            <div class="  inline-block px-6 py-2.5 bg-amber-500 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md  hover:bg-amber-700 hover:shadow-lg focus:bg-amber-700 focus:shadow-lg focus:outline-none focus:ring-0  active:shadow-lg transition duration-150 ease-in-out ">
+                <i class="fa-solid fa-pen-to-square "></i>
+                <a href="{%url 'update' party.id%}">แก้ไข</a>
+            </div>
+            
+
+            <div class=" ml-2 inline-block px-6 py-2.5 bg-red-500 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out">
+                
+                <form method="POST" action="{% url 'delete_party' party.id %}">
+                    {% csrf_token %}
+                    <i class="fa-solid fa-trash"></i>
+                    <input type="submit" value="ลบปาร์ตี้  ">
+                </form>
+                
+            </div>
+            {%endif%}
+
+
+        </div>
+
+        <div>
+            {%if user.is_authenticated and not user.is_superuser%}
+            <div class="">
+            
+                กดถูกใจปาร์ตี้นี้
+            </div>
+            {%if user in party.likes.all%}
+            <div class="text-3xl text-gray-700">
+               
+                <a href="{% url 'unlike_party' party.id %}"><i class="fa-solid fa-heart text-emerald-300 hover:text-emerald-400  "></i></a>
+            </div>
+            {%else%}
+            <div class="text-3xl text-gray-700">
+                
+                <a href="{% url 'like_party' party.id %}"><i class="fa-regular fa-heart hover:text-emerald-300"></i></a>
+            </div>
+            {%endif%}
+            
+        </div>
+        {%endif%}
+        </div>
+
+
+        <div>
+            {%if user in party.members.all and user != party.owner %}
+            <div class="mt-3 mb-3 inline-block px-6 py-2.5 bg-red-500 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out">
+
+                <form method ='POST'  action="{% url 'leave' party.id %}" >
+                    {% csrf_token %}
+                    <i class="fa-solid fa-arrow-right-from-bracket "></i>
+                    <input type="submit" value="ออกจากปาร์ตี้" >
+                </form>
+    
+    
+    
+    
+            </div>
+            {% elif user in party.pending_members.all %}
+            <div class="mt-3 mb-3 inline-block px-6 py-2.5 bg-red-500 text-white font-medium text-xs leading-tight uppercase rounded-full shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out">
+
+                <form method ='POST'  action="{% url 'cancel_join' party.id %}" >
+                    {% csrf_token %}
+                    <i class="fa-solid fa-x"></i>
+                    <input type="submit" value="ยกเลิกขอเข้าร่วม" >
+                </form>
+    
+    
+    
+    
+            </div>
+            {%else%}
+            {%endif%}
+    
+    
+
+            
+        </div>
+       
+
+     
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+  
+
+
+
+{{request.user.username|json_script:"json-username"}}
+
+{% block scripts %}{% endblock %}
+<script>
+    const party_id = "{{party.id}}";
+    const userName = "{{request.user.username}}";
+    const test = JSON.parse(document.getElementById('json-username').textContent);
+    //const chatSocket = new WebSocket('wss://81ae-2403-6200-8822-a16a-a18a-6808-c249-29f9.ap.ngrok.io/ws/party/' + party_id+'/');
+    const chatSocket = new WebSocket('ws://' + window.location.host + '/ws/party/' + party_id+'/');
+   
+
+    chatSocket.onmessage = function(e) {
+        const data = JSON.parse(e.data);
+
+        if (data.message) {
+            let html = '<div class="p-4 bg-gray-200 rounded-xl">';
+            html += '<p class="font-semibold">' + data.username + '</p>'
+            html += '<p class="font-semibold">' + data.message + '</p></div>';
+
+            document.querySelector('#chat-messages').innerHTML += html;
+            scorllToBottom();
+        }
+    }
+
+    chatSocket.onclose = function(e) {
+        console.log('Connection closed');
+    }
+
+    document.querySelector('#chat-message-submit').onclick = function(e) {
+        e.preventDefault();
+        const messageInputDom = document.querySelector('#chat-message-input');
+        const message = messageInputDom.value;
+       
+
+        chatSocket.send(JSON.stringify({
+            'message': message,
+            'username':userName,
+            'party': party_id,
+        }));
+
+        messageInputDom.value = '';
+
+        return false;
+
+        
+    }
+    function scorllToBottom(){
+            const objDiv=document.querySelector('#chat-messages');
+            objDiv.scrollTop = objDiv.scrollHeight
+        }
+        
+    scorllToBottom();
+
+    var toggleMaskButton = document.getElementById('toggle-mask-button');
+    var accountDisplay = document.getElementById('bank-account-display');
+    var bankAccount = "{{party.bankaccount}}";
+
+    if (bankAccount.match(/^\d+$/)) {
+    // ซ่อนเลข
+    var maskedAccount = "xxxxxxxxxx" + bankAccount.slice(-2);
+    accountDisplay.textContent = maskedAccount;
+    } else {
+   // ถ้ามีตัวอักษรไม่ซ่อนเลข
+    accountDisplay.textContent = bankAccount;
+    toggleMaskButton.style.display = 'none'; // ซ่อนปุ่ม
+    }
+
+    toggleMaskButton.addEventListener('click', function() {
+    if (accountDisplay.textContent === maskedAccount) {
+        accountDisplay.textContent = bankAccount;
+        toggleMaskButton.textContent = 'ซ่อนหมายเลขบัญชี';
+    } else {
+        accountDisplay.textContent = maskedAccount;
+        toggleMaskButton.textContent = 'เปิดหมายเลขบัญชี';
+    }
+    });
+    
+</script>
+
+
+
+
+{%else%}
+<div  class="text-center" >ไม่สามารถดูรายละเอียดได้เนื่องจากปาร์ตี้ยังไม่ได้รับการอนุมัติ</div>
+{%endif%}
+
+
+{%endblock%}
