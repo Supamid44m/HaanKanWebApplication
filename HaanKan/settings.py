@@ -184,12 +184,7 @@ SITE_ID = 1
 LOGIN_REDIRECT_URL="party"
 LOGOUT_REDIRECT_URL='party'
 
-#clinetID
-#220714774120-koqks533mffbng0kfmk8ac3h198c3kpj.apps.googleusercontent.com
 
-
-#secret
-#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
 
 #FOR CHAT
 CHANNEL_LAYERS = {
